@@ -1,10 +1,10 @@
-import { ThemeMode, type CommonThemeConfig } from '@officesdk/editor-sdk-core/shared'
+import { ThemeMode, type CommonThemeConfig } from '@officesdk/editor-sdk-core/shared';
 export type Theme = CommonThemeConfig;
 
 import { colors, boxShadow, borderRadius, typography } from './base';
 import { components } from './components';
 
-export const lightTheme: Theme = {
+export const lightTheme = {
   name: 'sm-light',
   mode: ThemeMode.LIGHT,
 
@@ -12,7 +12,5 @@ export const lightTheme: Theme = {
   boxShadow,
   borderRadius,
   typography,
-  components: components
-};
-
-
+  components: components,
+} as unknown as Theme;

@@ -1,3 +1,5 @@
+import { BorderRadiusConfig } from '@officesdk/editor-sdk-core/shared';
+
 const palettes = {
   // Brand colors
   brand: '#41464b',
@@ -197,102 +199,101 @@ export const boxShadow = {
   medium: '0 4px 10px rgba(65, 70, 75, 0.06)',
   large: '0 8px 18px 0 rgba(0, 0, 0, 0.06)',
   xl: '0 20px 32px 0 rgba(0, 0, 0, 0.06)',
-
 };
 
-export const borderRadius = {
+export const borderRadius: BorderRadiusConfig = {
   none: 0 as const,
   small: '2px',
   medium: '4px',
   large: '8px',
   xl: '12px',
   xxl: '16px',
-  full: '50%' as const,
+  full: '1000px' as const,
 };
 
 export const typography = {
-    title: {
-      fontFamily: {
-        base: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-      },
-      fontSize: {
-        xs: '12px',
-        s: '13px',
-        m: '14px',
-        l: '16px',
-        xl: '20px',
-        xxl: '24px',
-        xxxl: '32px',
-      },
-      fontWeight: {
-        light: 300,
-        regular: 400,
-        medium: 500,
-        semibold: 600,
-        bold: 700,
-      },
-      lineHeight: {
-        tight: '1.2',
-        regular: '1.4',
-        medium: '1.5',
-        relaxed: '1.6',
-        loose: '1.8',
-      },
+  title: {
+    fontFamily: {
+      base: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
     },
-    paragraph: {
-      fontFamily: {
-        base: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-      },
-      fontSize: {
-        xs: '12px',
-        s: '13px',
-        m: '14px',
-        l: '16px',
-        xl: '18px',
-        xxl: '20px',
-        xxxl: '24px',
-      },
-      fontWeight: {
-        light: 300,
-        regular: 400,
-        medium: 500,
-        semibold: 600,
-        bold: 700,
-      },
-      lineHeight: {
-        tight: '1.4',
-        regular: '1.5',
-        medium: '1.6',
-        relaxed: '1.7',
-        loose: '2',
-      },
+    fontSize: {
+      xs: '12px',
+      s: '13px',
+      m: '14px',
+      l: '16px',
+      xl: '20px',
+      xxl: '24px',
+      xxxl: '32px',
     },
-    article: {
-      fontFamily: {
-        base: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-      },
-      fontSize: {
-        xs: '12px',
-        s: '14px',
-        m: '16px',
-        l: '18px',
-        xl: '20px',
-        xxl: '24px',
-        xxxl: '28px',
-      },
-      fontWeight: {
-        light: 300,
-        regular: 400,
-        medium: 500,
-        semibold: 600,
-        bold: 700,
-      },
-      lineHeight: {
-        tight: '1.5',
-        regular: '1.6',
-        medium: '1.7',
-        relaxed: '1.8',
-        loose: '2',
-      },
+    fontWeight: {
+      light: 300,
+      regular: 400,
+      medium: 500,
+      semibold: 600,
+      bold: 700,
     },
-  }
+    lineHeight: {
+      tight: '1.2',
+      regular: '1.4',
+      medium: '1.5',
+      relaxed: '1.6',
+      loose: '1.8',
+    },
+  },
+  paragraph: {
+    fontFamily: {
+      base: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+    },
+    fontSize: {
+      xs: '12px',
+      s: '13px',
+      m: '14px',
+      l: '16px',
+      xl: '18px',
+      xxl: '20px',
+      xxxl: '24px',
+    },
+    fontWeight: {
+      light: 300,
+      regular: 400,
+      medium: 500,
+      semibold: 600,
+      bold: 700,
+    },
+    lineHeight: {
+      tight: '1.4',
+      regular: '1.5',
+      medium: '1.6',
+      relaxed: '1.7',
+      loose: '2',
+    },
+  },
+  article: {
+    fontFamily: {
+      base: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+    },
+    fontSize: {
+      xs: '12px',
+      s: '14px',
+      m: '16px',
+      l: '18px',
+      xl: '20px',
+      xxl: '24px',
+      xxxl: '28px',
+    },
+    fontWeight: {
+      light: 300,
+      regular: 400,
+      medium: 500,
+      semibold: 600,
+      bold: 700,
+    },
+    lineHeight: {
+      tight: '1.5',
+      regular: '1.6',
+      medium: '1.7',
+      relaxed: '1.8',
+      loose: '2',
+    },
+  },
+};

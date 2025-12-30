@@ -1,6 +1,6 @@
 import React from 'react';
 import RcTooltip from 'rc-tooltip';
-import type { TooltipProps as RcTooltipProps } from 'rc-tooltip';
+import type { TooltipProps as RcTooltipProps } from 'rc-tooltip/lib/Tooltip';
 import { createGlobalStyle } from 'styled-components';
 import 'rc-tooltip/assets/bootstrap.css';
 
@@ -115,13 +115,10 @@ const TooltipGlobalStyles = createGlobalStyle<{
 
   /* istanbul ignore next - styled-components CSS generation */
   ${({ $variant, theme }) => {
-    const arrowConfig = theme.components.tooltip.arrow;
-    const bgColor = $variant === 'black'
-      ? theme.components.tooltip.black.background
-      : theme.components.tooltip.white.small.background;
-    const borderColor = $variant === 'black'
-      ? theme.components.tooltip.black.background
-      : theme.components.tooltip.white.small.borderColor;
+    const bgColor =
+      $variant === 'black'
+        ? theme.components?.tooltip?.black?.background
+        : theme.components?.tooltip?.white?.small?.background;
 
     return `
       .rc-tooltip-placement-top .rc-tooltip-arrow,
@@ -255,15 +252,15 @@ export const Tooltip: React.FC<TooltipProps> = ({
   trigger = ['hover'],
   ...rest
 }) => {
+  const GlobalStyles = TooltipGlobalStyles as unknown as React.ComponentType<{
+    $variant: 'black' | 'white';
+    $size?: 'small' | 'large';
+  }>;
+
   return (
     <>
-      <TooltipGlobalStyles $variant={variant} $size={size} />
-      <RcTooltip
-        overlay={<div>{content}</div>}
-        placement={placement}
-        trigger={trigger}
-        {...rest}
-      >
+      <GlobalStyles $variant={variant} $size={size} />
+      <RcTooltip overlay={<div>{content}</div>} placement={placement} trigger={trigger} {...rest}>
         {children}
       </RcTooltip>
     </>
@@ -271,4 +268,3 @@ export const Tooltip: React.FC<TooltipProps> = ({
 };
 
 Tooltip.displayName = 'Tooltip';
-

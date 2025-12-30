@@ -172,18 +172,20 @@ const TabItem = styled.button<{
     if ($variant === 'card') {
       return `
         border: 1px solid;
-        ${$active ? `
+        ${
+          $active
+            ? `
           border-bottom-color: transparent;
           margin-bottom: -1px;
-        ` : ''}
+        `
+            : ''
+        }
       `;
     }
 
     return '';
   }}
 `;
-
-
 
 /**
  * Tab Component
@@ -204,7 +206,8 @@ export const Tabs: React.FC<TabsProps> = ({
   activeKey: controlledActiveKey,
   defaultActiveKey,
   variant = 'line',
-  size = 'large',
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  size: _size = 'large',
   onChange,
   className,
   style,
@@ -254,4 +257,3 @@ export const Tabs: React.FC<TabsProps> = ({
 };
 
 Tabs.displayName = 'Tab';
-

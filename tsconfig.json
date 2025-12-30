@@ -21,7 +21,12 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@officesdk/editor-sdk-core/shared": ["./node_modules/@officesdk/editor-sdk-core/types/shared.d.ts"]
+      "@officesdk/editor-sdk-core/shared": [
+        "./node_modules/@officesdk/editor-sdk-core/types/shared.d.ts"
+      ],
+      "@officesdk/ui-theme": ["./packages/theme/src/index.ts"],
+      "@officesdk/ui-utils": ["./packages/utils/src/index.ts"],
+      "@officesdk/ui-icons": ["./packages/icons/src/index.ts"]
     }
   },
   "exclude": [

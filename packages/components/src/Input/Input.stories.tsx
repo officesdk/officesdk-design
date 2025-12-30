@@ -50,7 +50,7 @@ const meta: Meta<typeof Input> = {
   argTypes: {
     size: {
       control: 'radio',
-      options: [ 'small', 'medium', 'large', 'extraLarge'],
+      options: ['small', 'medium', 'large', 'extraLarge'],
       description: 'Input size',
     },
     error: {
@@ -91,10 +91,6 @@ export const Sizes: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '300px' }}>
       <div>
-        <div style={{ marginBottom: '8px', fontSize: '12px', color: '#666' }}>Mini (20px)</div>
-        <Input size="mini" placeholder="Mini input" />
-      </div>
-      <div>
         <div style={{ marginBottom: '8px', fontSize: '12px', color: '#666' }}>Small (24px)</div>
         <Input size="small" placeholder="Small input" />
       </div>
@@ -103,8 +99,14 @@ export const Sizes: Story = {
         <Input size="medium" placeholder="Medium input" />
       </div>
       <div>
-        <div style={{ marginBottom: '8px', fontSize: '12px', color: '#666' }}>Large (40px)</div>
+        <div style={{ marginBottom: '8px', fontSize: '12px', color: '#666' }}>Large (32px)</div>
         <Input size="large" placeholder="Large input" />
+      </div>
+      <div>
+        <div style={{ marginBottom: '8px', fontSize: '12px', color: '#666' }}>
+          ExtraLarge (40px)
+        </div>
+        <Input size="extraLarge" placeholder="ExtraLarge input" />
       </div>
     </div>
   ),
@@ -118,11 +120,15 @@ export const States: Story = {
         <Input placeholder="Default state" />
       </div>
       <div>
-        <div style={{ marginBottom: '8px', fontSize: '12px', color: '#666' }}>Hover (hover over input)</div>
+        <div style={{ marginBottom: '8px', fontSize: '12px', color: '#666' }}>
+          Hover (hover over input)
+        </div>
         <Input placeholder="Hover state" />
       </div>
       <div>
-        <div style={{ marginBottom: '8px', fontSize: '12px', color: '#666' }}>Active (click to focus)</div>
+        <div style={{ marginBottom: '8px', fontSize: '12px', color: '#666' }}>
+          Active (click to focus)
+        </div>
         <Input placeholder="Active state" />
       </div>
       <div>
@@ -178,7 +184,9 @@ const WithSuffixNodeComponent = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '300px' }}>
       <div>
-        <div style={{ marginBottom: '8px', fontSize: '12px', color: '#666' }}>With clear button</div>
+        <div style={{ marginBottom: '8px', fontSize: '12px', color: '#666' }}>
+          With clear button
+        </div>
         <Input
           value={value}
           onChange={(e) => setValue(e.target.value)}
@@ -282,7 +290,9 @@ export const AllSizesWithStates: Story = {
       </div>
 
       <div>
-        <h3 style={{ marginBottom: '16px', fontSize: '16px', fontWeight: 600 }}>extraLarge (40px)</h3>
+        <h3 style={{ marginBottom: '16px', fontSize: '16px', fontWeight: 600 }}>
+          extraLarge (40px)
+        </h3>
         <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
           <Input size="extraLarge" placeholder="Default" style={{ width: '180px' }} />
           <Input size="extraLarge" placeholder="Active" style={{ width: '180px' }} />
@@ -309,4 +319,3 @@ export const Playground: Story = {
     </div>
   ),
 };
-

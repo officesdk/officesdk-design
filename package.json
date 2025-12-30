@@ -66,9 +66,24 @@
     "test:coverage": "vitest --coverage",
     "test:watch": "vitest --watch",
     "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix",
+    "format": "prettier --write \"**/*.{ts,tsx,json,md,mdx}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,json,md,mdx}\"",
     "type-check": "tsc --noEmit",
+    "validate": "yarn lint && yarn type-check && yarn test --run",
+    "validate:structure": "node scripts/validate-structure.js",
+    "prepare": "husky",
     "clean": "yarn workspaces foreach -A run clean && rm -rf node_modules",
     "prepublishOnly": "yarn build"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,mdx}": [
+      "prettier --write"
+    ]
   },
   "devDependencies": {
     "@storybook/addon-docs": "^7.6.7",
@@ -96,7 +111,9 @@
     "eslint": "^8.56.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^9.1.7",
     "jsdom": "^27.4.0",
+    "lint-staged": "^16.2.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-is": "^18.2.0",

@@ -1,7 +1,6 @@
 import { colors } from '../base';
-import { InputConfig } from '@officesdk/editor-sdk-core/shared';
 
-export const input: InputConfig = {
+export const input = {
   icons: {
     search: {
       url: '',
@@ -163,4 +162,3 @@ export const input: InputConfig = {
     },
   },
 };
-

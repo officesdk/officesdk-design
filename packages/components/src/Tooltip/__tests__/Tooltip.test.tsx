@@ -17,7 +17,7 @@ describe('Tooltip', () => {
     });
 
     it('should render with black variant by default', async () => {
-      const user = userEvent.setup();
+      userEvent.setup();
 
       render(
         <Tooltip content="Black tooltip" visible={true}>
@@ -30,7 +30,7 @@ describe('Tooltip', () => {
     });
 
     it('should render with white variant', async () => {
-      const user = userEvent.setup();
+      userEvent.setup();
 
       render(
         <Tooltip content="White tooltip" variant="white" visible={true}>
@@ -43,7 +43,7 @@ describe('Tooltip', () => {
     });
 
     it('should render with small size', async () => {
-      const user = userEvent.setup();
+      userEvent.setup();
 
       render(
         <Tooltip content="Small tooltip" variant="white" size="small" visible={true}>
@@ -56,7 +56,7 @@ describe('Tooltip', () => {
     });
 
     it('should render with large size', async () => {
-      const user = userEvent.setup();
+      userEvent.setup();
 
       render(
         <Tooltip content="Large tooltip" variant="white" size="large" visible={true}>
@@ -69,7 +69,7 @@ describe('Tooltip', () => {
     });
 
     it('should render black variant with visible tooltip', async () => {
-      const user = userEvent.setup();
+      userEvent.setup();
 
       render(
         <Tooltip content="Visible black" variant="black" visible={true}>
@@ -83,7 +83,7 @@ describe('Tooltip', () => {
     });
 
     it('should render white small variant with visible tooltip', async () => {
-      const user = userEvent.setup();
+      userEvent.setup();
 
       render(
         <Tooltip content="White small content" variant="white" size="small" visible={true}>
@@ -97,7 +97,7 @@ describe('Tooltip', () => {
     });
 
     it('should render white large variant with visible tooltip', async () => {
-      const user = userEvent.setup();
+      userEvent.setup();
 
       render(
         <Tooltip content="White large content" variant="white" size="large" visible={true}>
@@ -369,13 +369,18 @@ describe('Tooltip', () => {
     });
 
     it('should render with all placement variants for black tooltip', async () => {
-      const placements: Array<'top' | 'bottom' | 'left' | 'right' | 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight'> = [
-        'top', 'bottom', 'left', 'right', 'topLeft', 'topRight', 'bottomLeft', 'bottomRight'
-      ];
+      const placements: Array<
+        'top' | 'bottom' | 'left' | 'right' | 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight'
+      > = ['top', 'bottom', 'left', 'right', 'topLeft', 'topRight', 'bottomLeft', 'bottomRight'];
 
       for (const placement of placements) {
         const { unmount } = render(
-          <Tooltip content={`${placement} tooltip`} placement={placement} visible={true} variant="black">
+          <Tooltip
+            content={`${placement} tooltip`}
+            placement={placement}
+            visible={true}
+            variant="black"
+          >
             <button>{placement}</button>
           </Tooltip>
         );
@@ -390,12 +395,23 @@ describe('Tooltip', () => {
 
     it('should render with all placement variants for white tooltip', async () => {
       const placements: Array<'top' | 'bottom' | 'left' | 'right' | 'leftTop' | 'rightBottom'> = [
-        'top', 'bottom', 'left', 'right', 'leftTop', 'rightBottom'
+        'top',
+        'bottom',
+        'left',
+        'right',
+        'leftTop',
+        'rightBottom',
       ];
 
       for (const placement of placements) {
         const { unmount } = render(
-          <Tooltip content={`${placement} white`} placement={placement} visible={true} variant="white" size="large">
+          <Tooltip
+            content={`${placement} white`}
+            placement={placement}
+            visible={true}
+            variant="white"
+            size="large"
+          >
             <button>{placement}</button>
           </Tooltip>
         );
@@ -424,4 +440,3 @@ describe('Tooltip', () => {
     });
   });
 });
-

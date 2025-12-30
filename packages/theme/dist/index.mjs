@@ -202,7 +202,7 @@ var borderRadius = {
   large: "8px",
   xl: "12px",
   xxl: "16px",
-  full: "50%"
+  full: "1000px"
 };
 var typography = {
   title: {
