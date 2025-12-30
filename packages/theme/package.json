@@ -1,6 +1,7 @@
 {
   "name": "@officesdk/ui-theme",
   "version": "0.1.0",
+  "private": true,
   "description": "Officesdk  UI Theme System",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

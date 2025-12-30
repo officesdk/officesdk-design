@@ -1,6 +1,7 @@
 {
   "name": "@officesdk/ui-utils",
   "version": "0.1.0",
+  "private": true,
   "description": "Officesdk  UI Utilities",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
