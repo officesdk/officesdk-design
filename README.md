@@ -1,18 +1,18 @@
 # @officesdk/ui
 
-> Officesdk  UI Component Library - A modern UI component library built with React and styled-components
+> Officesdk UI Component Library - A modern UI component library built with React and styled-components
 
-## ✨ Features
+## Features
 
-- 🎨 **Modern Design** - Clean and beautiful design style
-- 🔧 **TypeScript Support** - Full type definitions
-- 💅 **Flexible Styling** - Built with styled-components, easy to customize
-- 📦 **Tree Shaking** - Supports on-demand loading
-- 🎯 **Ready to Use** - Complete default configuration
-- 📖 **Well Documented** - Detailed component documentation and examples
-- 🏗️ **Monorepo Architecture** - Clear package management structure
+- **Modern Design** - Clean and beautiful design style
+- **TypeScript Support** - Full type definitions
+- **Flexible Styling** - Built with styled-components, easy to customize
+- **Tree Shaking** - Supports on-demand loading
+- **Ready to Use** - Complete default configuration
+- **Well Documented** - Detailed component documentation and examples
+- **Monorepo Architecture** - Clear package management structure
 
-## 📦 Installation
+## Installation
 
 ```bash
 # Using yarn
@@ -27,7 +27,7 @@ pnpm add @officesdk/ui styled-components@^5.3.0
 
 > **Note**: `@officesdk/ui` includes all components, themes, and utility functions. You can use different import paths for specific features.
 
-## 🚀 Quick Start
+## Quick Start
 
 ```tsx
 import React from 'react';
@@ -46,14 +46,14 @@ function App() {
       <Button variant="solid" colorType="default">
         Click Me
       </Button>
-    </UIConfigProvider>       
+    </UIConfigProvider>
   );
 }
 
 export default App;
 ```
 
-## 📚 Documentation
+## Documentation
 
 For complete component documentation and examples, visit our [Storybook Documentation](https://your-storybook-url.com).
 
@@ -65,7 +65,7 @@ yarn dev
 
 Then visit http://localhost:6006
 
-## 📦 Usage
+## Usage
 
 ### Import Components and Configuration
 
@@ -85,22 +85,22 @@ import { theme } from '@officesdk/ui/theme';
 import { classNames, debounce } from '@officesdk/ui/utils';
 ```
 
-## 🏗️ Project Structure
+## Project Structure
 
 ```
 officesdk-ui/
-├── packages/
-│   ├── components/        # UI components package
-│   ├── theme/             # Theme system package
-│   └── utils/             # Utilities package
-├── docs/                  # Documentation
-├── .storybook/            # Storybook configuration
-└── package.json           # Root configuration
+ packages/
+    components/        # UI components package
+    theme/             # Theme system package
+    utils/             # Utilities package
+ docs/                  # Documentation
+ .storybook/            # Storybook configuration
+ package.json           # Root configuration
 ```
 
-## 🔧 Development
+## Development
 
-> 💡 If you encounter installation or runtime issues, please check the [Setup Guide](./SETUP.md)
+> If you encounter installation or runtime issues, please check the [Setup Guide](./SETUP.md)
 
 ### Install Dependencies
 
@@ -138,7 +138,7 @@ yarn lint
 yarn clean
 ```
 
-## 📦 Packages
+## Packages
 
 ### @officesdk/ui-components
 
@@ -152,7 +152,7 @@ Theme system package providing default theme configuration and type definitions.
 
 Utilities package providing common utility functions.
 
-## 🎨 Custom Configuration
+## Custom Configuration
 
 ```tsx
 import { UIConfigProvider, createUIConfig } from '@officesdk/ui';
@@ -180,25 +180,76 @@ const config = createUIConfig({
 });
 
 function App() {
-  return (
-    <UIConfigProvider config={config}>
-      {/* Your app */}
-    </UIConfigProvider>
-  );
+  return <UIConfigProvider config={config}>{/* Your app */}</UIConfigProvider>;
 }
 ```
 
-## 🤝 Contributing
+## Contributing
 
-Contributions are welcome! Please check the [Development Guide](./docs/Development.mdx) for more information.
+Contributions are welcome! Please read our [Contributing Guide](./CONTRIBUTING.md) and [Development Guide](./docs/Development.mdx).
 
-## 📄 License
+### Quick Contribution Steps
+
+```bash
+# 1. Fork and clone
+git clone git@github.com:YOUR_USERNAME/ui.git
+
+# 2. Create branch
+git checkout -b feat/your-feature
+
+# 3. Make changes and test
+yarn dev
+yarn test
+yarn validate
+
+# 4. Add changeset
+yarn changeset
+
+# 5. Commit and push
+git commit -m "feat: your feature"
+git push origin feat/your-feature
+
+# 6. Create PR
+```
+
+## Release Process
+
+We use [Changesets](https://github.com/changesets/changesets) for automated releases.
+
+**For Contributors**: Add a changeset with `yarn changeset` after making changes.
+
+**For Maintainers**: See [Release Documentation](./docs/Release.mdx) and [NPM Setup Guide](./docs/NPM-Setup.md).
+
+## Release Process
+
+We use [Changesets](https://github.com/changesets/changesets) for automated version management and publishing.
+
+### For Contributors
+
+```bash
+# 1. Make changes and commit
+git commit -m "feat: add new component"
+
+# 2. Add changeset
+yarn changeset
+
+# 3. Create PR and merge
+# Changesets will automatically create a version PR
+
+# 4. Merge version PR to publish
+```
+
+See [Release Documentation](./docs/Release.mdx) for detailed information.
+
+## License
 
 MIT
 
-## 🔗 Links
+## Links
 
-- [Documentation](https://github.com/officesdk/ui)
-- [Storybook](https://your-storybook-url.com)
+- [Documentation](https://github.com/officesdk/ui#readme)
+- [Storybook](https://officesdk.github.io/ui) (Coming soon)
+- [NPM Package](https://www.npmjs.com/package/@officesdk/ui)
 - [GitHub](https://github.com/officesdk/ui)
 - [Issues](https://github.com/officesdk/ui/issues)
+- [Changelog](./CHANGELOG.md)

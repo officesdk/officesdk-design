@@ -60,6 +60,7 @@ yarn clean
 **Problem**: Error about packageManager version mismatch
 
 **Solution**:
+
 ```bash
 corepack enable
 corepack prepare yarn@4.9.1 --activate
@@ -70,8 +71,10 @@ corepack prepare yarn@4.9.1 --activate
 **Problem**: Storybook fails to resolve modules
 
 **Solution**:
+
 - Make sure `nodeLinker: node-modules` is set in `.yarnrc.yml`
 - Clean and reinstall:
+
 ```bash
 rm -rf node_modules
 yarn install
@@ -89,8 +92,10 @@ Ensure all packages have correct `peerDependencies` declared in their `package.j
 **Problem**: TypeScript compilation errors during build
 
 **Solution**:
+
 1. Make sure all dependencies are installed
 2. Build packages in order:
+
 ```bash
 cd packages/utils && yarn build
 cd ../theme && yarn build
@@ -115,13 +120,13 @@ The project uses TypeScript with strict mode enabled. Each package has its own `
 
 ```
 officesdk-ui/
-├── packages/
-│   ├── components/     # UI components
-│   ├── theme/          # Theme system
-│   └── utils/          # Utilities
-├── docs/               # Documentation
-├── .storybook/         # Storybook config
-└── package.json        # Root config
+[EMOJI][EMOJI][EMOJI][EMOJI][EMOJI][EMOJI][EMOJI][EMOJI][EMOJI] packages/
+[EMOJI][EMOJI]�   [EMOJI][EMOJI][EMOJI][EMOJI][EMOJI][EMOJI][EMOJI][EMOJI][EMOJI] components/     # UI components
+[EMOJI][EMOJI]�   [EMOJI][EMOJI][EMOJI][EMOJI][EMOJI][EMOJI][EMOJI][EMOJI][EMOJI] theme/          # Theme system
+[EMOJI][EMOJI]�   [EMOJI][EMOJI][EMOJI][EMOJI][EMOJI][EMOJI][EMOJI][EMOJI][EMOJI] utils/          # Utilities
+[EMOJI][EMOJI][EMOJI][EMOJI][EMOJI][EMOJI][EMOJI][EMOJI][EMOJI] docs/               # Documentation
+[EMOJI][EMOJI][EMOJI][EMOJI][EMOJI][EMOJI][EMOJI][EMOJI][EMOJI] .storybook/         # Storybook config
+[EMOJI][EMOJI][EMOJI][EMOJI][EMOJI][EMOJI][EMOJI][EMOJI][EMOJI] package.json        # Root config
 ```
 
 ## Publishing

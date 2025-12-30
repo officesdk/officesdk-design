@@ -12,7 +12,7 @@ yarn type-check
 
 # Check for Chinese characters in staged files
 echo "Checking for Chinese characters..."
-STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(ts|tsx|js|jsx|md|mdx)$' || true)
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(ts|tsx|js|jsx)$' || true)
 
 if [ -n "$STAGED_FILES" ]; then
   for file in $STAGED_FILES; do

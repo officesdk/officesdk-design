@@ -1,0 +1,271 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Documentation/Release Process" />
+
+# Release Process
+
+This document describes the release process for `@officesdk/ui`.
+
+## Overview
+
+We use [Changesets](https://github.com/changesets/changesets) for version management and automated releases.
+
+## Quick Start
+
+```bash
+# 1. Make your changes
+git checkout -b feat/new-component
+
+# 2. Commit your changes
+git commit -m "feat: add new component"
+
+# 3. Add a changeset
+yarn changeset
+
+# 4. Push and create PR
+git push origin feat/new-component
+
+# 5. After PR is merged, Changesets will create a "Version Packages" PR
+# 6. Merge the "Version Packages" PR to trigger automatic release
+```
+
+## Detailed Workflow
+
+### 1. Development Phase
+
+```bash
+# Create feature branch
+git checkout -b feat/add-dropdown
+
+# Develop your feature
+# - Add component
+# - Add tests
+# - Add stories
+# - Update documentation
+
+# Commit changes (pre-commit hooks will run automatically)
+git commit -m "feat(Dropdown): add Dropdown component"
+```
+
+### 2. Adding Changeset
+
+```bash
+# Run changeset command
+yarn changeset
+
+# You will be prompted:
+# ? Which packages would you like to include?
+#    @officesdk/ui
+
+# ? What kind of change is this for @officesdk/ui?
+#    patch   (0.1.0  0.1.1) - Bug fixes
+#    minor   (0.1.0  0.2.0) - New features
+#    major   (0.1.0  1.0.0) - Breaking changes
+
+# ? Please enter a summary for this change
+#   Add Dropdown component with keyboard navigation support
+```
+
+This creates a file in `.changeset/` directory with your change description.
+
+### 3. Create Pull Request
+
+```bash
+# Push your branch
+git push origin feat/add-dropdown
+
+# Create PR on GitHub
+# The CI workflow will automatically run:
+# - Lint
+# - Type Check
+# - Tests
+# - Build
+```
+
+### 4. Review and Merge
+
+- Code review by team members
+- All CI checks must pass
+- Merge PR to main branch
+
+### 5. Automatic Version PR
+
+After merging, Changesets bot will automatically:
+
+1. Create a new PR titled "chore: release new version"
+2. Update version in `package.json`
+3. Generate CHANGELOG entries
+4. Update dependencies if needed
+
+### 6. Release
+
+- Review the "Version Packages" PR
+- Check version numbers and CHANGELOG
+- Merge the PR
+- GitHub Actions will automatically:
+  - Build all packages
+  - Run tests
+  - Publish to NPM
+  - Create GitHub Release
+  - Deploy Storybook
+
+## Version Types
+
+### Patch (0.1.0 0.1.1)
+
+**When to use**: Bug fixes, minor improvements
+
+**Examples**:
+
+- Fix button hover state
+- Resolve accessibility issue
+- Update documentation
+- Performance improvements
+
+```bash
+yarn changeset
+# Select: patch
+```
+
+### Minor (0.1.0 0.2.0)
+
+**When to use**: New features, backward compatible
+
+**Examples**:
+
+- Add new component
+- Add new props to existing component
+- Add new theme tokens
+- Add new utility functions
+
+```bash
+yarn changeset
+# Select: minor
+```
+
+### Major (0.1.0 1.0.0)
+
+**When to use**: Breaking changes
+
+**Examples**:
+
+- Remove deprecated API
+- Change component API
+- Rename props
+- Remove components
+
+```bash
+yarn changeset
+# Select: major
+```
+
+## Manual Release (Emergency)
+
+If automatic release fails, you can manually release:
+
+```bash
+# 1. Ensure you're on main branch
+git checkout main
+git pull origin main
+
+# 2. Update versions
+yarn changeset:version
+
+# 3. Commit version changes
+git add .
+git commit -m "chore: version packages"
+git push
+
+# 4. Build and publish
+yarn changeset:publish
+
+# 5. Push tags
+git push --follow-tags
+```
+
+## Pre-release (Beta/Alpha)
+
+For beta releases:
+
+```bash
+# 1. Create pre-release branch
+git checkout -b beta
+
+# 2. Enter pre-release mode
+yarn changeset pre enter beta
+
+# 3. Add changesets as normal
+yarn changeset
+
+# 4. Version and publish
+yarn changeset:version
+yarn changeset:publish --tag beta
+
+# 5. Exit pre-release mode when ready
+yarn changeset pre exit
+```
+
+## Troubleshooting
+
+### Issue: NPM publish fails
+
+**Solution**: Check NPM_TOKEN in GitHub Secrets
+
+### Issue: Version PR not created
+
+**Solution**:
+
+- Ensure changeset files exist in `.changeset/`
+- Check GitHub Actions logs
+- Verify GITHUB_TOKEN permissions
+
+### Issue: Build fails in CI
+
+**Solution**:
+
+- Run `yarn build` locally first
+- Check for missing dependencies
+- Verify all tests pass locally
+
+## Best Practices
+
+### DO
+
+- Add changeset for every user-facing change
+- Write clear changeset summaries
+- Test locally before pushing
+- Review version PR carefully
+- Keep CHANGELOG up to date
+
+### DON'T
+
+- Skip changeset for features/fixes
+- Use vague changeset descriptions
+- Merge version PR without review
+- Publish manually unless emergency
+- Commit directly to main
+
+## Monitoring
+
+### After Release
+
+1. **Verify on NPM**: https://www.npmjs.com/package/@officesdk/ui
+2. **Check Storybook**: https://officesdk.github.io/ui
+3. **Monitor GitHub Issues**: Check for bug reports
+4. **Test in real project**: Install and test the new version
+
+### Metrics to Track
+
+- Download count
+- Bundle size
+- Test coverage
+- Build time
+- Issue resolution time
+
+## Support
+
+For questions or issues with the release process:
+
+- Open an issue on GitHub
+- Contact the maintainers
+- Check Changesets documentation: https://github.com/changesets/changesets

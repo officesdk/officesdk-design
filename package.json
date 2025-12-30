@@ -72,6 +72,10 @@
     "type-check": "tsc --noEmit",
     "validate": "yarn lint && yarn type-check && yarn test --run",
     "validate:structure": "node scripts/validate-structure.js",
+    "changeset": "changeset",
+    "changeset:version": "changeset version && yarn install --mode update-lockfile",
+    "changeset:publish": "yarn build && changeset publish",
+    "release": "yarn changeset:version && yarn changeset:publish",
     "prepare": "husky",
     "clean": "yarn workspaces foreach -A run clean && rm -rf node_modules",
     "prepublishOnly": "yarn build"
@@ -86,6 +90,7 @@
     ]
   },
   "devDependencies": {
+    "@changesets/cli": "^2.29.8",
     "@storybook/addon-docs": "^7.6.7",
     "@storybook/addon-essentials": "^7.6.7",
     "@storybook/addon-interactions": "^7.6.7",

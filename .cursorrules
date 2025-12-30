@@ -1,0 +1,9 @@
+Tech Stack: React 18, TypeScript, Lucide React (icon library), Storybook, Vitest.
+
+Naming Convention: Components use PascalCase, directories use kebab-case.
+
+Export Convention: Use Named Exports only, Default Export is prohibited.
+
+File Structure: Each component must include index.ts (exports), ComponentName.tsx (logic), ComponentName.stories.tsx (stories), __tests__ (tests).
+
+Text: No Chinese characters in comments or code.
