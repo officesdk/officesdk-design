@@ -15,11 +15,12 @@ const config: StorybookConfig = {
   },
   async viteFinal(config) {
     return mergeConfig(config, {
+      base: process.env.NODE_ENV === 'production' ? '/ui/' : '/',
       resolve: {
         preserveSymlinks: true,
         alias: {
           'styled-components': path.resolve(__dirname, '../node_modules/styled-components'),
-          'react': path.resolve(__dirname, '../node_modules/react'),
+          react: path.resolve(__dirname, '../node_modules/react'),
           'react-dom': path.resolve(__dirname, '../node_modules/react-dom'),
         },
       },
@@ -44,4 +45,3 @@ const config: StorybookConfig = {
 };
 
 export default config;
-
