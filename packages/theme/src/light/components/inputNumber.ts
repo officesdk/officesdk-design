@@ -41,26 +41,25 @@ export const inputNumber: InputNumberConfig = {
   small: {
     button: { width: '28px' },
     input: {
-      width: '60px',
+      width: '72px',
       boxShadow: 'none',
-      boxShadowHover: 'none',
+      boxShadowHover: '0 2px 4px 0 rgba(0, 0, 0, 0.04)',
       boxShadowActive: '0 2px 8px 0 rgba(0, 0, 0, 0.04)',
       boxShadowDisabled: 'none',
     },
-    height: '28px',
-    borderRadius: '4px',
+    height: '24px',
+    borderRadius: '2px',
   },
   large: {
-    button: { width: '36px' },
+    button: { width: '32px' },
     input: {
       width: '80px',
       boxShadow: 'none',
-      boxShadowHover: 'none',
+      boxShadowHover: '0 2px 4px 0 rgba(0, 0, 0, 0.04)',
       boxShadowActive: '0 2px 8px 0 rgba(0, 0, 0, 0.04)',
       boxShadowDisabled: 'none',
     },
-    height: '36px',
-    borderRadius: '4px',
+    height: '32px',
+    borderRadius: '2px',
   },
 };
-
