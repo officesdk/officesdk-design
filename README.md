@@ -16,13 +16,13 @@
 
 ```bash
 # Using yarn
-yarn add @officesdk/ui styled-components@^5.3.0
+yarn add @officesdk/ui
 
 # Using npm
-npm install @officesdk/ui styled-components@^5.3.0
+npm install @officesdk/ui
 
 # Using pnpm
-pnpm add @officesdk/ui styled-components@^5.3.0
+pnpm add @officesdk/ui
 ```
 
 > **Note**: `@officesdk/ui` includes all components, themes, and utility functions. You can use different import paths for specific features.
@@ -55,7 +55,7 @@ export default App;
 
 ## Documentation
 
-For complete component documentation and examples, visit our [Storybook Documentation](https://your-storybook-url.com).
+For complete component documentation and examples, visit our [Storybook Documentation](https://officesdk.github.io/ui/?path=/docs/documentation-introduction--docs).
 
 View documentation locally:
 
