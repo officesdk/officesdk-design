@@ -2575,7 +2575,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@officesdk/ui-components@workspace:*, @officesdk/ui-components@workspace:packages/components":
+"@officesdk/ui-components@workspace:packages/components":
   version: 0.0.0-use.local
   resolution: "@officesdk/ui-components@workspace:packages/components"
   dependencies:
@@ -2596,7 +2596,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@officesdk/ui-icons@workspace:*, @officesdk/ui-icons@workspace:packages/icons":
+"@officesdk/ui-icons@workspace:packages/icons":
   version: 0.0.0-use.local
   resolution: "@officesdk/ui-icons@workspace:packages/icons"
   dependencies:
@@ -2636,11 +2636,6 @@ __metadata:
 "@officesdk/ui@workspace:packages/ui":
   version: 0.0.0-use.local
   resolution: "@officesdk/ui@workspace:packages/ui"
-  dependencies:
-    "@officesdk/ui-components": "workspace:*"
-    "@officesdk/ui-icons": "workspace:*"
-    "@officesdk/ui-theme": "workspace:*"
-    "@officesdk/ui-utils": "workspace:*"
   peerDependencies:
     react: ">=18.0.0"
     react-dom: ">=18.0.0"

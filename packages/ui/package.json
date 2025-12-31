@@ -58,12 +58,6 @@
     "react-dom": ">=18.0.0",
     "styled-components": "^5.3.0"
   },
-  "dependencies": {
-    "@officesdk/ui-components": "workspace:*",
-    "@officesdk/ui-icons": "workspace:*",
-    "@officesdk/ui-theme": "workspace:*",
-    "@officesdk/ui-utils": "workspace:*"
-  },
   "scripts": {
     "build": "node build.js",
     "clean": "rm -rf dist"
