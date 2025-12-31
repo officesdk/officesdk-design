@@ -1,16 +1,16 @@
-# @officesdk/ui-icons
+# @officesdk/design-icons
 
-Built-in icon resources for OfficeSdk UI.
+Built-in icon resources for OfficeSdk Design.
 
 ## Installation
 
-This package is included in `@officesdk/ui` and doesn't need to be installed separately.
+This package is included in `@officesdk/design` and doesn't need to be installed separately.
 
 ## Usage
 
 ```typescript
-import { Icon, IconProvider } from '@officesdk/ui';
-import { iconRegistry } from '@officesdk/ui/icons';
+import { Icon, IconProvider } from '@officesdk/design';
+import { iconRegistry } from '@officesdk/design/icons';
 
 // Use with IconProvider
 <IconProvider icons={iconRegistry}>

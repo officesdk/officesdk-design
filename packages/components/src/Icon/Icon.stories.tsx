@@ -154,7 +154,7 @@ export const AllIconsShowcase: Story = {
             Usage Method 1: Direct Import
           </h3>
           <p style={{ marginBottom: '16px', color: '#666', fontSize: '14px' }}>
-            Import icon components directly from @officesdk/ui/icons
+            Import icon components directly from @officesdk/design/icons
           </p>
           <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap' }}>
             <div style={{ textAlign: 'center' }}>

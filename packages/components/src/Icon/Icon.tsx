@@ -80,7 +80,7 @@ const IconContainer = styled.span<{
  *
  * @example
  * // Using with imported icon component
- * import { CloseIcon } from '@officesdk/ui/icons';
+ * import { CloseIcon } from '@officesdk/design/icons';
  * <Icon><CloseIcon /></Icon>
  */
 export const Icon: React.FC<IconProps> = ({

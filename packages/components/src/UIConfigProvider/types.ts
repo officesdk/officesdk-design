@@ -106,7 +106,7 @@ export interface UIConfig {
   /**
    * Theme configuration (required)
    */
-  theme: any; // Will be typed as Theme from @officesdk/ui/theme
+  theme: any; // Will be typed as Theme from @officesdk/design/theme
   /**
    * Icon registry (optional)
    */

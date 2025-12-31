@@ -2,7 +2,7 @@
 
 set -e
 
-echo "🚀 start Officesdk  UI development environment..."
+echo "🚀 start Officesdk design development environment..."
 
 # check Node version
 NODE_VERSION=$(node -v | cut -d'v' -f2 | cut -d'.' -f1)

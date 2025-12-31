@@ -1,4 +1,4 @@
-# @officesdk/ui
+# @officesdk/design
 
 > Officesdk UI Component Library - A modern UI component library built with React and styled-components
 
@@ -16,24 +16,24 @@
 
 ```bash
 # Using yarn
-yarn add @officesdk/ui
+yarn add @officesdk/design
 
 # Using npm
-npm install @officesdk/ui
+npm install @officesdk/design
 
 # Using pnpm
-pnpm add @officesdk/ui
+pnpm add @officesdk/design
 ```
 
-> **Note**: `@officesdk/ui` includes all components, themes, and utility functions. You can use different import paths for specific features.
+> **Note**: `@officesdk/design` includes all components, themes, and utility functions. You can use different import paths for specific features.
 
 ## Quick Start
 
 ```tsx
 import React from 'react';
-import { Button, UIConfigProvider, createUIConfig } from '@officesdk/ui';
-import { lightTheme } from '@officesdk/ui/theme';
-import { iconRegistry } from '@officesdk/ui/icons';
+import { Button, UIConfigProvider, createUIConfig } from '@officesdk/design';
+import { lightTheme } from '@officesdk/design/theme';
+import { iconRegistry } from '@officesdk/design/icons';
 
 const config = createUIConfig({
   theme: lightTheme,
@@ -55,7 +55,7 @@ export default App;
 
 ## Documentation
 
-For complete component documentation and examples, visit our [Storybook Documentation](https://officesdk.github.io/ui/?path=/docs/documentation-introduction--docs).
+For complete component documentation and examples, visit our [Storybook Documentation](https://officesdk.github.io/officesdk-design/?path=/docs/documentation-introduction--docs).
 
 View documentation locally:
 
@@ -70,29 +70,30 @@ Then visit http://localhost:6006
 ### Import Components and Configuration
 
 ```tsx
-import { Button, UIConfigProvider, createUIConfig } from '@officesdk/ui';
-import { lightTheme } from '@officesdk/ui/theme';
-import { iconRegistry } from '@officesdk/ui/icons';
+import { Button, UIConfigProvider, createUIConfig } from '@officesdk/design';
+import { lightTheme } from '@officesdk/design/theme';
+import { iconRegistry } from '@officesdk/design/icons';
 ```
 
 ### On-Demand Import
 
 ```tsx
 // Import theme only
-import { theme } from '@officesdk/ui/theme';
+import { theme } from '@officesdk/design/theme';
 
 // Import utilities only
-import { classNames, debounce } from '@officesdk/ui/utils';
+import { classNames, debounce } from '@officesdk/design/utils';
 ```
 
 ## Project Structure
 
 ```
-officesdk-ui/
+officesdk-design/
  packages/
     components/        # UI components package
     theme/             # Theme system package
     utils/             # Utilities package
+    icons/             # icons package
  docs/                  # Documentation
  .storybook/            # Storybook configuration
  package.json           # Root configuration
@@ -140,24 +141,24 @@ yarn clean
 
 ## Packages
 
-### @officesdk/ui-components
+### @officesdk/design-components
 
 Core UI components package containing all reusable React components.
 
-### @officesdk/ui-theme
+### @officesdk/design-theme
 
 Theme system package providing default theme configuration and type definitions.
 
-### @officesdk/ui-utils
+### @officesdk/design-utils
 
 Utilities package providing common utility functions.
 
 ## Custom Configuration
 
 ```tsx
-import { UIConfigProvider, createUIConfig } from '@officesdk/ui';
-import { lightTheme } from '@officesdk/ui/theme';
-import { iconRegistry } from '@officesdk/ui/icons';
+import { UIConfigProvider, createUIConfig } from '@officesdk/design';
+import { lightTheme } from '@officesdk/design/theme';
+import { iconRegistry } from '@officesdk/design/icons';
 
 // Create custom configuration
 const config = createUIConfig({
@@ -192,7 +193,7 @@ Contributions are welcome! Please read our [Contributing Guide](./CONTRIBUTING.m
 
 ```bash
 # 1. Fork and clone
-git clone git@github.com:YOUR_USERNAME/ui.git
+git clone git@github.com:YOUR_USERNAME/officesdk-design.git
 
 # 2. Create branch
 git checkout -b feat/your-feature
@@ -247,9 +248,9 @@ MIT
 
 ## Links
 
-- [Documentation](https://github.com/officesdk/ui#readme)
-- [Storybook](https://officesdk.github.io/ui) (Coming soon)
-- [NPM Package](https://www.npmjs.com/package/@officesdk/ui)
-- [GitHub](https://github.com/officesdk/ui)
-- [Issues](https://github.com/officesdk/ui/issues)
+- [Documentation](https://github.com/officesdk/officesdk-design#readme)
+- [Storybook](https://officesdk.github.io/officesdk-design) (Coming soon)
+- [NPM Package](https://www.npmjs.com/package/@officesdk/design)
+- [GitHub](https://github.com/officesdk/officesdk-design)
+- [Issues](https://github.com/officesdk/officesdk-design/issues)
 - [Changelog](./CHANGELOG.md)

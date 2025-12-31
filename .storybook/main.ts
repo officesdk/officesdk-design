@@ -15,7 +15,7 @@ const config: StorybookConfig = {
   },
   async viteFinal(config) {
     return mergeConfig(config, {
-      base: process.env.NODE_ENV === 'production' ? '/ui/' : '/',
+      base: process.env.NODE_ENV === 'production' ? '/design/' : '/',
       resolve: {
         preserveSymlinks: true,
         alias: {

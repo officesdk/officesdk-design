@@ -2568,19 +2568,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@officesdk/editor-sdk-core@npm:0.0.0-alpha.2":
-  version: 0.0.0-alpha.2
-  resolution: "@officesdk/editor-sdk-core@npm:0.0.0-alpha.2"
-  checksum: 10c0/dfc3c9abe0f72fe7637d2e6ad4504eeaa5602d457859252a773ec755dd282fc39c3cf7db183d980ca463a56e0db380b57ad210f1e30eed5577c6f40545707f60
-  languageName: node
-  linkType: hard
-
-"@officesdk/ui-components@workspace:packages/components":
+"@officesdk/design-components@workspace:*, @officesdk/design-components@workspace:packages/components":
   version: 0.0.0-use.local
-  resolution: "@officesdk/ui-components@workspace:packages/components"
+  resolution: "@officesdk/design-components@workspace:packages/components"
   dependencies:
-    "@officesdk/ui-theme": "workspace:*"
-    "@officesdk/ui-utils": "workspace:*"
+    "@officesdk/design-theme": "workspace:*"
+    "@officesdk/design-utils": "workspace:*"
     "@types/react": "npm:^18.2.47"
     "@types/react-dom": "npm:^18.2.18"
     react: "npm:^18.2.0"
@@ -2596,9 +2589,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@officesdk/ui-icons@workspace:packages/icons":
+"@officesdk/design-icons@workspace:*, @officesdk/design-icons@workspace:packages/icons":
   version: 0.0.0-use.local
-  resolution: "@officesdk/ui-icons@workspace:packages/icons"
+  resolution: "@officesdk/design-icons@workspace:packages/icons"
   dependencies:
     "@svgr/core": "npm:^8.1.0"
     "@svgr/plugin-jsx": "npm:^8.1.0"
@@ -2608,9 +2601,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@officesdk/ui-theme@workspace:*, @officesdk/ui-theme@workspace:packages/theme":
+"@officesdk/design-theme@workspace:*, @officesdk/design-theme@workspace:packages/theme":
   version: 0.0.0-use.local
-  resolution: "@officesdk/ui-theme@workspace:packages/theme"
+  resolution: "@officesdk/design-theme@workspace:packages/theme"
   dependencies:
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
@@ -2624,19 +2617,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@officesdk/ui-utils@workspace:*, @officesdk/ui-utils@workspace:packages/utils":
+"@officesdk/design-utils@workspace:*, @officesdk/design-utils@workspace:packages/utils":
   version: 0.0.0-use.local
-  resolution: "@officesdk/ui-utils@workspace:packages/utils"
+  resolution: "@officesdk/design-utils@workspace:packages/utils"
   dependencies:
     tsup: "npm:^8.0.1"
     typescript: "npm:^5.3.3"
   languageName: unknown
   linkType: soft
 
-"@officesdk/ui@workspace:packages/ui":
+"@officesdk/design@workspace:packages/design":
   version: 0.0.0-use.local
-  resolution: "@officesdk/ui@workspace:packages/ui"
+  resolution: "@officesdk/design@workspace:packages/design"
   dependencies:
+    "@officesdk/design-components": "workspace:*"
+    "@officesdk/design-icons": "workspace:*"
+    "@officesdk/design-theme": "workspace:*"
+    "@officesdk/design-utils": "workspace:*"
     "@officesdk/editor-sdk-core": "npm:0.0.0-alpha.2"
   peerDependencies:
     rc-tooltip: ^6.0.0
@@ -2645,6 +2642,13 @@ __metadata:
     styled-components: ^5.3.0
   languageName: unknown
   linkType: soft
+
+"@officesdk/editor-sdk-core@npm:0.0.0-alpha.2":
+  version: 0.0.0-alpha.2
+  resolution: "@officesdk/editor-sdk-core@npm:0.0.0-alpha.2"
+  checksum: 10c0/dfc3c9abe0f72fe7637d2e6ad4504eeaa5602d457859252a773ec755dd282fc39c3cf7db183d980ca463a56e0db380b57ad210f1e30eed5577c6f40545707f60
+  languageName: node
+  linkType: hard
 
 "@pkgjs/parseargs@npm:^0.11.0":
   version: 0.11.0
@@ -10514,9 +10518,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"officesdk-ui-monorepo@workspace:.":
+"officesdk-design-monorepo@workspace:.":
   version: 0.0.0-use.local
-  resolution: "officesdk-ui-monorepo@workspace:."
+  resolution: "officesdk-design-monorepo@workspace:."
   dependencies:
     "@changesets/cli": "npm:^2.29.8"
     "@storybook/addon-docs": "npm:^7.6.7"

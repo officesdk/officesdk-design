@@ -43,7 +43,7 @@ Each component has its own theme configuration including:
 ### Basic Usage
 
 ```tsx
-import { theme } from '@officesdk/ui';
+import { theme } from '@officesdk/design';
 import { ThemeProvider } from 'styled-components';
 
 function App() {
@@ -60,8 +60,8 @@ function App() {
 You can customize the theme by deep merging:
 
 ```tsx
-import { theme } from '@officesdk/ui';
-import { deepMerge } from '@officesdk/ui/utils';
+import { theme } from '@officesdk/design';
+import { deepMerge } from '@officesdk/design/utils';
 import { ThemeProvider } from 'styled-components';
 
 const customTheme = deepMerge(theme, {

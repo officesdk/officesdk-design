@@ -1,17 +1,17 @@
-# @officesdk/ui-theme
+# @officesdk/design-theme
 
-Officesdk  UI Theme System
+Officesdk  Design Theme System
 
 ## Installation
 
 ```bash
-yarn add @officesdk/ui styled-components@^5.3.0
+yarn add @officesdk/design styled-components@^5.3.0
 ```
 
 ## Usage
 
 ```tsx
-import { theme } from '@officesdk/ui';
+import { theme } from '@officesdk/design';
 import { ThemeProvider } from 'styled-components';
 
 function App() {
@@ -26,8 +26,8 @@ function App() {
 ## Custom Theme
 
 ```tsx
-import { theme } from '@officesdk/ui';
-import { deepMerge } from '@officesdk/ui/utils';
+import { theme } from '@officesdk/design';
+import { deepMerge } from '@officesdk/design/utils';
 
 const customTheme = deepMerge(theme, {
   colors: {

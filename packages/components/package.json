@@ -1,17 +1,17 @@
 {
-  "name": "@officesdk/ui-components",
+  "name": "@officesdk/design-components",
   "version": "0.1.0",
-  "description": "Officesdk  UI Components",
+  "description": "Officesdk  Design Components",
   "license": "MIT",
   "author": "OfficeSdk Team",
-  "homepage": "https://github.com/officesdk/ui#readme",
+  "homepage": "https://github.com/officesdk/officesdk-design#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/officesdk/ui.git",
+    "url": "https://github.com/officesdk/officesdk-design.git",
     "directory": "packages/components"
   },
   "bugs": {
-    "url": "https://github.com/officesdk/ui/issues"
+    "url": "https://github.com/officesdk/officesdk-design/issues"
   },
   "keywords": [
     "react",
@@ -46,8 +46,8 @@
     "styled-components": "^5.3.0"
   },
   "dependencies": {
-    "@officesdk/ui-theme": "workspace:*",
-    "@officesdk/ui-utils": "workspace:*"
+    "@officesdk/design-theme": "workspace:*",
+    "@officesdk/design-utils": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "^18.2.47",

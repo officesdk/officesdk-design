@@ -1,8 +1,8 @@
 {
-  "name": "@officesdk/ui-theme",
+  "name": "@officesdk/design-theme",
   "version": "0.1.0",
   "private": true,
-  "description": "Officesdk  UI Theme System",
+  "description": "Officesdk  Design Theme System",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",

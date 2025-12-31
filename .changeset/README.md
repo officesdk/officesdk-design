@@ -16,7 +16,7 @@ yarn changeset
 
 Follow the prompts:
 
-1. Select `@officesdk/ui` (the only package we publish)
+1. Select `@officesdk/design` (the only package we publish)
 2. Choose version bump type:
    - **patch** (0.1.0 to 0.1.1) - Bug fixes
    - **minor** (0.1.0 to 0.2.0) - New features
@@ -29,7 +29,7 @@ This creates a markdown file in `.changeset/` describing your change.
 
 ```markdown
 ---
-'@officesdk/ui': minor
+'@officesdk/design': minor
 ---
 
 Add Dropdown component with the following features:

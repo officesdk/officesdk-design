@@ -1,17 +1,17 @@
-# @officesdk/ui-utils
+# @officesdk/design-utils
 
-Officesdk  UI Utilities Package
+Officesdk design Utilities Package 
 
 ## Installation
 
 ```bash
-yarn add @officesdk/ui
+yarn add @officesdk/design
 ```
 
 ## Usage
 
 ```tsx
-import { classNames, debounce, throttle, deepMerge } from '@officesdk/ui/utils';
+import { classNames, debounce, throttle, deepMerge } from '@officesdk/design/utils';
 
 // Merge class names
 const className = classNames('btn', isActive && 'active', 'primary');

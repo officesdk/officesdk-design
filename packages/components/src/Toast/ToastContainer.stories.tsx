@@ -16,13 +16,13 @@ type Story = StoryObj<typeof ToastContainer>;
 // Demo component using toast methods
 const ToastDemo = () => {
   const toast = useToast();
-  
+
   return (
     <div style={{ padding: '40px', display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '400px' }}>
       <h2 style={{ fontSize: '24px', fontWeight: 600, marginBottom: '16px' }}>
         Toast Methods Demo
       </h2>
-      
+
       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
         <button
           onClick={() => toast.success('Operation completed successfully!')}
@@ -39,7 +39,7 @@ const ToastDemo = () => {
         >
           Show Success Toast
         </button>
-        
+
         <button
           onClick={() => toast.info('This is an informational message')}
           style={{
@@ -55,7 +55,7 @@ const ToastDemo = () => {
         >
           Show Info Toast
         </button>
-        
+
         <button
           onClick={() => toast.error('An error occurred. Please try again.')}
           style={{
@@ -71,7 +71,7 @@ const ToastDemo = () => {
         >
           Show Error Toast
         </button>
-        
+
         <button
           onClick={() => toast.warn('Warning: This action cannot be undone')}
           style={{
@@ -87,7 +87,7 @@ const ToastDemo = () => {
         >
           Show Warning Toast
         </button>
-        
+
         <button
           onClick={() => toast.info('New update available', {
             actionText: 'Update',
@@ -107,7 +107,7 @@ const ToastDemo = () => {
         >
           Show Toast with Action
         </button>
-        
+
         <button
           onClick={() => {
             toast.success('First toast');
@@ -129,23 +129,23 @@ const ToastDemo = () => {
           Show Multiple Toasts
         </button>
       </div>
-      
+
       <div style={{ marginTop: '24px', padding: '16px', background: '#f9f9f9', borderRadius: '4px' }}>
         <h3 style={{ fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>
           Usage Example:
         </h3>
         <pre style={{ fontSize: '12px', margin: 0, whiteSpace: 'pre-wrap' }}>
-{`import { useToast } from '@officesdk/ui';
+{`import { useToast } from '@officesdk/design';
 
 const MyComponent = () => {
   const toast = useToast();
-  
+
   const handleClick = () => {
     toast.success('Success!');
     toast.info('Info message');
     toast.error('Error message');
     toast.warn('Warning message');
-    
+
     // With options
     toast.info('Update available', {
       actionText: 'Update',
@@ -154,7 +154,7 @@ const MyComponent = () => {
       duration: 5000,
     });
   };
-  
+
   return <button onClick={handleClick}>Show Toast</button>;
 };`}
         </pre>
@@ -191,14 +191,14 @@ export const MultipleToasts: Story = {
   render: () => {
     const DemoComponent = () => {
       const toast = useToast();
-      
+
       const showMultiple = () => {
         toast.success('Task 1 completed');
         setTimeout(() => toast.success('Task 2 completed'), 300);
         setTimeout(() => toast.success('Task 3 completed'), 600);
         setTimeout(() => toast.info('All tasks completed!'), 900);
       };
-      
+
       return (
         <div style={{ padding: '40px' }}>
           <button
@@ -219,7 +219,7 @@ export const MultipleToasts: Story = {
         </div>
       );
     };
-    
+
     return (
       <ToastContainer>
         <DemoComponent />

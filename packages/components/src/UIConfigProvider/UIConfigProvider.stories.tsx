@@ -80,9 +80,9 @@ const DemoComponent = () => {
           fontSize: '13px',
           overflow: 'auto',
         }}>
-{`import { UIConfigProvider, createUIConfig } from '@officesdk/ui';
-import { lightTheme } from '@officesdk/ui/theme';
-import { iconRegistry } from '@officesdk/ui/icons';
+{`import { UIConfigProvider, createUIConfig } from '@officesdk/design';
+import { lightTheme } from '@officesdk/design/theme';
+import { iconRegistry } from '@officesdk/design/icons';
 
 const config = createUIConfig({
   theme: lightTheme,

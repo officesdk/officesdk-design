@@ -2,13 +2,13 @@ import { Meta } from '@storybook/blocks';
 
 <Meta title="Documentation/Introduction" />
 
-# Officesdk UI
+# Officesdk Design
 
-Welcome to Officesdk UI Component Library!
+Welcome to Officesdk Design Component Library!
 
 ## Introduction
 
-Officesdk SDK UI is a modern UI component library built with React and styled-components. It provides a series of high-quality, reusable components to help you quickly build beautiful user interfaces.
+Officesdk SDK Design is a modern UI component library built with React and styled-components. It provides a series of high-quality, reusable components to help you quickly build beautiful user interfaces.
 
 ## Features
 
@@ -31,13 +31,13 @@ Officesdk SDK UI is a modern UI component library built with React and styled-co
 ### Installation
 
 ```bash
-yarn add @officesdk/ui
+yarn add @officesdk/design
 ```
 
 Or using npm:
 
 ```bash
-npm install @officesdk/ui
+npm install @officesdk/design
 ```
 
 ### TypeScript Configuration
@@ -49,9 +49,9 @@ For better type resolution, add the following paths to your `tsconfig.json`:
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@officesdk/ui/theme": ["./node_modules/@officesdk/ui/dist/theme/index.d.ts"],
-      "@officesdk/ui/utils": ["./node_modules/@officesdk/ui/dist/utils/index.d.ts"],
-      "@officesdk/ui/icons": ["./node_modules/@officesdk/ui/dist/icons/index.d.ts"],
+      "@officesdk/design/theme": ["./node_modules/@officesdk/design/dist/theme/index.d.ts"],
+      "@officesdk/design/utils": ["./node_modules/@officesdk/design/dist/utils/index.d.ts"],
+      "@officesdk/design/icons": ["./node_modules/@officesdk/design/dist/icons/index.d.ts"],
       "@officesdk/editor-sdk-core/shared": [
         "./node_modules/@officesdk/editor-sdk-core/types/shared.d.ts"
       ]
@@ -65,9 +65,9 @@ Note: This configuration is optional but recommended for optimal TypeScript Inte
 ### Usage
 
 ```tsx
-import { Button, UIConfigProvider, createUIConfig } from '@officesdk/ui';
-import { lightTheme } from '@officesdk/ui/theme';
-import { iconRegistry } from '@officesdk/ui/icons';
+import { Button, UIConfigProvider, createUIConfig } from '@officesdk/design';
+import { lightTheme } from '@officesdk/design/theme';
+import { iconRegistry } from '@officesdk/design/icons';
 
 const config = createUIConfig({
   theme: lightTheme,

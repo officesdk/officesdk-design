@@ -8,7 +8,7 @@ const IconContext = createContext<IconRegistry | null>(null);
 export interface IconProviderProps {
   /**
    * Icon registry mapping icon names to React components
-   * Import from @officesdk/ui/icons
+   * Import from @officesdk/design/icons
    */
   icons: IconRegistry;
   /**
@@ -23,8 +23,8 @@ export interface IconProviderProps {
  * Provides icon registry to child components via Context
  *
  * @example
- * import { IconProvider } from '@officesdk/ui';
- * import { iconRegistry } from '@officesdk/ui/icons';
+ * import { IconProvider } from '@officesdk/design';
+ * import { iconRegistry } from '@officesdk/design/icons';
  *
  * <IconProvider icons={iconRegistry}>
  *   <App />

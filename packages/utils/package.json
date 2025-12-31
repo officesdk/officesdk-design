@@ -1,8 +1,8 @@
 {
-  "name": "@officesdk/ui-utils",
+  "name": "@officesdk/design-utils",
   "version": "0.1.0",
   "private": true,
-  "description": "Officesdk  UI Utilities",
+  "description": "Officesdk design Utilities",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",

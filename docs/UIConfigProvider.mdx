@@ -14,9 +14,9 @@ import { Meta } from '@storybook/blocks';
 
 ```tsx
 import { ThemeProvider } from 'styled-components';
-import { IconProvider, ToastContainer } from '@officesdk/ui';
-import { lightTheme } from '@officesdk/ui/theme';
-import { iconRegistry } from '@officesdk/ui/icons';
+import { IconProvider, ToastContainer } from '@officesdk/design';
+import { lightTheme } from '@officesdk/design/theme';
+import { iconRegistry } from '@officesdk/design/icons';
 
 <ThemeProvider theme={lightTheme}>
   <IconProvider icons={iconRegistry}>
@@ -30,9 +30,9 @@ import { iconRegistry } from '@officesdk/ui/icons';
 ### After (Single Provider)
 
 ```tsx
-import { UIConfigProvider, createUIConfig } from '@officesdk/ui';
-import { lightTheme } from '@officesdk/ui/theme';
-import { iconRegistry } from '@officesdk/ui/icons';
+import { UIConfigProvider, createUIConfig } from '@officesdk/design';
+import { lightTheme } from '@officesdk/design/theme';
+import { iconRegistry } from '@officesdk/design/icons';
 
 const config = createUIConfig({
   theme: lightTheme,
@@ -51,8 +51,8 @@ const config = createUIConfig({
 ## Basic Usage
 
 ```tsx
-import { UIConfigProvider, createUIConfig } from '@officesdk/ui';
-import { lightTheme } from '@officesdk/ui/theme';
+import { UIConfigProvider, createUIConfig } from '@officesdk/design';
+import { lightTheme } from '@officesdk/design/theme';
 
 const config = createUIConfig({
   theme: lightTheme,
@@ -80,7 +80,7 @@ const config = createUIConfig({
 ### Icons (Optional)
 
 ```tsx
-import { iconRegistry } from '@officesdk/ui/icons';
+import { iconRegistry } from '@officesdk/design/icons';
 
 const config = createUIConfig({
   theme: lightTheme,
@@ -172,7 +172,7 @@ const config = createUIConfig({
 ### useUIConfig Hook
 
 ```tsx
-import { useUIConfig } from '@officesdk/ui';
+import { useUIConfig } from '@officesdk/design';
 
 function MyComponent() {
   const config = useUIConfig();
@@ -188,7 +188,7 @@ function MyComponent() {
 ### useToast Hook
 
 ```tsx
-import { useToast } from '@officesdk/ui';
+import { useToast } from '@officesdk/design';
 
 function MyComponent() {
   const toast = useToast();
@@ -215,8 +215,8 @@ function MyComponent() {
 ### Merging Configurations
 
 ```tsx
-import { createUIConfig, mergeUIConfig } from '@officesdk/ui';
-import { lightTheme } from '@officesdk/ui/theme';
+import { createUIConfig, mergeUIConfig } from '@officesdk/design';
+import { lightTheme } from '@officesdk/design/theme';
 
 const baseConfig = createUIConfig({
   theme: lightTheme,
@@ -237,8 +237,8 @@ const customConfig = mergeUIConfig(baseConfig, {
 
 ```tsx
 import { useState } from 'react';
-import { UIConfigProvider, createUIConfig } from '@officesdk/ui';
-import { lightTheme, darkTheme } from '@officesdk/ui/theme';
+import { UIConfigProvider, createUIConfig } from '@officesdk/design';
+import { lightTheme, darkTheme } from '@officesdk/design/theme';
 
 function App() {
   const [isDark, setIsDark] = useState(false);

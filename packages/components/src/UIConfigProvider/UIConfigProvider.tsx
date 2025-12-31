@@ -24,9 +24,9 @@ export interface UIConfigProviderProps {
  * Includes ThemeProvider, IconProvider, ToastContainer, and other settings
  *
  * @example
- * import { UIConfigProvider } from '@officesdk/ui';
- * import { lightTheme } from '@officesdk/ui/theme';
- * import { iconRegistry } from '@officesdk/ui/icons';
+ * import { UIConfigProvider } from '@officesdk/design';
+ * import { lightTheme } from '@officesdk/design/theme';
+ * import { iconRegistry } from '@officesdk/design/icons';
  *
  * <UIConfigProvider config={{
  *   theme: lightTheme,

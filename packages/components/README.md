@@ -1,19 +1,19 @@
-# @officesdk/ui-components
+# @officesdk/design-components
 
 Officesdk  UI Core Components Package
 
 ## Installation
 
 ```bash
-yarn add @officesdk/ui styled-components@^5.3.0
+yarn add @officesdk/design styled-components@^5.3.0
 ```
 
 ## Usage
 
 ```tsx
-import { Button, UIConfigProvider, createUIConfig } from '@officesdk/ui';
-import { lightTheme } from '@officesdk/ui/theme';
-import { iconRegistry } from '@officesdk/ui/icons';
+import { Button, UIConfigProvider, createUIConfig } from '@officesdk/design';
+import { lightTheme } from '@officesdk/design/theme';
+import { iconRegistry } from '@officesdk/design/icons';
 
 const config = createUIConfig({
   theme: lightTheme,

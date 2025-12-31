@@ -4,9 +4,9 @@ import type { UIConfig } from './types';
  * Create UI configuration with default values
  *
  * @example
- * import { createUIConfig } from '@officesdk/ui';
- * import { lightTheme } from '@officesdk/ui/theme';
- * import { iconRegistry } from '@officesdk/ui/icons';
+ * import { createUIConfig } from '@officesdk/design';
+ * import { lightTheme } from '@officesdk/design/theme';
+ * import { iconRegistry } from '@officesdk/design/icons';
  *
  * const config = createUIConfig({
  *   theme: lightTheme,

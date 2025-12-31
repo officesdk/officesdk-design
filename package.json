@@ -1,17 +1,17 @@
 {
-  "name": "officesdk-ui-monorepo",
+  "name": "officesdk-design-monorepo",
   "version": "0.1.0",
   "private": true,
-  "description": "OfficeSdk SDK UI Component Library - Monorepo",
+  "description": "OfficeSdk SDK Design System - Monorepo",
   "license": "MIT",
   "author": "OfficeSdk Team",
-  "homepage": "https://github.com/officesdk/ui#readme",
+  "homepage": "https://github.com/officesdk/officesdk-design#readme",
   "bugs": {
-    "url": "https://github.com/officesdk/ui/issues"
+    "url": "https://github.com/officesdk/officesdk-design/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/officesdk/ui.git"
+    "url": "https://github.com/officesdk/officesdk-design.git"
   },
   "workspaces": [
     "packages/*"
@@ -24,7 +24,7 @@
   },
   "scripts": {
     "dev": "storybook dev -p 6006",
-    "build": "yarn workspaces foreach -A run build",
+    "build": "yarn workspaces foreach -At run build",
     "build:storybook": "storybook build",
     "test": "vitest",
     "test:ui": "vitest --ui",

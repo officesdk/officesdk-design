@@ -1,6 +1,6 @@
 # NPM Publishing Setup Guide
 
-This guide helps you set up NPM publishing for @officesdk/ui.
+This guide helps you set up NPM publishing for @officesdk/design.
 
 ## Prerequisites
 
@@ -60,7 +60,7 @@ Check `package.json`:
 
 ```json
 {
-  "name": "@officesdk/ui",
+  "name": "@officesdk/design",
   "version": "0.1.0",
   "publishConfig": {
     "access": "public",
@@ -110,7 +110,7 @@ npm login
 npm publish --access public
 
 # 5. Verify
-npm info @officesdk/ui
+npm info @officesdk/design
 ```
 
 ## Step 8: Enable GitHub Pages (for Storybook)
@@ -120,14 +120,14 @@ npm info @officesdk/ui
 3. Save
 
 After the next push to main, Storybook will be deployed to:
-`https://officesdk.github.io/ui`
+`https://officesdk.github.io/officesdk-design`
 
 ## Step 9: Test Automated Release
 
 ```bash
 # 1. Create a test changeset
 yarn changeset
-# Select: @officesdk/ui
+# Select: @officesdk/design
 # Type: patch
 # Summary: "Test automated release"
 
@@ -192,9 +192,9 @@ git push origin main
 
 After setup, monitor:
 
-- NPM download stats: https://npm-stat.com/charts.html?package=@officesdk/ui
+- NPM download stats: https://npm-stat.com/charts.html?package=@officesdk/design
 - GitHub Actions: Check for failed workflows
-- NPM package page: https://www.npmjs.com/package/@officesdk/ui
+- NPM package page: https://www.npmjs.com/package/@officesdk/design
 
 ## Next Steps
 
