@@ -1,8 +1,9 @@
 import React, { createContext, useContext } from 'react';
-import { ThemeProvider } from 'styled-components';
+import { ThemeProvider,  } from 'styled-components';
 import { IconProvider } from '../Icon/IconProvider';
 import { ToastContainer } from '../Toast/ToastContainer';
 import type { UIConfig } from './types';
+import { TooltipGlobalStyles } from '../Tooltip';
 
 const UIConfigContext = createContext<UIConfig | null>(null);
 
@@ -56,9 +57,12 @@ export const UIConfigProvider: React.FC<UIConfigProviderProps> = ({
 
   const Provider = ThemeProvider as any;
 
+  const TooltipStyles = TooltipGlobalStyles as any;
+
   return (
     <UIConfigContext.Provider value={config}>
       <Provider theme={theme}>
+        <TooltipStyles />
         <IconProvider icons={icons}>
           <ToastContainer
             maxCount={toastConfig.maxCount}

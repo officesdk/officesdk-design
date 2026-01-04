@@ -40,54 +40,62 @@ export const Default: Story = {
   args: {
     content: 'Tooltip text',
     variant: 'black',
+    getPopupContainer: (triggerNode) => triggerNode.parentElement || document.body,
   },
   render: (args) => (
-    <Tooltip {...args}>
-      <Button>Hover me</Button>
-    </Tooltip>
+    <div style={{ padding: '50px' }} data-testid="tooltip-container">
+      <Tooltip {...args}>
+        <Button>Hover me</Button>
+      </Tooltip>
+    </div>
   ),
 };
 
 export const BlackVariant: Story = {
-  render: () => (
-    <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', padding: '100px' }}>
-      <Tooltip content="Simple tooltip" variant="black">
-        <Button>Simple</Button>
-      </Tooltip>
+  render: () => {
+    const getContainer = (node: HTMLElement) => node.parentElement || document.body;
+    return (
+      <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', padding: '100px' }}>
+        <Tooltip content="Simple tooltip" variant="black" getPopupContainer={getContainer}>
+          <Button>Simple</Button>
+        </Tooltip>
 
-      <Tooltip content="Tooltip with title" variant="black">
-        <Button>With Title</Button>
-      </Tooltip>
+        <Tooltip content="Tooltip with title" variant="black" getPopupContainer={getContainer}>
+          <Button>With Title</Button>
+        </Tooltip>
 
-      <Tooltip
-        content={
-          <div>
-            <div style={{ fontWeight: 500, marginBottom: '4px' }}>Title</div>
-            <div>Description text here</div>
-          </div>
-        }
-        variant="black"
-      >
-        <Button>Complex Content</Button>
-      </Tooltip>
-
-      <Tooltip
-        content={
-          <div>
-            <div style={{ fontWeight: 500, marginBottom: '4px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span>Title</span>
-              <span style={{ opacity: 0.9 }}>⌘+⇧+M</span>
+        <Tooltip
+          content={
+            <div>
+              <div style={{ fontWeight: 500, marginBottom: '4px' }}>Title</div>
+              <div>Description text here</div>
             </div>
-            <div>Tooltip description text</div>
-            <div style={{ color: '#73b1eb', marginTop: '4px', opacity: 0.9 }}>Help - Feature name</div>
-          </div>
-        }
-        variant="black"
-      >
-        <Button>Full Example</Button>
-      </Tooltip>
-    </div>
-  ),
+          }
+          variant="black"
+          getPopupContainer={getContainer}
+        >
+          <Button>Complex Content</Button>
+        </Tooltip>
+
+        <Tooltip
+          content={
+            <div>
+              <div style={{ fontWeight: 500, marginBottom: '4px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span>Title</span>
+                <span style={{ opacity: 0.9 }}>⌘+⇧+M</span>
+              </div>
+              <div>Tooltip description text</div>
+              <div style={{ color: '#73b1eb', marginTop: '4px', opacity: 0.9 }}>Help - Feature name</div>
+            </div>
+          }
+          variant="black"
+          getPopupContainer={getContainer}
+        >
+          <Button>Full Example</Button>
+        </Tooltip>
+      </div>
+    );
+  },
 };
 
 export const WhiteSmall: Story = {
@@ -151,62 +159,67 @@ export const WhiteSmall: Story = {
 };
 
 export const WhiteLarge: Story = {
-  render: () => (
-    <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', padding: '100px' }}>
-      <Tooltip
-        content={
-          <div style={{ width: '320px' }}>
-            <div style={{ fontWeight: 500, fontSize: '14px', marginBottom: '8px' }}>Title</div>
-            <div style={{ fontSize: '13px', lineHeight: '20px', marginBottom: '8px' }}>
-              A description text. This text has no length limit. A description text. This text has no length limit. A description text. This text has no length limit.
-            </div>
-            <div style={{ display: 'flex', gap: '6px', justifyContent: 'flex-end' }}>
-              <Button size="small">Primary</Button>
-              <Button size="small" variant="outlined">Secondary</Button>
-            </div>
-          </div>
-        }
-        variant="white"
-        size="large"
-      >
-        <Button>Large Tooltip</Button>
-      </Tooltip>
-
-      <Tooltip
-        content={
-          <div style={{ width: '320px' }}>
-            <div style={{ fontWeight: 500, fontSize: '14px', marginBottom: '8px' }}>Title</div>
-            <div style={{ fontSize: '13px', lineHeight: '20px', marginBottom: '8px' }}>
-              A description text. This text has no length limit.
-            </div>
-            <div style={{ marginBottom: '8px' }}>
-              <div style={{ display: 'flex', gap: '4px', fontSize: '13px', lineHeight: '24px', color: 'rgba(65, 70, 75, 0.8)' }}>
-                <span>•</span>
-                <span>List item one with more details</span>
+  render: () => {
+    const getContainer = (node: HTMLElement) => node.parentElement || document.body;
+    return (
+      <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', padding: '100px' }}>
+        <Tooltip
+          content={
+            <div style={{ width: '320px' }}>
+              <div style={{ fontWeight: 500, fontSize: '14px', marginBottom: '8px' }}>Title</div>
+              <div style={{ fontSize: '13px', lineHeight: '20px', marginBottom: '8px' }}>
+                A description text. This text has no length limit. A description text. This text has no length limit. A description text. This text has no length limit.
               </div>
-              <div style={{ display: 'flex', gap: '4px', fontSize: '13px', lineHeight: '24px', color: 'rgba(65, 70, 75, 0.8)' }}>
-                <span>•</span>
-                <span>List item two with more details</span>
-              </div>
-            </div>
-            <div style={{ display: 'flex', gap: '6px', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div style={{ display: 'flex', gap: '4px', color: '#5ba0e7', fontSize: '12px' }}>
-                <span>Text link</span>
-              </div>
-              <div style={{ display: 'flex', gap: '6px' }}>
+              <div style={{ display: 'flex', gap: '6px', justifyContent: 'flex-end' }}>
                 <Button size="small">Primary</Button>
                 <Button size="small" variant="outlined">Secondary</Button>
               </div>
             </div>
-          </div>
-        }
-        variant="white"
-        size="large"
-      >
-        <Button>Complex Large</Button>
-      </Tooltip>
-    </div>
-  ),
+          }
+          variant="white"
+          size="large"
+          getPopupContainer={getContainer}
+        >
+          <Button>Large Tooltip</Button>
+        </Tooltip>
+
+        <Tooltip
+          content={
+            <div style={{ width: '320px' }}>
+              <div style={{ fontWeight: 500, fontSize: '14px', marginBottom: '8px' }}>Title</div>
+              <div style={{ fontSize: '13px', lineHeight: '20px', marginBottom: '8px' }}>
+                A description text. This text has no length limit.
+              </div>
+              <div style={{ marginBottom: '8px' }}>
+                <div style={{ display: 'flex', gap: '4px', fontSize: '13px', lineHeight: '24px', color: 'rgba(65, 70, 75, 0.8)' }}>
+                  <span>•</span>
+                  <span>List item one with more details</span>
+                </div>
+                <div style={{ display: 'flex', gap: '4px', fontSize: '13px', lineHeight: '24px', color: 'rgba(65, 70, 75, 0.8)' }}>
+                  <span>•</span>
+                  <span>List item two with more details</span>
+                </div>
+              </div>
+              <div style={{ display: 'flex', gap: '6px', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div style={{ display: 'flex', gap: '4px', color: '#5ba0e7', fontSize: '12px' }}>
+                  <span>Text link</span>
+                </div>
+                <div style={{ display: 'flex', gap: '6px' }}>
+                  <Button size="small">Primary</Button>
+                  <Button size="small" variant="outlined">Secondary</Button>
+                </div>
+              </div>
+            </div>
+          }
+          variant="white"
+          size="large"
+          getPopupContainer={getContainer}
+        >
+          <Button>Complex Large</Button>
+        </Tooltip>
+      </div>
+    );
+  },
 };
 
 export const Placements: Story = {
