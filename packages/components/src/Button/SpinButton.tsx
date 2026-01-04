@@ -1,6 +1,7 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { Slider } from '../Slider';
+import { NumberInput } from '../NumberInput';
 
 export interface SpinButtonProps {
   /**
@@ -85,196 +86,6 @@ const SliderWrapper = styled.div<{
   min-width: 0;
 `;
 
-const SpinButtonContainer = styled.div<{
-  $size: 'small' | 'large';
-  $disabled: boolean;
-  $alert: boolean;
-  $isFocused: boolean;
-}>`
-  display: inline-flex;
-  align-items: center;
-  background: white;
-  border: 1px solid;
-  border-radius: 2px;
-  flex-shrink: 0;
-
-  ${({ $size }) =>
-    $size === 'small'
-      ? `
-    height: 24px;
-    width: 72px;
-  `
-      : `
-    height: 32px;
-    width: 80px;
-  `}
-
-  ${({ $disabled, $alert, $isFocused, theme }) => {
-    if ($disabled) {
-      return `
-        border-color: ${theme.colors.palettes.transparency['10']};
-        cursor: not-allowed;
-      `;
-    }
-    if ($alert) {
-      return `
-        border-color: ${theme.colors.palettes.red['6']};
-      `;
-    }
-    if ($isFocused) {
-      return `
-        border-color: ${theme.colors.palettes.transparency['30']};
-        box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.04);
-      `;
-    }
-    return `
-      border-color: ${theme.colors.palettes.transparency['10']};
-
-      &:hover {
-        border-color: ${theme.colors.palettes.transparency['20']};
-        box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.04);
-      }
-    `;
-  }}
-`;
-
-const InputWrapper = styled.div`
-  flex: 1;
-  display: flex;
-  align-items: center;
-  padding: 0 8px;
-  min-width: 0;
-`;
-
-const StyledInput = styled.input<{ $size: 'small' | 'large'; $disabled: boolean }>`
-  width: 100%;
-  border: none;
-  outline: none;
-  background: transparent;
-  font-family: 'PingFang SC', sans-serif;
-  font-weight: 400;
-  line-height: 20px;
-  padding: 0;
-  margin: 0;
-
-  ${({ $size }) =>
-    $size === 'small'
-      ? `
-    font-size: 12px;
-  `
-      : `
-    font-size: 13px;
-  `}
-
-  ${({ $disabled, theme }) =>
-    $disabled
-      ? `
-    color: ${theme.colors.palettes.transparency['30']};
-    cursor: not-allowed;
-  `
-      : `
-    color: ${theme.colors.palettes.gray['120']};
-  `}
-
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.palettes.transparency['30']};
-  }
-
-  /* Remove number input arrows */
-  &::-webkit-inner-spin-button,
-  &::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  &[type='number'] {
-    -moz-appearance: textfield;
-  }
-`;
-
-const ButtonGroup = styled.div<{ $alert: boolean; $disabled: boolean }>`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  border-left: 1px solid;
-  flex-shrink: 0;
-
-  ${({ $disabled, $alert, theme }) => {
-    if ($disabled) {
-      return `border-color: ${theme.colors.palettes.transparency['10']};`;
-    }
-    if ($alert) {
-      return `border-color: ${theme.colors.palettes.red['6']};`;
-    }
-    return `border-color: ${theme.colors.palettes.transparency['10']};`;
-  }}
-`;
-
-const StepButton = styled.button<{ $position: 'up' | 'down'; $alert: boolean; $disabled: boolean }>`
-  flex: 1 1 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  padding: 1px 8px;
-  outline: none;
-  min-height: 0;
-  overflow: hidden;
-
-  ${({ $position, $alert, $disabled, theme }) => {
-    if ($position === 'up') {
-      return `
-        border-bottom: 1px solid ${
-          $disabled
-            ? theme.colors.palettes.transparency['10']
-            : $alert
-            ? theme.colors.palettes.red['6']
-            : theme.colors.palettes.transparency['10']
-        };
-      `;
-    }
-    return '';
-  }}
-
-  ${({ $disabled, theme }) => {
-    if ($disabled) {
-      return `
-        cursor: not-allowed;
-        opacity: 0.4;
-      `;
-    }
-    return `
-      &:hover {
-        background-color: ${theme.colors.palettes.transparency['5']};
-      }
-
-      &:active {
-        background-color: ${theme.colors.palettes.transparency['10']};
-      }
-    `;
-  }}
-
-  svg {
-    width: 14px;
-    height: 14px;
-    fill: ${({ $disabled, theme }) =>
-      $disabled ? theme.colors.palettes.transparency['30'] : theme.colors.palettes.gray['120']};
-  }
-`;
-
-const UpArrow = () => (
-  <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M7 4.5L10.5 8.5H3.5L7 4.5Z" fill="currentColor" />
-  </svg>
-);
-
-const DownArrow = () => (
-  <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M7 9.5L3.5 5.5H10.5L7 9.5Z" fill="currentColor" />
-  </svg>
-);
 
 /**
  * SpinButton Component - Spin Button
@@ -302,115 +113,21 @@ export const SpinButton: React.FC<SpinButtonProps> = ({
   style,
 }) => {
   const [internalValue, setInternalValue] = useState<number>(controlledValue ?? defaultValue);
-  const [displayValue, setDisplayValue] = useState<string>('');
-  const [isFocused, setIsFocused] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const value = controlledValue !== undefined ? controlledValue : internalValue;
 
-  // Format value for display
-  const formatValue = useCallback(
-    (val: number): string => {
-      if (formatter) {
-        return formatter(val);
-      }
-      if (precision !== undefined) {
-        return val.toFixed(precision);
-      }
-      return String(val);
-    },
-    [formatter, precision]
-  );
-
-  // Parse display value to number
-  const parseValue = useCallback(
-    (displayVal: string): number | null => {
-      if (parser) {
-        return parser(displayVal);
-      }
-      const parsed = parseFloat(displayVal);
-      return isNaN(parsed) ? null : parsed;
-    },
-    [parser]
-  );
-
-  // Update display value when value changes
-  useEffect(() => {
-    if (!isFocused) {
-      setDisplayValue(formatValue(value));
-    }
-  }, [value, isFocused, formatValue]);
-
-  // Clamp value to min/max
-  const clampValue = useCallback(
-    (val: number): number => {
-      return Math.max(min, Math.min(max, val));
-    },
-    [min, max]
-  );
-
-  // Handle value change
+  // Handle value change from NumberInput or Slider
   const handleValueChange = useCallback(
-    (newValue: number) => {
-      const clampedValue = clampValue(newValue);
+    (newValue: number | null) => {
+      if (newValue === null) return;
 
       if (controlledValue === undefined) {
-        setInternalValue(clampedValue);
+        setInternalValue(newValue);
       }
 
-      onChange?.(clampedValue);
+      onChange?.(newValue);
     },
-    [clampValue, controlledValue, onChange]
-  );
-
-  // Increment value
-  const increment = useCallback(() => {
-    if (disabled) return;
-    handleValueChange(value + step);
-  }, [disabled, value, step, handleValueChange]);
-
-  // Decrement value
-  const decrement = useCallback(() => {
-    if (disabled) return;
-    handleValueChange(value - step);
-  }, [disabled, value, step, handleValueChange]);
-
-  // Handle input change
-  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setDisplayValue(e.target.value);
-  }, []);
-
-  // Handle input blur
-  const handleBlur = useCallback(() => {
-    setIsFocused(false);
-    const parsed = parseValue(displayValue);
-    if (parsed !== null) {
-      handleValueChange(parsed);
-    } else {
-      setDisplayValue(formatValue(value));
-    }
-  }, [displayValue, parseValue, handleValueChange, value, formatValue]);
-
-  // Handle input focus
-  const handleFocus = useCallback(() => {
-    setIsFocused(true);
-    setDisplayValue(String(value));
-  }, [value]);
-
-  // Handle keyboard events
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        increment();
-      } else if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        decrement();
-      } else if (e.key === 'Enter') {
-        inputRef.current?.blur();
-      }
-    },
-    [increment, decrement]
+    [controlledValue, onChange]
   );
 
   return (
@@ -423,53 +140,24 @@ export const SpinButton: React.FC<SpinButtonProps> = ({
             max={max}
             step={step}
             disabled={disabled}
-            onChange={(val) => handleValueChange(val)}
+            onChange={handleValueChange}
           />
         </SliderWrapper>
       )}
 
-      <SpinButtonContainer $size={size} $disabled={disabled} $alert={alert} $isFocused={isFocused}>
-        <InputWrapper>
-          <StyledInput
-            ref={inputRef}
-            type="text"
-            value={displayValue}
-            onChange={handleInputChange}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            onKeyDown={handleKeyDown}
-            disabled={disabled}
-            $size={size}
-            $disabled={disabled}
-          />
-        </InputWrapper>
-
-        <ButtonGroup $alert={alert} $disabled={disabled}>
-          <StepButton
-            type="button"
-            $position="up"
-            $alert={alert}
-            $disabled={disabled}
-            onClick={increment}
-            disabled={disabled}
-            tabIndex={-1}
-          >
-            <UpArrow />
-          </StepButton>
-
-          <StepButton
-            type="button"
-            $position="down"
-            $alert={alert}
-            $disabled={disabled}
-            onClick={decrement}
-            disabled={disabled}
-            tabIndex={-1}
-          >
-            <DownArrow />
-          </StepButton>
-        </ButtonGroup>
-      </SpinButtonContainer>
+      <NumberInput
+        value={value}
+        min={min}
+        max={max}
+        step={step}
+        size={size}
+        disabled={disabled}
+        alert={alert}
+        precision={precision}
+        formatter={formatter}
+        parser={parser}
+        onChange={handleValueChange}
+      />
     </SpinButtonWrapper>
   );
 };

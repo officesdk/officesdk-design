@@ -16,6 +16,9 @@ export type { SliderProps } from './Slider';
 export { Input, SearchInput } from './Input';
 export type { InputProps, SearchInputProps } from './Input';
 
+export { NumberInput } from './NumberInput';
+export type { NumberInputProps } from './NumberInput';
+
 export { Icon, IconProvider, useIconRegistry } from './Icon';
 export type { IconProps, IconProviderProps, IconRegistry, IconComponent } from './Icon';
 
