@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export interface ButtonProps {
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**
    * Button variant type
    */
@@ -39,23 +39,6 @@ export interface ButtonProps {
    * Whether the icon button should have a border (only for variant='icon')
    */
   iconBordered?: boolean;
-  /**
-   * Click event handler
-   */
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  /**
-   * Button content
-   */
-  children?: React.ReactNode;
-  /**
-   * Custom className
-   */
-  className?: string;
-
-  /**
-   * Custom inline styles
-   */
-  style?: React.CSSProperties;
 }
 
 const IconWrapper = styled.span<{ $size: ButtonProps['size']; $position: 'before' | 'after' }>`
@@ -225,10 +208,8 @@ export const Button: React.FC<ButtonProps> = ({
   iconBefore,
   iconAfter,
   iconBordered = false,
-  onClick,
   children,
-  className,
-  style
+  ...rest
 }) => {
   // Determine if this is an icon-only button
   const isIconOnly = variant === 'icon' || (!children && !!(iconBefore || iconAfter));
@@ -245,9 +226,7 @@ export const Button: React.FC<ButtonProps> = ({
       $isIconOnly={isIconOnly}
       $iconBordered={iconBordered}
       disabled={disabled || loading}
-      onClick={onClick}
-      className={className}
-      style={style}
+      {...rest}
     >
       {loading ? (
         <>Loading...</>
