@@ -47,6 +47,10 @@ export interface NumberInputProps {
    */
   parser?: (displayValue: string) => number;
   /**
+   * Unit text to display after the input
+   */
+  unit?: string;
+  /**
    * Callback when value changes
    */
   onChange?: (value: number | null) => void;
@@ -119,6 +123,32 @@ const InputWrapper = styled.div`
   align-items: center;
   padding: 0 8px;
   min-width: 0;
+  gap: 4px;
+`;
+
+const UnitText = styled.span<{ $size: 'small' | 'large'; $disabled: boolean }>`
+  flex-shrink: 0;
+  font-family: 'PingFang SC', sans-serif;
+  font-weight: 400;
+  line-height: 20px;
+
+  ${({ $size }) =>
+    $size === 'small'
+      ? `
+    font-size: 12px;
+  `
+      : `
+    font-size: 13px;
+  `}
+
+  ${({ $disabled, theme }) =>
+    $disabled
+      ? `
+    color: ${theme.colors.palettes.transparency['30']};
+  `
+      : `
+    color: ${theme.colors.palettes.gray['120']};
+  `}
 `;
 
 const StyledInput = styled.input<{ $size: 'small' | 'large'; $disabled: boolean }>`
@@ -163,6 +193,7 @@ const StyledInput = styled.input<{ $size: 'small' | 'large'; $disabled: boolean 
   }
 
   &[type='number'] {
+    appearance: textfield;
     -moz-appearance: textfield;
   }
 `;
@@ -271,6 +302,7 @@ export const NumberInput: React.FC<NumberInputProps> = ({
   precision,
   formatter,
   parser,
+  unit,
   onChange,
   className,
   style,
@@ -388,10 +420,10 @@ export const NumberInput: React.FC<NumberInputProps> = ({
   );
 
   return (
-    <NumberInputContainer 
-      $size={size} 
-      $disabled={disabled} 
-      $alert={alert} 
+    <NumberInputContainer
+      $size={size}
+      $disabled={disabled}
+      $alert={alert}
       $isFocused={isFocused}
       className={className}
       style={style}
@@ -409,6 +441,11 @@ export const NumberInput: React.FC<NumberInputProps> = ({
           $size={size}
           $disabled={disabled}
         />
+        {unit && (
+          <UnitText $size={size} $disabled={disabled}>
+            {unit}
+          </UnitText>
+        )}
       </InputWrapper>
 
       <ButtonGroup $alert={alert} $disabled={disabled}>

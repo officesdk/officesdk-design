@@ -180,5 +180,23 @@ describe('NumberInput', () => {
       expect(screen.getByRole('textbox')).toBeInTheDocument();
     });
   });
+
+  describe('Unit', () => {
+    it('should display unit text', () => {
+      render(<NumberInput defaultValue={100} unit="px" />);
+      expect(screen.getByText('px')).toBeInTheDocument();
+    });
+
+    it('should display percentage unit', () => {
+      render(<NumberInput defaultValue={50} unit="%" />);
+      expect(screen.getByText('%')).toBeInTheDocument();
+    });
+
+    it('should not display unit when not provided', () => {
+      render(<NumberInput defaultValue={50} />);
+      expect(screen.queryByText('px')).not.toBeInTheDocument();
+      expect(screen.queryByText('%')).not.toBeInTheDocument();
+    });
+  });
 });
 

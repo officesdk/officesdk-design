@@ -112,6 +112,24 @@ export const Alert: Story = {
   },
 };
 
+export const WithUnit: Story = {
+  args: {
+    defaultValue: 100,
+    unit: 'px',
+    size: 'large',
+  },
+};
+
+export const WithUnitPercent: Story = {
+  args: {
+    defaultValue: 50,
+    unit: '%',
+    min: 0,
+    max: 100,
+    size: 'large',
+  },
+};
+
 export const WithFormatter: Story = {
   args: {
     defaultValue: 1000,
