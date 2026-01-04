@@ -1,5 +1,16 @@
 # @officesdk/design
 
+## 0.1.2
+
+### Patch Changes
+
+- Add NumberInput component with unit support:
+  - New standalone NumberInput component extracted from SpinButton
+  - Support for unit text display (e.g., 'px', '%', 'deg')
+  - Comprehensive test coverage with 19 test cases
+  - Full Storybook documentation with multiple examples
+  - SpinButton refactored to use NumberInput internally
+
 ## 0.1.1
 
 ### Patch Changes
