@@ -15,23 +15,38 @@ if (fs.existsSync(distDir)) {
 }
 fs.mkdirSync(distDir, { recursive: true });
 
+// Create cjs and esm directories
+const cjsDir = path.join(distDir, 'cjs');
+const esmDir = path.join(distDir, 'esm');
+fs.mkdirSync(cjsDir, { recursive: true });
+fs.mkdirSync(esmDir, { recursive: true });
+
 // Copy sub-package dist directories
 const subPackages = ['components', 'theme', 'utils', 'icons'];
 
 subPackages.forEach((pkg) => {
-  const srcDir = path.join(packagesDir, pkg, 'dist');
-  const destDir = path.join(distDir, pkg);
+  const srcCjsDir = path.join(packagesDir, pkg, 'dist', 'cjs');
+  const srcEsmDir = path.join(packagesDir, pkg, 'dist', 'esm');
+  const destCjsDir = path.join(cjsDir, pkg);
+  const destEsmDir = path.join(esmDir, pkg);
 
-  if (fs.existsSync(srcDir)) {
-    fs.cpSync(srcDir, destDir, { recursive: true });
-    console.log(`Copied ${pkg}/dist to dist/${pkg}`);
+  if (fs.existsSync(srcCjsDir)) {
+    fs.cpSync(srcCjsDir, destCjsDir, { recursive: true });
+    console.log(`Copied ${pkg}/dist/cjs to dist/cjs/${pkg}`);
   } else {
-    console.warn(`Warning: ${pkg}/dist not found`);
+    console.warn(`Warning: ${pkg}/dist/cjs not found`);
+  }
+
+  if (fs.existsSync(srcEsmDir)) {
+    fs.cpSync(srcEsmDir, destEsmDir, { recursive: true });
+    console.log(`Copied ${pkg}/dist/esm to dist/esm/${pkg}`);
+  } else {
+    console.warn(`Warning: ${pkg}/dist/esm not found`);
   }
 });
 
 // Create main index files that re-export from components
-const indexContent = `// Re-export all components
+const indexEsmContent = `// Re-export all components
 export * from './components/index.mjs';
 `;
 
@@ -43,10 +58,10 @@ const indexDtsContent = `// Re-export all components
 export * from './components/index';
 `;
 
-fs.writeFileSync(path.join(distDir, 'index.mjs'), indexContent);
-fs.writeFileSync(path.join(distDir, 'index.js'), indexCjsContent);
-fs.writeFileSync(path.join(distDir, 'index.d.ts'), indexDtsContent);
-fs.writeFileSync(path.join(distDir, 'index.d.mts'), indexDtsContent);
+fs.writeFileSync(path.join(esmDir, 'index.mjs'), indexEsmContent);
+fs.writeFileSync(path.join(cjsDir, 'index.js'), indexCjsContent);
+fs.writeFileSync(path.join(esmDir, 'index.d.ts'), indexDtsContent);
+fs.writeFileSync(path.join(esmDir, 'index.d.mts'), indexDtsContent);
 
 console.log('Meta-package build complete');
 console.log('Bundled: components, theme, utils, icons');

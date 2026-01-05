@@ -24,44 +24,44 @@
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.mjs",
+  "types": "./dist/esm/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "types": "./dist/esm/index.d.ts",
+      "import": "./dist/esm/index.mjs",
+      "require": "./dist/cjs/index.js"
     },
     "./theme": {
-      "types": "./dist/theme/index.d.ts",
-      "import": "./dist/theme/index.mjs",
-      "require": "./dist/theme/index.js"
+      "types": "./dist/esm/theme/index.d.ts",
+      "import": "./dist/esm/theme/index.mjs",
+      "require": "./dist/cjs/theme/index.js"
     },
     "./utils": {
-      "types": "./dist/utils/index.d.ts",
-      "import": "./dist/utils/index.mjs",
-      "require": "./dist/utils/index.js"
+      "types": "./dist/esm/utils/index.d.ts",
+      "import": "./dist/esm/utils/index.mjs",
+      "require": "./dist/cjs/utils/index.js"
     },
     "./icons": {
-      "types": "./dist/icons/index.d.ts",
-      "import": "./dist/icons/index.mjs",
-      "require": "./dist/icons/index.js"
+      "types": "./dist/esm/icons/index.d.ts",
+      "import": "./dist/esm/icons/index.mjs",
+      "require": "./dist/cjs/icons/index.js"
     }
   },
   "typesVersions": {
     "*": {
       "components": [
-        "./dist/components/index.d.ts"
+        "./dist/esm/components/index.d.ts"
       ],
       "theme": [
-        "./dist/theme/index.d.ts"
+        "./dist/esm/theme/index.d.ts"
       ],
       "utils": [
-        "./dist/utils/index.d.ts"
+        "./dist/esm/utils/index.d.ts"
       ],
       "icons": [
-        "./dist/icons/index.d.ts"
+        "./dist/esm/icons/index.d.ts"
       ]
     }
   },
