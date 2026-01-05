@@ -39,20 +39,20 @@ subPackages.forEach((pkg) => {
 
   if (fs.existsSync(srcEsmDir)) {
     fs.cpSync(srcEsmDir, destEsmDir, { recursive: true });
-    
+
     // Rename .mjs to .js in ESM directory
     const mjsFile = path.join(destEsmDir, 'index.mjs');
     const jsFile = path.join(destEsmDir, 'index.js');
     const mjsMapFile = path.join(destEsmDir, 'index.mjs.map');
     const jsMapFile = path.join(destEsmDir, 'index.js.map');
-    
+
     if (fs.existsSync(mjsFile)) {
       fs.renameSync(mjsFile, jsFile);
     }
     if (fs.existsSync(mjsMapFile)) {
       fs.renameSync(mjsMapFile, jsMapFile);
     }
-    
+
     console.log(`Copied ${pkg}/dist/esm to dist/esm/${pkg}`);
   } else {
     console.warn(`Warning: ${pkg}/dist/esm not found`);
