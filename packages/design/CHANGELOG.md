@@ -1,5 +1,15 @@
 # @officesdk/design
 
+## 0.1.3
+
+### Patch Changes
+
+- Improve build output structure and type definitions:
+  - Generate proper .d.ts files in both CJS and ESM directories
+  - Use .js extension for ESM files with package.json type module marker
+  - Clearer separation between CJS and ESM outputs
+  - Better TypeScript support and module resolution
+
 ## 0.1.2
 
 ### Patch Changes
