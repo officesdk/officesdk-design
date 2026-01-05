@@ -17,9 +17,10 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup && node ../../scripts/post-build.js .",
+    "build": "yarn clean && tsup && yarn rename-mts",
     "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "rename-mts": "mv dist/esm/index.d.mts dist/esm/index.d.ts"
   },
   "peerDependencies": {
     "react": ">=16.9.0",

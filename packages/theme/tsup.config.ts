@@ -5,7 +5,9 @@ export default defineConfig([
     entry: ['src/index.ts'],
     format: ['cjs'],
     outDir: 'dist/cjs',
-    dts: false,
+    dts: {
+      resolve: true,
+    },
     clean: true,
     sourcemap: true,
     external: ['react/jsx-runtime'],
@@ -25,6 +27,11 @@ export default defineConfig([
     external: ['react/jsx-runtime'],
     treeshake: true,
     splitting: false,
-    minify: false
+    minify: false,
+    outExtension() {
+      return {
+        js: '.js',
+      };
+    },
   },
 ]);

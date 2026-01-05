@@ -5,7 +5,9 @@ export default defineConfig([
     entry: ['src/index.ts'],
     format: ['cjs'],
     outDir: 'dist/cjs',
-    dts: false,
+    dts: {
+      resolve: true,
+    },
     clean: true,
     sourcemap: true,
     external: [
@@ -36,6 +38,11 @@ export default defineConfig([
     treeshake: true,
     splitting: false,
     minify: false,
+    outExtension() {
+      return {
+        js: '.js',
+      };
+    },
   },
 ]);
 

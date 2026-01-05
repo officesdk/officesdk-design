@@ -24,44 +24,44 @@
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
-  "types": "./dist/esm/index.d.ts",
+  "main": "./dist/components/cjs/index.js",
+  "module": "./dist/components/esm/index.js",
+  "types": "./dist/components/esm/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/esm/index.d.ts",
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js"
+      "types": "./dist/components/esm/index.d.ts",
+      "import": "./dist/components/esm/index.js",
+      "require": "./dist/components/cjs/index.js"
     },
     "./theme": {
-      "types": "./dist/esm/theme/index.d.ts",
-      "import": "./dist/esm/theme/index.js",
-      "require": "./dist/cjs/theme/index.js"
+      "types": "./dist/theme/esm/index.d.ts",
+      "import": "./dist/theme/esm/index.js",
+      "require": "./dist/theme/cjs/index.js"
     },
     "./utils": {
-      "types": "./dist/esm/utils/index.d.ts",
-      "import": "./dist/esm/utils/index.js",
-      "require": "./dist/cjs/utils/index.js"
+      "types": "./dist/utils/esm/index.d.ts",
+      "import": "./dist/utils/esm/index.js",
+      "require": "./dist/utils/cjs/index.js"
     },
     "./icons": {
-      "types": "./dist/esm/icons/index.d.ts",
-      "import": "./dist/esm/icons/index.js",
-      "require": "./dist/cjs/icons/index.js"
+      "types": "./dist/icons/esm/index.d.ts",
+      "import": "./dist/icons/esm/index.js",
+      "require": "./dist/icons/cjs/index.js"
     }
   },
   "typesVersions": {
     "*": {
       "components": [
-        "./dist/esm/components/index.d.ts"
+        "./dist/components/esm/index.d.ts"
       ],
       "theme": [
-        "./dist/esm/theme/index.d.ts"
+        "./dist/theme/esm/index.d.ts"
       ],
       "utils": [
-        "./dist/esm/utils/index.d.ts"
+        "./dist/utils/esm/index.d.ts"
       ],
       "icons": [
-        "./dist/esm/icons/index.d.ts"
+        "./dist/icons/esm/index.d.ts"
       ]
     }
   },
