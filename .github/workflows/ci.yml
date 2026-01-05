@@ -109,10 +109,10 @@ jobs:
 
       - name: Check Build Output
         run: |
-          test -f packages/components/dist/index.js
-          test -f packages/theme/dist/index.js
-          test -f packages/utils/dist/index.js
-          test -f packages/icons/dist/index.js
+          test -f packages/components/dist/esm/index.js
+          test -f packages/theme/dist/esm/index.js
+          test -f packages/utils/dist/esm/index.js
+          test -f packages/icons/dist/esm/index.js
 
   validate:
     name: Validate
