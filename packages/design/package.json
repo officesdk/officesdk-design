@@ -51,6 +51,9 @@
   },
   "typesVersions": {
     "*": {
+      ".": [
+        "./dist/components/esm/index.d.ts"
+      ],
       "components": [
         "./dist/components/esm/index.d.ts"
       ],
@@ -76,7 +79,7 @@
     "styled-components": ">=5.2.0"
   },
   "dependencies": {
-    "@officesdk/editor-sdk-core": "0.0.0-alpha.2"
+    "@officesdk/editor-sdk-core": "0.0.0-alpha.3"
   },
   "devDependencies": {
     "@officesdk/design-components": "workspace:*",

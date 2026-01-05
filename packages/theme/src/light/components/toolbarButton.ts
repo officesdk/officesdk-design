@@ -1,51 +1,55 @@
 import { ToolbarButtonConfig } from '@officesdk/editor-sdk-core/shared';
-import { colors } from '../base';
+import { boxShadow, colors } from '../base';
 
 export const toolbarButton: ToolbarButtonConfig = {
+  boxShadow: {
+    boxShadow: 'none',
+    boxShadowHover: boxShadow.small,
+    boxShadowActive: 'none',
+    boxShadowClick: boxShadow.small,
+    boxShadowDisabled: 'none',
+  },
   border: {
     borderColor: 'transparent',
     borderColorHover: colors.palettes.transparency['20'],
-    borderColorActive: colors.palettes.transparency['30'],
-    borderColorDisabled: 'transparent',
+    borderColorActive: colors.palettes.transparency['20'],
     borderColorClick: colors.palettes.transparency['30'],
+    borderColorDisabled: 'transparent',
   },
   background: {
     background: 'transparent',
     backgroundHover: colors.palettes.transparency['5'],
     backgroundActive: colors.palettes.transparency['5'],
-    backgroundDisabled: 'transparent',
     backgroundClick: colors.palettes.transparency['10'],
-  },
-  dropdownIcon: {
-    url: '',
-    size: {
-      width: '16px',
-      height: '16px',
-    },
-  },
-  icon: {
-    url: '',
-    size: {
-      width: '20px',
-      height: '20px',
-    },
-  },
-  layout: {
-    padding: '4px',
-    height: '26px',
-    gap: '0px',
-    content: {
-      padding: '4px',
-    },
-  },
-  typography: {
-    fontSize: '12px',
-    fontWeight: 400,
+    backgroundDisabled: 'transparent',
   },
   color: {
     color: colors.palettes.gray['120'],
     colorHover: colors.palettes.gray['120'],
     colorActive: colors.palettes.gray['120'],
     colorDisabled: colors.palettes.transparency['30'],
+  },
+  layout: {
+    padding: '0 1px',
+    height: '28px',
+    content: {
+      padding: '0 4px',
+      gap: '0px',
+      iconSize: {
+        width: '20px',
+        height: '20px',
+      },
+    },
+    dropdown: {
+      iconSize: {
+        width: '16px',
+        height: '16px',
+      },
+      wrapperWidth: '14px',
+    },
+  },
+  typography: {
+    fontSize: '12px',
+    fontWeight: 400,
   },
 };

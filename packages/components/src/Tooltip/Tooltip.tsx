@@ -7,7 +7,7 @@ export interface TooltipProps extends Partial<RcTooltipProps> {
   /**
    * Tooltip content
    */
-  content: React.ReactNode;
+  content?: React.ReactNode;
   /**
    * Tooltip variant
    */

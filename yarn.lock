@@ -2634,7 +2634,7 @@ __metadata:
     "@officesdk/design-icons": "workspace:*"
     "@officesdk/design-theme": "workspace:*"
     "@officesdk/design-utils": "workspace:*"
-    "@officesdk/editor-sdk-core": "npm:0.0.0-alpha.2"
+    "@officesdk/editor-sdk-core": "npm:0.0.0-alpha.3"
   peerDependencies:
     rc-tooltip: ^6.0.0
     react: ">=16.9.0"
@@ -2643,10 +2643,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@officesdk/editor-sdk-core@npm:0.0.0-alpha.2":
-  version: 0.0.0-alpha.2
-  resolution: "@officesdk/editor-sdk-core@npm:0.0.0-alpha.2"
-  checksum: 10c0/dfc3c9abe0f72fe7637d2e6ad4504eeaa5602d457859252a773ec755dd282fc39c3cf7db183d980ca463a56e0db380b57ad210f1e30eed5577c6f40545707f60
+"@officesdk/editor-sdk-core@npm:0.0.0-alpha.3":
+  version: 0.0.0-alpha.3
+  resolution: "@officesdk/editor-sdk-core@npm:0.0.0-alpha.3"
+  checksum: 10c0/0d908cfc4446db8465e12973b96a70bda3e6489d3001e6256b885b2a54b686496aae368838f74577f07f4d352b8c7208fb8995b107f48f3b34c52e7dc3d26005
   languageName: node
   linkType: hard
 

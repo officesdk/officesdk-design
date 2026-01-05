@@ -31,6 +31,9 @@ export type { TabsProps, TabItem } from './Tabs';
 export { Tooltip } from './Tooltip';
 export type { TooltipProps } from './Tooltip';
 
+export { ToolbarButton } from './ToolbarButton';
+export type { ToolbarButtonProps } from './ToolbarButton';
+
 export { UIConfigProvider, useUIConfig, createUIConfig, mergeUIConfig } from './UIConfigProvider';
 export type {
   UIConfigProviderProps,

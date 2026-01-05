@@ -9,6 +9,7 @@ import { tab } from './tab';
 import { slider } from './slider';
 import { inputNumber } from './inputNumber';
 import { tooltip } from './tooltip';
+import { toolbarButton } from './toolbarButton';
 
 export {
   button,
@@ -22,6 +23,7 @@ export {
   slider,
   inputNumber,
   tooltip,
+  toolbarButton,
 };
 
 export const components = {
@@ -36,4 +38,5 @@ export const components = {
   slider,
   inputNumber,
   tooltip,
+  toolbarButton,
 };
