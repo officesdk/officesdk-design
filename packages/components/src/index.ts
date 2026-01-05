@@ -46,3 +46,6 @@ export type {
   I18nConfig,
 } from './UIConfigProvider';
 
+export { styled } from './utils/styled';
+export { getGlobalTheme } from './utils/context';
+
