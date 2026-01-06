@@ -2650,6 +2650,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@officesdk/editor-sdk-core@npm:0.0.0-alpha.4":
+  version: 0.0.0-alpha.4
+  resolution: "@officesdk/editor-sdk-core@npm:0.0.0-alpha.4"
+  checksum: 10c0/1aa9988060c2915a4a2be6f0efbc222b921f0a95fb221d316febe63015a2415a89f2d43794027f3be88ebf112cde230accd830092e346a89f2d3b1acb58c42da
+  languageName: node
+  linkType: hard
+
 "@pkgjs/parseargs@npm:^0.11.0":
   version: 0.11.0
   resolution: "@pkgjs/parseargs@npm:0.11.0"
@@ -10523,6 +10530,7 @@ __metadata:
   resolution: "officesdk-design-monorepo@workspace:."
   dependencies:
     "@changesets/cli": "npm:^2.29.8"
+    "@officesdk/editor-sdk-core": "npm:0.0.0-alpha.4"
     "@storybook/addon-docs": "npm:^7.6.7"
     "@storybook/addon-essentials": "npm:^7.6.7"
     "@storybook/addon-interactions": "npm:^7.6.7"
