@@ -2,7 +2,7 @@ import baseStyled, {
   ThemedStyledInterface
 } from 'styled-components';
 import { getGlobalTheme } from './context';
-import type { CommonThemeConfig } from '@officesdk/editor-sdk-core/shared';
+import type { Theme } from '@officesdk/design-theme';
 
 // Helper function to wrap styled component and inject theme via defaultProps
 const wrapWithTheme = (component: any) => {
@@ -38,6 +38,6 @@ Object.keys(baseStyled).forEach((key) => {
 });
 
 // Export with proper typing
-export const styled = styledWithBase as ThemedStyledInterface<CommonThemeConfig>;
+export const styled = styledWithBase as ThemedStyledInterface<Theme>;
 
 
