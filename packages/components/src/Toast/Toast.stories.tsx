@@ -19,9 +19,17 @@ const meta: Meta<typeof Toast> = {
       control: 'text',
       description: 'Toast message content',
     },
-    actionText: {
+    description: {
       control: 'text',
-      description: 'Action button text',
+      description: 'Optional description text',
+    },
+    mainButtonText: {
+      control: 'text',
+      description: 'Main action button text (blue)',
+    },
+    secondaryButtonText: {
+      control: 'text',
+      description: 'Secondary action button text (gray)',
     },
     closable: {
       control: 'boolean',
@@ -70,13 +78,16 @@ export const Warn: Story = {
   },
 };
 
-// With action button
-export const WithAction: Story = {
+// Single line with buttons (Un)
+export const SingleLineWithButtons: Story = {
   args: {
-    variant: 'info',
-    message: 'New version available',
-    actionText: 'Update',
-    onAction: () => alert('Update clicked!'),
+    variant: 'success',
+    message: '信息反馈',
+    mainButtonText: '按钮名称',
+    onMainButtonClick: () => alert('Main button clicked!'),
+    secondaryButtonText: '按钮名称',
+    onSecondaryButtonClick: () => alert('Secondary button clicked!'),
+    closable: true,
   },
 };
 
@@ -89,13 +100,16 @@ export const Closable: Story = {
   },
 };
 
-// With both action and close
-export const WithActionAndClose: Story = {
+// Multi-line with description (Deux)
+export const MultiLineWithDescription: Story = {
   args: {
-    variant: 'warn',
-    message: 'Unsaved changes detected',
-    actionText: 'Save',
-    onAction: () => alert('Save clicked!'),
+    variant: 'success',
+    message: '信息反馈',
+    description: '信息具体说明',
+    mainButtonText: '按钮名称',
+    onMainButtonClick: () => alert('Main button clicked!'),
+    secondaryButtonText: '按钮名称',
+    onSecondaryButtonClick: () => alert('Secondary button clicked!'),
     closable: true,
   },
 };

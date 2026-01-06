@@ -1,21 +1,7 @@
-import { colors } from '../base';
+import { borderRadius, colors } from '../base';
 import type { ButtonConfig } from '@officesdk/editor-sdk-core/shared';
 
 export const button: ButtonConfig = {
-  icons: {
-    close: {
-      url: '',
-      size: { width: '16px', height: '16px' },
-    },
-    clear: {
-      url: '',
-      size: { width: '16px', height: '16px' },
-    },
-    search: {
-      url: '',
-      size: { width: '16px', height: '16px' },
-    },
-  },
   solid: {
     default: {
       background: `linear-gradient(0deg, ${colors.palettes.gray['120']} 0%, ${colors.palettes.gray['90']} 100%)`,
@@ -213,39 +199,71 @@ export const button: ButtonConfig = {
     },
   },
   small: {
-    height: '28px',
-    padding: '4px 12px',
-    fontSize: '13px',
-    lineHeight: '20px',
-    borderRadius: '4px',
-    iconSize: { width: '14px', height: '14px' },
-    iconGap: '4px',
+    withIcon: {
+      height: '24px',
+      padding: '0px 10px',
+      textPadding: '0 2px',
+      fontSize: '12px',
+      lineHeight: '20px',
+      borderRadius: borderRadius.small,
+      iconSize: { width: '16px', height: '16px' },
+      iconGap: '4px',
+    },
+    onlyIcon: {
+      iconSize: { width: '12px', height: '12px' },
+      padding: '6px',
+      borderRadius: borderRadius.small,
+    },
   },
   medium: {
-    height: '32px',
-    padding: '6px 16px',
-    fontSize: '14px',
-    lineHeight: '20px',
-    borderRadius: '4px',
-    iconSize: { width: '16px', height: '16px' },
-    iconGap: '6px',
+    withIcon: {
+      height: '28px',
+      padding: '2px 14px',
+      textPadding: '0 2px',
+      fontSize: '13px',
+      lineHeight: '20px',
+      borderRadius: borderRadius.small,
+      iconSize: { width: '16px', height: '16px' },
+      iconGap: '4px',
+    },
+    onlyIcon: {
+      iconSize: { width: '14px', height: '14px' },
+      padding: '7px',
+      borderRadius: borderRadius.small,
+    },
   },
   large: {
-    height: '36px',
-    padding: '8px 20px',
-    fontSize: '14px',
-    lineHeight: '20px',
-    borderRadius: '4px',
-    iconSize: { width: '16px', height: '16px' },
-    iconGap: '6px',
+    withIcon: {
+      height: '32px',
+      padding: '0 18px',
+      textPadding: '0 6px',
+      fontSize: '13px',
+      lineHeight: '20px',
+      borderRadius: borderRadius.small,
+      iconSize: { width: '18px', height: '18px' },
+      iconGap: '4px',
+    },
+    onlyIcon: {
+      iconSize: { width: '16px', height: '16px' },
+      padding: '8px',
+      borderRadius: borderRadius.small,
+    },
   },
   extraLarge: {
-    height: '40px',
-    padding: '10px 24px',
-    fontSize: '14px',
-    lineHeight: '20px',
-    borderRadius: '4px',
-    iconSize: { width: '16px', height: '16px' },
-    iconGap: '8px',
+    withIcon: {
+      height: '40px',
+      padding: '0px 26px',
+      textPadding: '0px 6px',
+      fontSize: '14px',
+      lineHeight: '24px',
+      borderRadius: borderRadius.small,
+      iconSize: { width: '16px', height: '16px' },
+      iconGap: '4px',
+    },
+    onlyIcon: {
+      iconSize: { width: '20px', height: '20px' },
+      padding: '10px',
+      borderRadius: borderRadius.small,
+    },
   },
 };

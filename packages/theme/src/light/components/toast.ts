@@ -13,12 +13,6 @@ export const toast: ToastConfig = {
       url: '',
       size: { width: '20px', height: '20px' },
     },
-    button: {
-      fontSize: '14px',
-      fontWeight: 500,
-      color: colors.palettes.green['6'],
-      gap: '8px',
-    },
   },
   info: {
     background: colors.palettes.blue['1'],
@@ -26,12 +20,6 @@ export const toast: ToastConfig = {
     icon: {
       url: '',
       size: { width: '20px', height: '20px' },
-    },
-    button: {
-      fontSize: '14px',
-      fontWeight: 500,
-      color: colors.palettes.blue['6'],
-      gap: '8px',
     },
   },
   error: {
@@ -41,12 +29,6 @@ export const toast: ToastConfig = {
       url: '',
       size: { width: '20px', height: '20px' },
     },
-    button: {
-      fontSize: '14px',
-      fontWeight: 500,
-      color: colors.palettes.red['6'],
-      gap: '8px',
-    },
   },
   warn: {
     background: colors.palettes.yellow['1'],
@@ -54,12 +36,6 @@ export const toast: ToastConfig = {
     icon: {
       url: '',
       size: { width: '20px', height: '20px' },
-    },
-    button: {
-      fontSize: '14px',
-      fontWeight: 500,
-      color: colors.palettes.yellow['7'],
-      gap: '8px',
     },
   },
 };

@@ -2634,8 +2634,8 @@ __metadata:
     "@officesdk/design-icons": "workspace:*"
     "@officesdk/design-theme": "workspace:*"
     "@officesdk/design-utils": "workspace:*"
-    "@officesdk/editor-sdk-core": "npm:0.0.0-alpha.3"
   peerDependencies:
+    "@officesdk/editor-sdk-core": 0.0.0-alpha.6
     rc-tooltip: ^6.0.0
     react: ">=16.9.0"
     react-dom: ">=16.9.0"
@@ -2643,17 +2643,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@officesdk/editor-sdk-core@npm:0.0.0-alpha.3":
-  version: 0.0.0-alpha.3
-  resolution: "@officesdk/editor-sdk-core@npm:0.0.0-alpha.3"
-  checksum: 10c0/0d908cfc4446db8465e12973b96a70bda3e6489d3001e6256b885b2a54b686496aae368838f74577f07f4d352b8c7208fb8995b107f48f3b34c52e7dc3d26005
-  languageName: node
-  linkType: hard
-
-"@officesdk/editor-sdk-core@npm:0.0.0-alpha.4":
-  version: 0.0.0-alpha.4
-  resolution: "@officesdk/editor-sdk-core@npm:0.0.0-alpha.4"
-  checksum: 10c0/1aa9988060c2915a4a2be6f0efbc222b921f0a95fb221d316febe63015a2415a89f2d43794027f3be88ebf112cde230accd830092e346a89f2d3b1acb58c42da
+"@officesdk/editor-sdk-core@npm:0.0.0-alpha.6":
+  version: 0.0.0-alpha.6
+  resolution: "@officesdk/editor-sdk-core@npm:0.0.0-alpha.6"
+  checksum: 10c0/1e12c49c534874a23b422ad6bf14da794d7ba4e500d6e92605579ae218c1dbca3297fd985d08bbaf9403e9e9d6ae0ef400402fa49f0c5f9bd1a1ea3c6de6ae46
   languageName: node
   linkType: hard
 
@@ -10530,7 +10523,7 @@ __metadata:
   resolution: "officesdk-design-monorepo@workspace:."
   dependencies:
     "@changesets/cli": "npm:^2.29.8"
-    "@officesdk/editor-sdk-core": "npm:0.0.0-alpha.4"
+    "@officesdk/editor-sdk-core": "npm:0.0.0-alpha.6"
     "@storybook/addon-docs": "npm:^7.6.7"
     "@storybook/addon-essentials": "npm:^7.6.7"
     "@storybook/addon-interactions": "npm:^7.6.7"

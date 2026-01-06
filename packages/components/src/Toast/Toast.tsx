@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { styled } from '../utils/styled';
+import { Icon } from '../Icon';
+import { Button } from '../Button';
+import { getGlobalTheme } from '../utils/context';
 
 export interface ToastProps {
   /**
@@ -7,17 +10,29 @@ export interface ToastProps {
    */
   variant?: 'success' | 'info' | 'error' | 'warn';
   /**
-   * Toast message content
+   * Toast message content (main text)
    */
   message: string;
   /**
-   * Optional action button text
+   * Optional description text (shows below message in multiline mode)
    */
-  actionText?: string;
+  description?: string;
   /**
-   * Action button click handler
+   * Main action button text (blue color)
    */
-  onAction?: () => void;
+  mainButtonText?: string;
+  /**
+   * Main action button click handler
+   */
+  onMainButtonClick?: () => void;
+  /**
+   * Secondary action button text (gray color)
+   */
+  secondaryButtonText?: string;
+  /**
+   * Secondary action button click handler
+   */
+  onSecondaryButtonClick?: () => void;
   /**
    * Whether to show close button
    */
@@ -78,53 +93,47 @@ const ToastContainer = styled.div<{
 
 const IconWrapper = styled.div<{
   $variant: 'success' | 'info' | 'error' | 'warn';
+  $hasDescription: boolean;
 }>`
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 
-  ${({ $variant, theme }) => {
+  ${({ $variant, $hasDescription, theme }) => {
     const iconConfig = theme.components.toast[$variant].icon;
+    const size = $hasDescription ? '28px' : '18px';
     return `
-      width: ${iconConfig.size.width};
-      height: ${iconConfig.size.height};
+      width: ${size};
+      height: ${size};
     `;
   }}
+`;
+
+const ContentWrapper = styled.div<{ $hasDescription: boolean }>`
+  display: flex;
+  flex-direction: ${({ $hasDescription }) => ($hasDescription ? 'column' : 'row')};
+  align-items: ${({ $hasDescription }) => ($hasDescription ? 'flex-start' : 'center')};
+  gap: ${({ $hasDescription }) => ($hasDescription ? '2px' : '0')};
+  flex: 1;
 `;
 
 const Message = styled.span`
-  flex: 1;
+  font-size: 13px;
   line-height: 20px;
-  color: ${({ theme }) => theme.colors.palettes.gray['120']};
+  color: ${({ theme }) => theme.colors.palettes.gray['100']};
 `;
 
-const ActionButton = styled.button<{
-  $variant: 'success' | 'info' | 'error' | 'warn';
-}>`
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  outline: none;
+const Description = styled.span`
+  font-size: 12px;
+  line-height: 20px;
+  color: ${({ theme }) => theme.colors.palettes.transparency['60']};
+`;
 
-  ${({ $variant, theme }) => {
-    const buttonConfig = theme.components.toast[$variant].button;
-    return `
-      font-size: ${buttonConfig.fontSize};
-      font-weight: ${buttonConfig.fontWeight};
-      color: ${buttonConfig.color};
-      margin-left: ${buttonConfig.gap};
-    `;
-  }}
-
-  &:hover {
-    opacity: 0.8;
-  }
-
-  &:active {
-    opacity: 0.6;
-  }
+const ActionGroup = styled.div`
+  display: flex;
+  gap: 2px;
+  align-items: center;
 `;
 
 const CloseButton = styled.button`
@@ -191,22 +200,39 @@ const CloseIconSvg = () => (
  * A notification message component with different variants
  *
  * @example
- * <Toast variant="success" message="Operation successful!" />
+ * // Single line toast
+ * <Toast variant="success" message="信息反馈" />
  *
  * @example
+ * // Toast with buttons
  * <Toast
  *   variant="info"
- *   message="New update available"
- *   actionText="Update"
- *   onAction={() => console.log('Update clicked')}
+ *   message="信息反馈"
+ *   mainButtonText="按钮名称"
+ *   onMainButtonClick={() => console.log('Main clicked')}
+ *   secondaryButtonText="按钮名称"
+ *   onSecondaryButtonClick={() => console.log('Secondary clicked')}
+ *   closable
+ * />
+ *
+ * @example
+ * // Multi-line toast with description
+ * <Toast
+ *   variant="success"
+ *   message="信息反馈"
+ *   description="信息具体说明"
+ *   mainButtonText="按钮名称"
  *   closable
  * />
  */
 export const Toast: React.FC<ToastProps> = ({
   variant = 'info' as 'success' | 'info' | 'error' | 'warn',
   message,
-  actionText,
-  onAction,
+  description,
+  mainButtonText,
+  onMainButtonClick,
+  secondaryButtonText,
+  onSecondaryButtonClick,
   closable = false,
   onClose,
   duration = 0,
@@ -238,15 +264,33 @@ export const Toast: React.FC<ToastProps> = ({
     return null;
   }
 
-  // Default icons based on variant
-  const defaultIcons = {
-    success: <SuccessIcon />,
-    info: <InfoIcon />,
-    error: <ErrorIcon />,
-    warn: <WarnIcon />,
+  // Icon priority: props.icon > theme icon > default icon
+  const getIconElement = () => {
+    // 1. If icon prop is provided, use it
+    if (icon) {
+      return icon;
+    }
+
+    // 2. Try to get icon from theme
+    const theme = getGlobalTheme();
+    const themeIconUrl = theme?.components?.toast?.[variant]?.icon?.url;
+    if (themeIconUrl) {
+      return <Icon src={themeIconUrl} />;
+    }
+
+    // 3. Use default icon as fallback
+    const defaultIcons = {
+      success: <SuccessIcon />,
+      info: <InfoIcon />,
+      error: <ErrorIcon />,
+      warn: <WarnIcon />,
+    };
+    return defaultIcons[variant];
   };
 
-  const iconElement = icon || defaultIcons[variant];
+  const iconElement = getIconElement();
+  const hasDescription = !!description;
+  const hasActions = !!(mainButtonText || secondaryButtonText || closable);
 
   return (
     <ToastContainer
@@ -257,31 +301,52 @@ export const Toast: React.FC<ToastProps> = ({
       aria-live="polite"
     >
       {showIcon && (
-        <IconWrapper $variant={variant}>
+        <IconWrapper $variant={variant} $hasDescription={hasDescription}>
           {iconElement}
         </IconWrapper>
       )}
 
-      <Message>{message}</Message>
+      <ContentWrapper $hasDescription={hasDescription}>
+        <Message>{message}</Message>
+        {description && <Description>{description}</Description>}
+      </ContentWrapper>
 
-      {actionText && onAction && (
-        <ActionButton
-          $variant={variant}
-          onClick={onAction}
-          type="button"
-        >
-          {actionText}
-        </ActionButton>
-      )}
+      {hasActions && (
+        <ActionGroup>
+          {mainButtonText && onMainButtonClick && (
+            <Button
+              variant="text"
+              colorType="guidance"
+              size="small"
+              onClick={onMainButtonClick}
+            >
+              {mainButtonText}
+            </Button>
+          )}
 
-      {closable && (
-        <CloseButton
-          onClick={handleClose}
-          type="button"
-          aria-label="Close"
-        >
-          <CloseIconSvg />
-        </CloseButton>
+          {secondaryButtonText && onSecondaryButtonClick && (
+            <Button
+              variant="text"
+              colorType="default"
+              size="small"
+              onClick={onSecondaryButtonClick}
+            >
+              {secondaryButtonText}
+            </Button>
+          )}
+
+          {closable && (
+            <Button
+              variant="icon"
+              colorType="default"
+              size="small"
+              onClick={handleClose}
+              aria-label="Close"
+              icon={<CloseIconSvg />}
+              iconBordered={false}
+            />
+          )}
+        </ActionGroup>
       )}
     </ToastContainer>
   );

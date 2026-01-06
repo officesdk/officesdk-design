@@ -23,8 +23,8 @@ const TestComponent = () => {
         Show Warning
       </button>
       <button onClick={() => toast.info('With action', {
-        actionText: 'Action',
-        onAction: () => console.log('Action clicked'),
+        mainButtonText: 'Action',
+        onMainButtonClick: () => console.log('Action clicked'),
       })}>
         Show With Action
       </button>

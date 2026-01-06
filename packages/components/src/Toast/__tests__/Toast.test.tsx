@@ -49,12 +49,12 @@ describe('Toast', () => {
       expect(iconWrapper).not.toBeInTheDocument();
     });
 
-    it('should render action button when provided', () => {
+    it('should render main action button when provided', () => {
       render(
         <Toast
           message="Test"
-          actionText="Action"
-          onAction={() => {}}
+          mainButtonText="Action"
+          onMainButtonClick={() => {}}
         />
       );
       expect(screen.getByRole('button', { name: /action/i })).toBeInTheDocument();
@@ -65,12 +65,12 @@ describe('Toast', () => {
       expect(screen.getByRole('button', { name: /close/i })).toBeInTheDocument();
     });
 
-    it('should render both action and close buttons', () => {
+    it('should render both main button and close button', () => {
       render(
         <Toast
           message="Test"
-          actionText="Action"
-          onAction={() => {}}
+          mainButtonText="Action"
+          onMainButtonClick={() => {}}
           closable
         />
       );
@@ -80,7 +80,7 @@ describe('Toast', () => {
   });
 
   describe('Interactions', () => {
-    it('should call onAction when action button clicked', async () => {
+    it('should call onMainButtonClick when main button clicked', async () => {
       vi.useRealTimers();
       const handleAction = vi.fn();
       const user = userEvent.setup();
@@ -88,8 +88,8 @@ describe('Toast', () => {
       render(
         <Toast
           message="Test"
-          actionText="Action"
-          onAction={handleAction}
+          mainButtonText="Action"
+          onMainButtonClick={handleAction}
         />
       );
 

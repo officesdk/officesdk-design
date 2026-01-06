@@ -46,9 +46,9 @@ describe('Button', () => {
       expect(screen.getByRole('button')).toBeInTheDocument();
     });
 
-    it('should render with icons', () => {
+    it('should render with icon before text', () => {
       render(
-        <Button iconBefore={<span data-testid="icon-before">→</span>}>
+        <Button icon={<span data-testid="icon-before">→</span>} iconPlacement="before">
           With Icon
         </Button>
       );
@@ -56,10 +56,21 @@ describe('Button', () => {
       expect(screen.getByText('With Icon')).toBeInTheDocument();
     });
 
-    it('should render icon-only button', () => {
-      render(<Button variant="icon">×</Button>);
+    it('should render with icon after text', () => {
+      render(
+        <Button icon={<span data-testid="icon-after">→</span>} iconPlacement="after">
+          With Icon
+        </Button>
+      );
+      expect(screen.getByTestId('icon-after')).toBeInTheDocument();
+      expect(screen.getByText('With Icon')).toBeInTheDocument();
+    });
+
+    it('should render button with only icon', () => {
+      render(<Button icon={<span data-testid="icon-only">×</span>} />);
       const button = screen.getByRole('button');
       expect(button).toBeInTheDocument();
+      expect(screen.getByTestId('icon-only')).toBeInTheDocument();
     });
   });
 

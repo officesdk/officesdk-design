@@ -1,9 +1,11 @@
 import React from 'react';
 import { styled } from '../utils/styled';
+import { Icon } from '../Icon';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**
    * Button variant type
+   * - 'icon': Square icon button without padding, size based on iconSize
    */
   variant?: 'solid' | 'outlined' | 'text' | 'icon';
   /**
@@ -28,28 +30,31 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
    */
   fullWidth?: boolean;
   /**
-   * Icon to display before the button text
+   * Icon to display with the button text
+   * - If string: treated as icon src URL, rendered using Icon component
+   * - If ReactNode: rendered directly
    */
-  iconBefore?: React.ReactNode;
+  icon?: string | React.ReactNode;
   /**
-   * Icon to display after the button text
+   * Icon placement relative to text (only for text buttons)
    */
-  iconAfter?: React.ReactNode;
+  iconPlacement?: 'before' | 'after';
   /**
    * Whether the icon button should have a border (only for variant='icon')
    */
   iconBordered?: boolean;
 }
 
-const IconWrapper = styled.span<{ $size: ButtonProps['size']; $position: 'before' | 'after' }>`
+const IconWrapper = styled.span<{ $size: ButtonProps['size']; $iconPlacement: 'before' | 'after' }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 
-  ${({ $size, $position, theme }) => {
-    const sizeConfig = theme.components.button[$size || 'medium'];
-    const marginSide = $position === 'before' ? 'margin-right' : 'margin-left';
+  ${({ $size, $iconPlacement, theme }) => {
+    const buttonConfig = theme.components.button[$size || 'medium'];
+    const sizeConfig = buttonConfig?.withIcon || buttonConfig;
+    const marginSide = $iconPlacement === 'before' ? 'margin-right' : 'margin-left';
 
     return `
       width: ${sizeConfig.iconSize.width};
@@ -65,12 +70,43 @@ const IconWrapper = styled.span<{ $size: ButtonProps['size']; $position: 'before
   }}
 `;
 
+const TextWrapper = styled.span<{ $size: ButtonProps['size'] }>`
+  ${({ $size, theme }) => {
+    const buttonConfig = theme.components.button[$size || 'medium'];
+    const sizeConfig = buttonConfig?.withIcon || buttonConfig;
+    return `
+      padding: ${sizeConfig.textPadding || '0'};
+    `;
+  }}
+`;
+
+const IconOnlyWrapper = styled.span<{ $size: ButtonProps['size'] }>`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  ${({ $size, theme }) => {
+    const buttonConfig = theme.components.button[$size || 'medium'];
+    const sizeConfig = buttonConfig?.onlyIcon || buttonConfig;
+    return `
+      width: ${sizeConfig.iconSize?.width || '14px'};
+      height: ${sizeConfig.iconSize?.height || '14px'};
+
+      svg, img {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+    `;
+  }}
+`;
+
 const StyledButton = styled.button<{
   $variant: ButtonProps['variant'];
   $colorType: ButtonProps['colorType'];
   $size: ButtonProps['size'];
   $fullWidth: boolean;
-  $isIconOnly: boolean;
   $iconBordered: boolean;
 }>`
   display: inline-flex;
@@ -82,18 +118,21 @@ const StyledButton = styled.button<{
   width: ${({ $fullWidth }) => ($fullWidth ? '100%' : 'auto')};
 
   /* Size variants */
-  ${({ $size, $isIconOnly, theme }) => {
-    const sizeConfig = theme.components.button[$size || 'medium'];
+  ${({ $size, $variant, theme }) => {
+    const sizeName = $size || 'medium';
+    const buttonConfig = theme.components.button[sizeName];
 
-    if ($isIconOnly) {
+    // Icon variant: use onlyIcon config (square button with padding)
+    if ($variant === 'icon') {
+      const sizeConfig = buttonConfig?.onlyIcon || buttonConfig;
       return `
-        padding: 0;
-        width: ${sizeConfig.height};
-        height: ${sizeConfig.height};
-        border-radius: ${sizeConfig.borderRadius};
+        padding: ${sizeConfig.padding || '7px'};
+        border-radius: ${sizeConfig.borderRadius || theme.borderRadius.small};
       `;
     }
 
+    // Other variants: use withIcon config
+    const sizeConfig = buttonConfig?.withIcon || buttonConfig;
     return `
       padding: ${sizeConfig.padding};
       font-size: ${sizeConfig.fontSize};
@@ -104,9 +143,9 @@ const StyledButton = styled.button<{
   }}
 
   /* Variant and color type styles */
-  ${({ $variant, $colorType, $isIconOnly, $iconBordered, theme }) => {
-    // Handle icon-only buttons
-    if ($variant === 'icon' || $isIconOnly) {
+  ${({ $variant, $colorType, $iconBordered, theme }) => {
+    // Handle icon variant buttons
+    if ($variant === 'icon') {
       const baseVariant = $iconBordered ? 'outlined' : 'text';
       const styles = theme.components.button[baseVariant]['default'];
 
@@ -196,12 +235,20 @@ const StyledButton = styled.button<{
  * <Button>button</Button>
  *
  * @example
- * // Button with icons
- * <Button iconBefore={<Icon />}>button</Button>
+ * // Button with icon (string URL)
+ * <Button icon="https://example.com/icon.svg" iconPlacement="before">button</Button>
  *
  * @example
- * // Icon-only button
- * <Button variant="icon" iconBordered><Icon /></Button>
+ * // Button with icon (ReactNode)
+ * <Button icon={<CustomIcon />} iconPlacement="after">button</Button>
+ *
+ * @example
+ * // Icon variant button (square, no padding)
+ * <Button variant="icon" icon={<CustomIcon />} iconBordered />
+ *
+ * @example
+ * // Icon variant button without border
+ * <Button variant="icon" icon={<CustomIcon />} />
  */
 export const Button: React.FC<ButtonProps> = ({
   variant = 'solid',
@@ -210,44 +257,40 @@ export const Button: React.FC<ButtonProps> = ({
   disabled = false,
   loading = false,
   fullWidth = false,
-  iconBefore,
-  iconAfter,
+  icon,
+  iconPlacement = 'before',
   iconBordered = false,
   children,
   ...rest
 }) => {
-  // Determine if this is an icon-only button
-  const isIconOnly = variant === 'icon' || (!children && !!(iconBefore || iconAfter));
-
-  // For icon-only buttons, use the icon as children
-  const iconOnlyContent = iconBefore || iconAfter;
-
   return (
     <StyledButton
       $variant={variant}
       $colorType={colorType}
       $size={size}
       $fullWidth={fullWidth}
-      $isIconOnly={isIconOnly}
       $iconBordered={iconBordered}
       disabled={disabled || loading}
       {...rest}
     >
       {loading ? (
-        <>Loading...</>
-      ) : isIconOnly ? (
-        iconOnlyContent
+        <TextWrapper $size={size}>Loading...</TextWrapper>
+      ) : variant === 'icon' ? (
+        // Icon variant: render icon with onlyIcon wrapper (uses onlyIcon config)
+        <IconOnlyWrapper $size={size}>
+          {typeof icon === 'string' ? <Icon src={icon} /> : icon || children}
+        </IconOnlyWrapper>
       ) : (
         <>
-          {iconBefore && (
-            <IconWrapper $size={size} $position="before">
-              {iconBefore}
+          {icon && iconPlacement === 'before' && (
+            <IconWrapper $size={size} $iconPlacement="before">
+              {typeof icon === 'string' ? <Icon src={icon} /> : icon}
             </IconWrapper>
           )}
-          {children}
-          {iconAfter && (
-            <IconWrapper $size={size} $position="after">
-              {iconAfter}
+          <TextWrapper $size={size}>{children}</TextWrapper>
+          {icon && iconPlacement === 'after' && (
+            <IconWrapper $size={size} $iconPlacement="after">
+              {typeof icon === 'string' ? <Icon src={icon} /> : icon}
             </IconWrapper>
           )}
         </>

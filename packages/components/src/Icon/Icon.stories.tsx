@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Icon, IconProvider } from './index';
+import BoldIcon from '../assets/svg/bold.svg'
 
 // Import icon components for demonstration
 const CloseIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -93,6 +94,16 @@ export const WithIconRegistry: Story = {
 export const WithImageUrl: Story = {
   args: {
     src: 'https://api.iconify.design/mdi/heart.svg',
+    size: 24,
+  },
+  render: (args) => (
+    <Icon {...args} />
+  ),
+};
+
+export const WithImportSvg: Story = {
+  args: {
+    src: BoldIcon,
     size: 24,
   },
   render: (args) => (

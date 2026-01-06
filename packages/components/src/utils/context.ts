@@ -1,6 +1,6 @@
-import { Theme } from "@officesdk/design-theme";
+import type { Theme } from "@officesdk/design-theme";
 
-const globalTheme: Theme = {};
+const globalTheme: Theme = {} as Theme;
 
 const registerGlobalTheme = (theme: Theme) => {
   // Replace the reference instead of mutating

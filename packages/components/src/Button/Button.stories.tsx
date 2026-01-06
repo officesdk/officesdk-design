@@ -15,6 +15,12 @@ const CloseIcon = () => (
   </svg>
 );
 
+const RefreshIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+  <path fillRule="evenodd" clipRule="evenodd" d="M14.736 1.8909C14.5717 1.51067 14.1302 1.33564 13.75 1.49996L13.6748 1.53246C13.3361 1.67883 13.1802 2.07206 13.3266 2.41076C12.3093 1.95552 11.1837 1.70234 10 1.70234C5.43256 1.70234 1.75 5.46047 1.75 10.0714C1.75 11.0643 1.92075 12.0182 2.2346 12.9036C2.37298 13.294 2.82162 13.4584 3.19812 13.2857C3.57461 13.113 3.73559 12.6687 3.60483 12.2756C3.37489 11.5845 3.25 10.8434 3.25 10.0714C3.25 6.26654 6.28317 3.20234 10 3.20234C11.7257 3.20234 13.3001 3.8605 14.4955 4.94731C14.7568 5.18496 15.1486 5.208 15.436 5.00262C15.7235 4.79724 15.8286 4.41914 15.6885 4.09486L14.736 1.8909ZM16.5413 8.36911C16.6775 8.91285 16.75 9.48306 16.75 10.0714C16.75 13.8762 13.7168 16.9404 10 16.9404C8.27428 16.9404 6.69985 16.2823 5.50455 15.1955C5.24317 14.9578 4.8514 14.9348 4.56397 15.1402C4.27655 15.3455 4.1714 15.7236 4.31154 16.0479L5.26401 18.2519C5.42833 18.6321 5.86977 18.8071 6.25 18.6428L6.32519 18.6103C6.66389 18.464 6.8198 18.0707 6.67343 17.732C7.69075 18.1873 8.81627 18.4404 10 18.4404C14.5674 18.4404 18.25 14.6823 18.25 10.0714C18.25 9.30202 18.1475 8.55592 17.9552 7.84686C17.8468 7.44709 17.4119 7.24918 17.0234 7.39282C16.6349 7.53646 16.4407 7.96731 16.5413 8.36911ZM10 8C8.89543 8 8 8.89543 8 10C8 11.1046 8.89543 12 10 12C11.1046 12 12 11.1046 12 10C12 8.89543 11.1046 8 10 8Z" fill="#41464B"/>
+</svg>
+);
+
 const meta: Meta<typeof Button> = {
   title: 'Components/Button',
   component: Button,
@@ -50,9 +56,14 @@ const meta: Meta<typeof Button> = {
       control: 'boolean',
       description: 'Whether the button takes full width',
     },
-    iconBordered: {
-      control: 'boolean',
-      description: 'Whether icon button has border (only for icon variant)',
+    icon: {
+      control: 'text',
+      description: 'Icon URL or ReactNode to display',
+    },
+    iconPlacement: {
+      control: 'radio',
+      options: ['before', 'after'],
+      description: 'Icon placement relative to text',
     },
   },
 };
@@ -175,7 +186,8 @@ export const WithIconBefore: Story = {
   args: {
     variant: 'solid',
     colorType: 'default',
-    iconBefore: <RedoIcon />,
+    icon: <RedoIcon />,
+    iconPlacement: 'before',
     children: 'button',
   },
 };
@@ -184,44 +196,29 @@ export const WithIconAfter: Story = {
   args: {
     variant: 'solid',
     colorType: 'default',
-    iconAfter: <RedoIcon />,
+    icon: <RedoIcon />,
+    iconPlacement: 'after',
     children: 'button',
   },
 };
 
-export const WithBothIcons: Story = {
+// ========== Icon Only Button ==========
+export const IconVariantBordered: Story = {
   args: {
-    variant: 'solid',
+    variant: 'icon',
     colorType: 'default',
-    iconBefore: <RedoIcon />,
-    iconAfter: <RedoIcon />,
-    children: 'button',
-  },
-};
-
-// ========== Icon Button ==========
-export const IconButtonBordered: Story = {
-  args: {
-    variant: 'icon',
+    icon: <CloseIcon />,
     iconBordered: true,
-    children: <CloseIcon />,
   },
 };
 
-export const IconButtonBorderless: Story = {
+export const IconVariantBorderless: Story = {
   args: {
     variant: 'icon',
+    colorType: 'default',
+    size: 'extraLarge',
+    icon: <RefreshIcon />,
     iconBordered: false,
-    children: <CloseIcon />,
-  },
-};
-
-export const IconButtonDisabled: Story = {
-  args: {
-    variant: 'icon',
-    iconBordered: true,
-    disabled: true,
-    children: <CloseIcon />,
   },
 };
 
@@ -308,21 +305,21 @@ export const AllVariantsShowcase: Story = {
       </div>
 
       <div>
-        <h3 style={{ marginBottom: '12px' }}>Icon Button</h3>
+        <h3 style={{ marginBottom: '12px' }}>Icon Variant Button (Square, No Padding)</h3>
         <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
-          <Button variant="icon" iconBordered><CloseIcon /></Button>
-          <Button variant="icon" iconBordered={false}><CloseIcon /></Button>
-          <Button variant="icon" iconBordered disabled><CloseIcon /></Button>
+          <Button variant="icon" icon={<CloseIcon />} iconBordered />
+          <Button variant="icon" icon={<CloseIcon />} iconBordered={false} />
+          <Button variant="icon" icon={<CloseIcon />} iconBordered disabled />
         </div>
       </div>
 
       <div>
-        <h3 style={{ marginBottom: '12px' }}>Icon Button</h3>
+        <h3 style={{ marginBottom: '12px' }}>Button with Icons</h3>
         <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-          <Button variant="solid" iconBefore={<RedoIcon />}>button</Button>
-          <Button variant="solid" iconAfter={<RedoIcon />}>button</Button>
-          <Button variant="outlined" iconBefore={<RedoIcon />}>secondary button</Button>
-          <Button variant="text" iconBefore={<RedoIcon />}>text button</Button>
+          <Button variant="solid" icon={<RedoIcon />} iconPlacement="before">button</Button>
+          <Button variant="solid" icon={<RedoIcon />} iconPlacement="after">button</Button>
+          <Button variant="outlined" icon={<RedoIcon />} iconPlacement="before">secondary button</Button>
+          <Button variant="text" icon={<RedoIcon />} iconPlacement="before">text button</Button>
         </div>
       </div>
 
