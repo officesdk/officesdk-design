@@ -1,13 +1,15 @@
- const globalTheme: Record<string, any> = {}
+import { Theme } from "@officesdk/design-theme";
 
-const registerGlobalTheme = (theme: Record<string, any>) => {
+const globalTheme: Theme = {};
+
+const registerGlobalTheme = (theme: Theme) => {
   // Replace the reference instead of mutating
- Object.assign(globalTheme, { ...globalTheme, ...theme });
-}
+  Object.assign(globalTheme, { ...globalTheme, ...theme });
+};
 
-export const getGlobalTheme = () => {
+export const getGlobalTheme = (): Theme => {
   return globalTheme;
-}
+};
 
 /**
  * Register global context
@@ -17,9 +19,8 @@ export const getGlobalTheme = () => {
  *
  * @param context - The context to register
  */
-export const registerGlobalContext = (context: { theme: Record<string, any> }) => {
+export const registerGlobalContext = (context: { theme: Theme }) => {
   if (context.theme) {
     registerGlobalTheme(context.theme);
   }
-}
-
+};

@@ -4,6 +4,11 @@
     "jsx": "react",
     "outDir": "./dist",
     "rootDir": "./src",
+    "paths": {
+      "@officesdk/design-theme": [
+        "../../packages/theme/src/index.ts"
+      ]
+    },
     "composite": false,
     "incremental": false
   },

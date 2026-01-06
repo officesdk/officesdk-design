@@ -7,8 +7,6 @@ import { registerGlobalContext } from '../utils/context';
 
 const UIConfigContext = createContext<UIConfig | null>(null);
 
-
-
 export interface UIConfigProviderProps {
   /**
    * UI configuration

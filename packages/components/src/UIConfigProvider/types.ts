@@ -1,3 +1,4 @@
+import { Theme } from '@officesdk/design-theme';
 import type { IconRegistry } from '../Icon/IconProvider';
 
 export type ToastPosition =
@@ -106,7 +107,7 @@ export interface UIConfig {
   /**
    * Theme configuration (required)
    */
-  theme: any; // Will be typed as Theme from @officesdk/design/theme
+  theme: Theme; // Will be typed as Theme from @officesdk/design/theme
   /**
    * Icon registry (optional)
    */
