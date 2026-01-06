@@ -1,5 +1,11 @@
 # @officesdk/design
 
+## 0.1.6
+
+### Patch Changes
+
+- d23968c: feat: add prefixCls to tooltip
+
 ## 0.1.5
 
 ### Patch Changes
