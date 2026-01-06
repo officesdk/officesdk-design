@@ -3,7 +3,7 @@ import RcTooltip from 'rc-tooltip';
 import type { TooltipProps as RcTooltipProps } from 'rc-tooltip/lib/Tooltip';
 import 'rc-tooltip/assets/bootstrap.css';
 
-export interface TooltipProps extends Partial<RcTooltipProps> {
+export interface TooltipProps extends Omit<Partial<RcTooltipProps>, 'prefixCls'> {
   /**
    * Tooltip content
    */
@@ -80,7 +80,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
   };
 
   return (
-    <RcTooltip {...tooltipProps}>
+    <RcTooltip {...tooltipProps} prefixCls="od-tooltip">
       {children}
     </RcTooltip>
   );
