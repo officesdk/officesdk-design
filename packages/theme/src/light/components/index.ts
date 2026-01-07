@@ -5,12 +5,13 @@ import { inputSearch } from './inputSearch';
 import { radio } from './radio';
 import { checkbox } from './checkbox';
 import { switchComponent } from './switch';
-import { dropdown } from './dropdown';
 import { tab } from './tab';
 import { slider } from './slider';
 import { inputNumber } from './inputNumber';
 import { tooltip } from './tooltip';
 import { toolbarButton } from './toolbarButton';
+import { menu } from './menu';
+import { dropdownButton, dropdown } from './dropdown';
 
 export {
   button,
@@ -21,7 +22,9 @@ export {
   checkbox,
   switchComponent,
   dropdown,
+  dropdownButton,
   tab,
+  menu,
   slider,
   inputNumber,
   tooltip,
@@ -42,4 +45,6 @@ export const components = {
   inputNumber,
   tooltip,
   toolbarButton,
+  menu,
+  dropdownButton
 };

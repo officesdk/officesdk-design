@@ -34,6 +34,9 @@ export type { TooltipProps } from './Tooltip';
 export { ToolbarButton } from './ToolbarButton';
 export type { ToolbarButtonProps } from './ToolbarButton';
 
+export { DropdownButton, Menu, Dropdown, MenuGlobalStyles, DropdownGlobalStyles } from './dropdown';
+export type { DropdownButtonProps, MenuProps, MenuItem, MenuGroup, MenuDivider, MenuItemType, DropdownProps } from './dropdown';
+
 export { UIConfigProvider, useUIConfig, createUIConfig, mergeUIConfig } from './UIConfigProvider';
 export type {
   UIConfigProviderProps,

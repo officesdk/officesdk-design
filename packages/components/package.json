@@ -41,7 +41,10 @@
     "rename-mts": "mv dist/esm/index.d.mts dist/esm/index.d.ts"
   },
   "peerDependencies": {
+    "rc-dropdown": "^4.0.0",
+    "rc-menu": "^9.0.0",
     "rc-tooltip": "^6.0.0",
+    "rc-virtual-list": "^3.0.0",
     "react": ">=16.9.0",
     "react-dom": ">=16.9.0",
     "styled-components": ">=5.2.0"

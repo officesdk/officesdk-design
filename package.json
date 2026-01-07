@@ -84,6 +84,9 @@
     "husky": "^9.1.7",
     "jsdom": "^27.4.0",
     "lint-staged": "^16.2.7",
+    "rc-dropdown": "^4.2.1",
+    "rc-menu": "^9.16.1",
+    "rc-virtual-list": "^3.19.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-is": "^18.2.0",
@@ -100,7 +103,7 @@
     "yarn": ">=4.0.0"
   },
   "dependencies": {
-    "@officesdk/editor-sdk-core": "0.0.0-alpha.8",
+    "@officesdk/editor-sdk-core": "0.0.0-alpha.9",
     "rc-tooltip": "^6.0.0"
   }
 }

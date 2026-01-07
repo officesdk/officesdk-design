@@ -1,96 +1,68 @@
-import { colors } from '../base';
-import { DropdownConfig } from '@officesdk/editor-sdk-core/shared';
+import { DropdownConfig, DropdownButtonConfig } from '@officesdk/editor-sdk-core/shared';
+import { borderRadius, boxShadow, colors } from '../base';
 
-export const dropdown: DropdownConfig  = {
-  icons: {
-    arrow: {
-      url: '',
-      size: { width: '12px', height: '12px' },
-      expandedRotateAngel: '180deg',
-    },
-    check: {
-      url: '',
-      size: { width: '14px', height: '14px' },
-    },
-  },
-  button: {
-    trigger: {
-      borderColor: colors.palettes.transparency['20'],
-      borderColorHover: colors.palettes.transparency['30'],
-      borderColorActive: colors.palettes.transparency['30'],
-      borderColorDisabled: colors.palettes.transparency['10'],
-      background: colors.palettes.gray['0'],
-      backgroundHover: colors.palettes.gray['0'],
-      backgroundActive: colors.palettes.gray['0'],
-      backgroundDisabled: colors.palettes.gray['5'],
-      color: colors.palettes.brand,
-      colorDisabled: colors.palettes.transparency['30'],
-      boxShadow: 'none',
-      boxShadowHover: 'none',
-      boxShadowActive: '0 2px 8px 0 rgba(0, 0, 0, 0.04)',
-      boxShadowDisabled: 'none',
-    },
-    menu: {
-      background: colors.palettes.gray['0'],
-      borderColor: colors.palettes.transparency['10'],
-      borderRadius: '8px',
-      padding: '4px',
-      boxShadow: '0 8px 18px 0 rgba(0, 0, 0, 0.06)',
-      maxHeight: '280px',
-    },
-    menuItem: {
-      background: 'transparent',
-      backgroundHover: colors.palettes.transparency['5'],
-      backgroundDisabled: 'transparent',
-      backgroundSelected: colors.palettes.transparency['8'],
-      color: colors.palettes.brand,
-      colorDisabled: colors.palettes.transparency['30'],
-      padding: '8px 12px',
-    },
-  },
-  input: {
-    trigger: {
-      borderColor: colors.palettes.transparency['10'],
-      borderColorHover: colors.palettes.transparency['20'],
-      borderColorActive: colors.palettes.transparency['30'],
-      borderColorDisabled: colors.palettes.transparency['10'],
-      background: colors.palettes.gray['0'],
-      backgroundHover: colors.palettes.gray['0'],
-      backgroundActive: colors.palettes.gray['0'],
-      backgroundDisabled: colors.palettes.gray['5'],
-      color: colors.palettes.brand,
-      colorDisabled: colors.palettes.transparency['30'],
-      boxShadow: 'none',
-      boxShadowHover: 'none',
-      boxShadowActive: '0 2px 8px 0 rgba(0, 0, 0, 0.04)',
-      boxShadowDisabled: 'none',
-    },
-    menu: {
-      background: colors.palettes.gray['0'],
-      borderColor: colors.palettes.transparency['10'],
-      borderRadius: '8px',
-      padding: '4px',
-      boxShadow: '0 8px 18px 0 rgba(0, 0, 0, 0.06)',
-      maxHeight: '280px',
-    },
-    menuItem: {
-      background: 'transparent',
-      backgroundHover: colors.palettes.transparency['5'],
-      backgroundDisabled: 'transparent',
-      backgroundSelected: colors.palettes.transparency['8'],
-      color: colors.palettes.brand,
-      colorDisabled: colors.palettes.transparency['30'],
-      padding: '8px 12px',
-    },
-  },
-  large: {
-    height: '36px',
-    padding: '8px 12px',
-    fontSize: '14px',
-    lineHeight: '20px',
-    borderRadius: '4px',
-    fontWeight: 400,
-    iconSize: { width: '16px', height: '16px' },
-  },
+export const dropdown: DropdownConfig = {
+  borderRadius: borderRadius.medium,
+  border: `1px solid ${colors.palettes.transparency['10']}`,
+  background: colors.palettes.gray['0'],
+  boxShadow: boxShadow.large,
+  padding: '4px 0',
 };
 
+export const dropdownButton: DropdownButtonConfig = {
+  // Color states
+  color: {
+    normal: colors.palettes.gray['100'],
+    hover: colors.palettes.gray['100'],
+    active: colors.palettes.gray['100'],
+    disabled: colors.palettes.transparency['30'],
+  },
+  // Background states
+  background: {
+    normal: colors.palettes.gray['0'],
+    hover: colors.palettes.gray['0'],
+    active: colors.palettes.gray['0'],
+    disabled: colors.palettes.gray['5'],
+  },
+  // Icon configuration
+  icon: {
+    size: { width: '18px', height: '18px' },
+    opacity: {
+      normal: '1',
+      hover: '1',
+      active: '1',
+      disabled: '0.3',
+    },
+  },
+  // Indicator (arrow) configuration
+  indicator: {
+    url: '', // Use default arrow
+    size: { width: '18px', height: '18px' },
+    rotate: '90deg', // Arrow points right by default, rotate to point down
+    opacity: {
+      normal: '1',
+      hover: '1',
+      active: '1',
+      disabled: '0.3',
+    },
+  },
+  // Size configurations
+  size: {
+    large: {
+      padding: '10px 16px',
+      fontSize: '13px',
+      height: '40px',
+      gap: '8px',
+      iconSize: { width: '18px', height: '18px' },
+      indicatorSize: { width: '18px', height: '18px' },
+    },
+    medium: {
+      padding: '4px 8px',
+      fontSize: '13px',
+      height: '28px',
+      gap: '8px',
+      iconSize: { width: '18px', height: '18px' },
+      indicatorSize: { width: '18px', height: '18px' },
+    },
+  },
+};

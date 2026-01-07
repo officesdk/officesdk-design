@@ -4,6 +4,7 @@ import { IconProvider } from '../Icon/IconProvider';
 import { ToastContainer } from '../Toast/ToastContainer';
 import type { UIConfig } from './types';
 import { TooltipGlobalStyles } from '../Tooltip';
+import { MenuGlobalStyles, DropdownGlobalStyles } from '../dropdown';
 import { registerGlobalContext } from '../utils/context';
 
 const UIConfigContext = createContext<UIConfig | null>(null);
@@ -73,10 +74,16 @@ export const UIConfigProvider: React.FC<UIConfigProviderProps> = ({ config, chil
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const TooltipStyles = TooltipGlobalStyles as any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const MenuStyles = MenuGlobalStyles as any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const DropdownStyles = DropdownGlobalStyles as any;
 
   return (
     <UIConfigContext.Provider value={config}>
       <TooltipStyles />
+      <MenuStyles />
+      <DropdownStyles />
       <IconProvider icons={icons}>
         <ToastContainer
           maxCount={toastConfig.maxCount}

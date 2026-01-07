@@ -1250,7 +1250,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.11.1, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.13.10, @babel/runtime@npm:^7.17.8, @babel/runtime@npm:^7.18.0, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.20.7, @babel/runtime@npm:^7.23.2, @babel/runtime@npm:^7.5.5":
+"@babel/runtime@npm:^7.10.1, @babel/runtime@npm:^7.11.1, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.13.10, @babel/runtime@npm:^7.17.8, @babel/runtime@npm:^7.18.0, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.20.0, @babel/runtime@npm:^7.20.7, @babel/runtime@npm:^7.23.2, @babel/runtime@npm:^7.5.5":
   version: 7.28.4
   resolution: "@babel/runtime@npm:7.28.4"
   checksum: 10c0/792ce7af9750fb9b93879cc9d1db175701c4689da890e6ced242ea0207c9da411ccf16dc04e689cc01158b28d7898c40d75598f4559109f761c12ce01e959bf7
@@ -2582,7 +2582,10 @@ __metadata:
     tsup: "npm:^8.0.1"
     typescript: "npm:^5.3.3"
   peerDependencies:
+    rc-dropdown: ^4.0.0
+    rc-menu: ^9.0.0
     rc-tooltip: ^6.0.0
+    rc-virtual-list: ^3.0.0
     react: ">=16.9.0"
     react-dom: ">=16.9.0"
     styled-components: ">=5.2.0"
@@ -2635,18 +2638,20 @@ __metadata:
     "@officesdk/design-theme": "workspace:*"
     "@officesdk/design-utils": "workspace:*"
   peerDependencies:
-    "@officesdk/editor-sdk-core": 0.0.0-alpha.8
+    "@officesdk/editor-sdk-core": 0.0.0-alpha.9
+    rc-menu: ^9.0.0
     rc-tooltip: ^6.0.0
+    rc-virtual-list: ^3.0.0
     react: ">=16.9.0"
     react-dom: ">=16.9.0"
     styled-components: ">=5.2.0"
   languageName: unknown
   linkType: soft
 
-"@officesdk/editor-sdk-core@npm:0.0.0-alpha.8":
-  version: 0.0.0-alpha.8
-  resolution: "@officesdk/editor-sdk-core@npm:0.0.0-alpha.8"
-  checksum: 10c0/612d4f1f2baa573f2c7a454808fe321d2674b4d412ed230a467dc9162529110ea9a81123c6060b373d9d16560e2cdc92b00bfbfaa00d3b6f991c7c8450fb8b83
+"@officesdk/editor-sdk-core@npm:0.0.0-alpha.9":
+  version: 0.0.0-alpha.9
+  resolution: "@officesdk/editor-sdk-core@npm:0.0.0-alpha.9"
+  checksum: 10c0/f4158ac2eab24a8bd3f9a34863de50926b8ecef5ba6acd3d9d57bfe627fcf56a1836c02a59034eed129edd229312c2382f283d2595b0d85594e0c718d0a0a3d9
   languageName: node
   linkType: hard
 
@@ -6235,7 +6240,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"classnames@npm:^2.2.1, classnames@npm:^2.3.1, classnames@npm:^2.3.2":
+"classnames@npm:2.x, classnames@npm:^2.2.1, classnames@npm:^2.2.6, classnames@npm:^2.3.1, classnames@npm:^2.3.2":
   version: 2.5.1
   resolution: "classnames@npm:2.5.1"
   checksum: 10c0/afff4f77e62cea2d79c39962980bf316bacb0d7c49e13a21adaadb9221e1c6b9d3cdb829d8bb1b23c406f4e740507f37e1dcf506f7e3b7113d17c5bab787aa69
@@ -10523,7 +10528,7 @@ __metadata:
   resolution: "officesdk-design-monorepo@workspace:."
   dependencies:
     "@changesets/cli": "npm:^2.29.8"
-    "@officesdk/editor-sdk-core": "npm:0.0.0-alpha.8"
+    "@officesdk/editor-sdk-core": "npm:0.0.0-alpha.9"
     "@storybook/addon-docs": "npm:^7.6.7"
     "@storybook/addon-essentials": "npm:^7.6.7"
     "@storybook/addon-interactions": "npm:^7.6.7"
@@ -10552,7 +10557,10 @@ __metadata:
     husky: "npm:^9.1.7"
     jsdom: "npm:^27.4.0"
     lint-staged: "npm:^16.2.7"
+    rc-dropdown: "npm:^4.2.1"
+    rc-menu: "npm:^9.16.1"
     rc-tooltip: "npm:^6.0.0"
+    rc-virtual-list: "npm:^3.19.2"
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
     react-is: "npm:^18.2.0"
@@ -11274,7 +11282,39 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rc-motion@npm:^2.0.0":
+"rc-dropdown@npm:^4.2.1":
+  version: 4.2.1
+  resolution: "rc-dropdown@npm:4.2.1"
+  dependencies:
+    "@babel/runtime": "npm:^7.18.3"
+    "@rc-component/trigger": "npm:^2.0.0"
+    classnames: "npm:^2.2.6"
+    rc-util: "npm:^5.44.1"
+  peerDependencies:
+    react: ">=16.11.0"
+    react-dom: ">=16.11.0"
+  checksum: 10c0/ec980e6c9f8bbba53e895002a0c3a28f294ae07f3ebc6c9a9cb80c7e1bb74ba9f0e0c4b9c23f487fdf8c5a4531000e05b5b43744ef506f0fd869165486768817
+  languageName: node
+  linkType: hard
+
+"rc-menu@npm:^9.16.1":
+  version: 9.16.1
+  resolution: "rc-menu@npm:9.16.1"
+  dependencies:
+    "@babel/runtime": "npm:^7.10.1"
+    "@rc-component/trigger": "npm:^2.0.0"
+    classnames: "npm:2.x"
+    rc-motion: "npm:^2.4.3"
+    rc-overflow: "npm:^1.3.1"
+    rc-util: "npm:^5.27.0"
+  peerDependencies:
+    react: ">=16.9.0"
+    react-dom: ">=16.9.0"
+  checksum: 10c0/b61f21013cd679777b673d6e1a9f8429ffd9481a49665fc9a9c78198025d52aa76ae162186c46ca9f332117c8c7ff32f30d72435e1ae1b2a3daec0f86cb48810
+  languageName: node
+  linkType: hard
+
+"rc-motion@npm:^2.0.0, rc-motion@npm:^2.4.3":
   version: 2.9.5
   resolution: "rc-motion@npm:2.9.5"
   dependencies:
@@ -11288,7 +11328,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rc-resize-observer@npm:^1.3.1":
+"rc-overflow@npm:^1.3.1":
+  version: 1.5.0
+  resolution: "rc-overflow@npm:1.5.0"
+  dependencies:
+    "@babel/runtime": "npm:^7.11.1"
+    classnames: "npm:^2.2.1"
+    rc-resize-observer: "npm:^1.0.0"
+    rc-util: "npm:^5.37.0"
+  peerDependencies:
+    react: ">=16.9.0"
+    react-dom: ">=16.9.0"
+  checksum: 10c0/7e9ce2fc3db7eb6e960b2848c0da9f67dcdc2a06eadd22baebe9933253424f6243c98fa7f093b765cb355d5fc3a880542748e199bee279dabc790fcf1bb2d34b
+  languageName: node
+  linkType: hard
+
+"rc-resize-observer@npm:^1.0.0, rc-resize-observer@npm:^1.3.1":
   version: 1.4.3
   resolution: "rc-resize-observer@npm:1.4.3"
   dependencies:
@@ -11318,7 +11373,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rc-util@npm:^5.24.4, rc-util@npm:^5.44.0, rc-util@npm:^5.44.1, rc-util@npm:^5.44.3":
+"rc-util@npm:^5.24.4, rc-util@npm:^5.27.0, rc-util@npm:^5.36.0, rc-util@npm:^5.37.0, rc-util@npm:^5.44.0, rc-util@npm:^5.44.1, rc-util@npm:^5.44.3":
   version: 5.44.4
   resolution: "rc-util@npm:5.44.4"
   dependencies:
@@ -11328,6 +11383,21 @@ __metadata:
     react: ">=16.9.0"
     react-dom: ">=16.9.0"
   checksum: 10c0/748b71a6280ddaaac93d1fb2c92f03818775468e7ccb6c221484687cc0b7e879d083e98e338f75ac0fe2e942dbb9c2405bd32d25e5a804bf1fb7a11f3f897127
+  languageName: node
+  linkType: hard
+
+"rc-virtual-list@npm:^3.19.2":
+  version: 3.19.2
+  resolution: "rc-virtual-list@npm:3.19.2"
+  dependencies:
+    "@babel/runtime": "npm:^7.20.0"
+    classnames: "npm:^2.2.6"
+    rc-resize-observer: "npm:^1.0.0"
+    rc-util: "npm:^5.36.0"
+  peerDependencies:
+    react: ">=16.9.0"
+    react-dom: ">=16.9.0"
+  checksum: 10c0/3778ade183a33d113555fb99465c2f59391c9b5178629cb7bb2947d5ee71a1b166bf9468b063394f63384965166ef368acf78cb5f4b3a23e9393af04543b6626
   languageName: node
   linkType: hard
 

@@ -48,3 +48,7 @@ coverage
 
 # coverage
 coverage/
+
+# yalc
+.yalc/
+yalc.lock
