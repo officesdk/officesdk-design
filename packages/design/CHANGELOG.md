@@ -1,5 +1,11 @@
 # @officesdk/design
 
+## 0.1.11
+
+### Patch Changes
+
+- 3b6e0e3: feat: add clickPreventDefault to Radio and Checkbox to block internal onchange
+
 ## 0.1.10
 
 ### Patch Changes
