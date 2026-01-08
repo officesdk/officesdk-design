@@ -1,5 +1,12 @@
 # @officesdk/design-components
 
+## 0.1.4
+
+### Patch Changes
+
+- Updated dependencies [5105c2a]
+  - @officesdk/design-theme@0.1.1
+
 ## 0.1.3
 
 ### Patch Changes
