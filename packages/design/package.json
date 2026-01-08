@@ -72,14 +72,16 @@
     "dist",
     "README.md"
   ],
-  "peerDependencies": {
+  "dependencies": {
     "@officesdk/editor-sdk-core": "0.0.0-alpha.9",
     "rc-menu": "^9.0.0",
-    "rc-tooltip": "^6.0.0",
-    "rc-virtual-list": "^3.0.0",
+    "rc-virtual-list": "^3.0.0"
+  },
+  "peerDependencies": {
     "react": ">=16.9.0",
     "react-dom": ">=16.9.0",
-    "styled-components": ">=5.2.0"
+    "styled-components": ">=5.2.0",
+    "rc-tooltip": "^6.0.0"
   },
   "devDependencies": {
     "@officesdk/design-components": "workspace:*",
