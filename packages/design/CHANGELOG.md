@@ -1,5 +1,11 @@
 # @officesdk/design
 
+## 0.1.10
+
+### Patch Changes
+
+- 44f8525: fix: Fix switch animation failing to trigger
+
 ## 0.1.9
 
 ### Patch Changes
