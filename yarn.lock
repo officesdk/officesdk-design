@@ -2639,9 +2639,9 @@ __metadata:
     "@officesdk/design-utils": "workspace:*"
     "@officesdk/editor-sdk-core": "npm:0.0.0-alpha.9"
     rc-menu: "npm:^9.0.0"
+    rc-tooltip: "npm:^6.0.0"
     rc-virtual-list: "npm:^3.0.0"
   peerDependencies:
-    rc-tooltip: ^6.0.0
     react: ">=16.9.0"
     react-dom: ">=16.9.0"
     styled-components: ">=5.2.0"
