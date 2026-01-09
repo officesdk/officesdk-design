@@ -1,5 +1,11 @@
 # @officesdk/design
 
+## 0.1.14
+
+### Patch Changes
+
+- 1e4b0a2: feat: Add borderless type to input component
+
 ## 0.1.13
 
 ### Patch Changes
