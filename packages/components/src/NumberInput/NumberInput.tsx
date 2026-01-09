@@ -52,8 +52,10 @@ export interface NumberInputProps {
   unit?: string;
   /**
    * Callback when value changes
+   * @param fixedValue - The clamped value within min/max range
+   * @param rawValue - The original input value before clamping
    */
-  onChange?: (value: number | null) => void;
+  onChange?: (fixedValue: number, rawValue: number) => void;
   /**
    * Custom className
    */
@@ -364,7 +366,7 @@ export const NumberInput: React.FC<NumberInputProps> = ({
         setInternalValue(clampedValue);
       }
 
-      onChange?.(clampedValue);
+      onChange?.(clampedValue, newValue);
     },
     [clampValue, controlledValue, onChange]
   );
@@ -478,4 +480,3 @@ export const NumberInput: React.FC<NumberInputProps> = ({
 };
 
 NumberInput.displayName = 'NumberInput';
-

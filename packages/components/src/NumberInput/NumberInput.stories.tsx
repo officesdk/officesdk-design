@@ -139,6 +139,23 @@ export const WithFormatter: Story = {
   },
 };
 
+export const WithRawValueCallback: Story = {
+  args: {
+    defaultValue: 50,
+    min: 0,
+    max: 100,
+    step: 1,
+    size: 'large',
+    onChange: (fixedValue, rawValue) => {
+      console.log('Fixed value:', fixedValue);
+      console.log('Raw value:', rawValue);
+      if (fixedValue !== rawValue) {
+        console.warn(`Value ${rawValue} was clamped to ${fixedValue}`);
+      }
+    },
+  },
+};
+
 export const Playground: Story = {
   args: {
     defaultValue: 0,
