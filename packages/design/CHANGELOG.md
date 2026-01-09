@@ -1,5 +1,11 @@
 # @officesdk/design
 
+## 0.1.12
+
+### Patch Changes
+
+- 0524099: feat: add inputStyle and inputClassName props to Input
+
 ## 0.1.11
 
 ### Patch Changes
