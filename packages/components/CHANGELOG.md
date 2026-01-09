@@ -1,5 +1,11 @@
 # @officesdk/design-components
 
+## 0.2.0
+
+### Minor Changes
+
+- ea8968d: add raw value for number input callback
+
 ## 0.1.4
 
 ### Patch Changes
