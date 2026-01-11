@@ -25,7 +25,12 @@ function isObject(item: any): item is Record<string, unknown> {
 
 const globalTheme: Theme = lightTheme;
 export const registerGlobalTheme = (theme: Theme) => {
-  deepMerge(globalTheme, theme);
+  // Theme is a complex object type, cast to Record for deepMerge
+  // Use double cast via unknown to satisfy TypeScript's type system
+  deepMerge(
+    globalTheme as unknown as Record<string, unknown>,
+    theme as unknown as Record<string, unknown>
+  );
 };
 
 export const getGlobalTheme = (): Theme => {
