@@ -3,6 +3,13 @@ export type { UIConfigProviderProps } from './UIConfigProvider';
 
 export { createUIConfig, mergeUIConfig } from './createUIConfig';
 
+export {
+  initUIConfig,
+  getUIConfig,
+  getGlobalIconRegistry,
+  getGlobalToastConfig,
+} from './configManager';
+
 export type {
   UIConfig,
   ToastConfig,

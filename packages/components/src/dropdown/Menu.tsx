@@ -1,10 +1,12 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import RcMenu, { MenuItem as RcMenuItem, SubMenu as RcSubMenu, Divider as RcDivider, ItemGroup as RcItemGroup } from 'rc-menu';
 import VirtualList from 'rc-virtual-list';
 import { styled } from '../utils/styled';
 import { Icon } from '../Icon';
 import { Input } from '../Input';
 import 'rc-menu/assets/index.css';
+import { MenuGlobalStyles } from './globalStyle';
+import { styleManager } from '../utils/styleManager';
 
 export interface MenuItem {
   type?: 'item';
@@ -366,6 +368,11 @@ export const Menu: React.FC<MenuProps> = ({
   className,
   style,
 }) => {
+  // Inject styles on first render using styleManager
+  useEffect(() => {
+    styleManager.inject('od-menu-styles', MenuGlobalStyles);
+  }, []);
+
   const [searchValue, setSearchValue] = useState('');
 
   const handleSearch = (value: string) => {

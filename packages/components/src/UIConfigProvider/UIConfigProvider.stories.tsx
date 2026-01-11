@@ -33,11 +33,11 @@ const DemoComponent = () => {
           Current Configuration
         </h2>
         <div style={{ background: '#f9f9f9', padding: '16px', borderRadius: '8px', fontSize: '14px' }}>
-          <div><strong>Locale:</strong> {config.locale}</div>
-          <div><strong>Toast Duration:</strong> {config.toast?.defaultDuration}ms</div>
-          <div><strong>Toast Max Count:</strong> {config.toast?.maxCount}</div>
-          <div><strong>Animation Duration:</strong> {config.animation?.duration}ms</div>
-          <div><strong>Animation Easing:</strong> {config.animation?.easing}</div>
+          <div><strong>Locale:</strong> {config?.locale}</div>
+          <div><strong>Toast Duration:</strong> {config?.toast?.defaultDuration}ms</div>
+          <div><strong>Toast Max Count:</strong> {config?.toast?.maxCount}</div>
+          <div><strong>Animation Duration:</strong> {config?.animation?.duration}ms</div>
+          <div><strong>Animation Easing:</strong> {config?.animation?.easing}</div>
         </div>
       </div>
 

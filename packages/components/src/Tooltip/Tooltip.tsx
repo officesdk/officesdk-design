@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import RcTooltip from 'rc-tooltip';
 import type { TooltipProps as RcTooltipProps } from 'rc-tooltip/lib/Tooltip';
 import 'rc-tooltip/assets/bootstrap.css';
+import { TooltipGlobalStyles } from './globalStyle';
+import { styleManager } from '../utils/styleManager';
 
 export interface TooltipProps extends Omit<Partial<RcTooltipProps>, 'prefixCls'> {
   /**
@@ -62,6 +64,11 @@ export const Tooltip: React.FC<TooltipProps> = ({
   getPopupContainer,
   ...rest
 }) => {
+  // Inject styles on first render using styleManager
+  useEffect(() => {
+    styleManager.inject('od-tooltip-styles', TooltipGlobalStyles);
+  }, []);
+
   const overlayContent = React.useMemo(() => <div>{content}</div>, [content]);
 
   // Generate className for variant/size combination

@@ -1,11 +1,31 @@
 import type { Theme } from "@officesdk/design-theme";
 import type React from "react";
+import { lightTheme } from "@officesdk/design/theme";
 
-const globalTheme: Theme = {} as Theme;
+function deepMerge<T extends Record<string, unknown>>(target: T, ...sources: Partial<T>[]): T {
+  if (!sources.length) return target;
+  const source = sources.shift();
+  if (isObject(target) && isObject(source)) {
+    for (const key in source) {
+      if (isObject(source[key])) {
+        if (!target[key]) Object.assign(target, { [key]: {} });
+        deepMerge(target[key] as Record<string, unknown>, source[key] as Record<string, unknown>);
+      } else {
+        Object.assign(target, { [key]: source[key] });
+      }
+    }
+  }
+  return deepMerge(target, ...sources);
+}
 
-const registerGlobalTheme = (theme: Theme) => {
-  // Replace the reference instead of mutating
-  Object.assign(globalTheme, { ...globalTheme, ...theme });
+function isObject(item: any): item is Record<string, unknown> {
+  return item && typeof item === "object" && !Array.isArray(item);
+}
+
+
+const globalTheme: Theme = lightTheme;
+export const registerGlobalTheme = (theme: Theme) => {
+  deepMerge(globalTheme, theme);
 };
 
 export const getGlobalTheme = (): Theme => {

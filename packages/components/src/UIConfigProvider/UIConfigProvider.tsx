@@ -1,10 +1,9 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { IconProvider } from '../Icon/IconProvider';
 import { ToastContainer } from '../Toast/ToastContainer';
 import type { UIConfig } from './types';
-import { TooltipGlobalStyles } from '../Tooltip';
-import { MenuGlobalStyles, DropdownGlobalStyles } from '../dropdown';
+import { initUIConfig, getUIConfig } from './configManager';
 import { registerGlobalContext } from '../utils/context';
 
 const UIConfigContext = createContext<UIConfig | null>(null);
@@ -21,10 +20,16 @@ export interface UIConfigProviderProps {
 }
 
 /**
- * UIConfigProvider Component
+ * UIConfigProvider Component (Optional, for React convenience)
  *
- * Unified provider for all UI components and global configurations
- * Includes ThemeProvider, IconProvider, ToastContainer, and other settings
+ * Unified provider for all UI components and global configurations.
+ * Includes IconProvider, ToastContainer, and other settings.
+ *
+ * Note: Global styles (Tooltip, Menu, Dropdown) are now injected on-demand
+ * when components are first used, so they are no longer included here.
+ *
+ * For non-React environments or when you want to avoid Provider nesting,
+ * use initUIConfig() instead.
  *
  * @example
  * import { UIConfigProvider } from '@officesdk/design';
@@ -43,47 +48,40 @@ export interface UIConfigProviderProps {
  * </UIConfigProvider>
  */
 export const UIConfigProvider: React.FC<UIConfigProviderProps> = ({ config, children }) => {
-  const { icons = {}, toast = {} } = config;
+  // Initialize global config on mount
+  useEffect(() => {
+    // Create render function compatible with React 18 and below
+    const renderFunction = (element: React.ReactElement, container: HTMLElement) => {
+      if ('createRoot' in ReactDOM) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const { createRoot } = ReactDOM as any;
+        const root = createRoot(container);
+        root.render(element);
+      } else {
+        // Fallback to React 17 and below
+        // eslint-disable-next-line react/no-deprecated
+        ReactDOM.render(element, container);
+      }
+    };
 
-  // Create a compatible render function
-  const renderFunction = (element: React.ReactElement, container: HTMLElement) => {
-    // Try React 18 createRoot first
-    if ('createRoot' in ReactDOM) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { createRoot } = ReactDOM as any;
-      const root = createRoot(container);
-      root.render(element);
-    } else {
-      // Fallback to React 17 and below
-      // eslint-disable-next-line react/no-deprecated
-      ReactDOM.render(element, container);
-    }
-  };
+    // Register render function first
+    registerGlobalContext({
+      theme: config.theme,
+      render: renderFunction,
+    });
 
-  // Register global context with theme and render function immediately
-  // This must happen before any styled components are rendered
-  registerGlobalContext({
-    theme: config.theme,
-    render: renderFunction,
-  });
+    // Then initialize full config
+    initUIConfig(config);
+  }, [config]);
 
+  const { icons = {} } = config;
   const toastConfig = {
-    maxCount: toast.maxCount ?? 5,
-    defaultDuration: toast.defaultDuration ?? 3000,
+    maxCount: config.toast?.maxCount ?? 5,
+    defaultDuration: config.toast?.defaultDuration ?? 3000,
   };
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const TooltipStyles = TooltipGlobalStyles as any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const MenuStyles = MenuGlobalStyles as any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const DropdownStyles = DropdownGlobalStyles as any;
 
   return (
     <UIConfigContext.Provider value={config}>
-      <TooltipStyles />
-      <MenuStyles />
-      <DropdownStyles />
       <IconProvider icons={icons}>
         <ToastContainer
           maxCount={toastConfig.maxCount}
@@ -99,17 +97,18 @@ export const UIConfigProvider: React.FC<UIConfigProviderProps> = ({ config, chil
 /**
  * Hook to access UI configuration
  *
+ * Falls back to global config if context is not available.
+ * This allows components to work even without UIConfigProvider when initUIConfig() is used.
+ *
  * @example
  * const config = useUIConfig();
- * console.log(config.theme);
- * console.log(config.locale);
+ * console.log(config?.theme);
+ * console.log(config?.locale);
  */
 export const useUIConfig = () => {
   const context = useContext(UIConfigContext);
-  if (!context) {
-    throw new Error('useUIConfig must be used within UIConfigProvider');
-  }
-  return context;
+  // Fallback to global config if context is not available
+  return context || getUIConfig();
 };
 
 UIConfigProvider.displayName = 'UIConfigProvider';

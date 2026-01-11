@@ -1,4 +1,5 @@
-import { forwardRef } from 'react';
+// React is required for JSX transform (jsx: "react")
+import React, { forwardRef } from 'react';
 import { Input, InputProps } from './Input';
 
 /**
@@ -18,6 +19,8 @@ import { Input, InputProps } from './Input';
  */
 export const UnderlinedInput = forwardRef<HTMLInputElement, Omit<InputProps, 'lineType'>>(
   (props, ref) => {
+    // React is used implicitly by JSX transform
+    void React;
     return <Input {...props} lineType="underlined" ref={ref} />;
   }
 );

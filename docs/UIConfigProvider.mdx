@@ -50,6 +50,8 @@ const config = createUIConfig({
 
 ## Basic Usage
 
+### Using UIConfigProvider (React Component)
+
 ```tsx
 import { UIConfigProvider, createUIConfig } from '@officesdk/design';
 import { lightTheme } from '@officesdk/design/theme';
@@ -66,6 +68,47 @@ function App() {
   );
 }
 ```
+
+### Using initUIConfig (Non-React / Global Configuration)
+
+For scenarios where you want to avoid React Provider nesting or configure before React app starts:
+
+```tsx
+import { initUIConfig } from '@officesdk/design';
+import { lightTheme } from '@officesdk/design/theme';
+import { iconRegistry } from '@officesdk/design/icons';
+
+// Initialize before React app starts (e.g., in index.tsx or main.tsx)
+initUIConfig({
+  theme: lightTheme,
+  icons: iconRegistry,
+  toast: {
+    maxCount: 5,
+    defaultDuration: 3000,
+  },
+});
+
+// Now you can use components without UIConfigProvider
+function App() {
+  return <Button>Click me</Button>;
+}
+```
+
+**Benefits of `initUIConfig`:**
+- ✅ No React Provider dependency - works in non-React environments
+- ✅ Avoid Provider nesting - useful for Modal/Portal scenarios
+- ✅ Global styles injected on-demand - only when components are first used
+- ✅ Can be called before React app starts
+
+**When to use `initUIConfig` vs `UIConfigProvider`:**
+- Use `initUIConfig` when:
+  - You want to avoid Provider nesting (e.g., Modal components)
+  - You need to configure before React app starts
+  - You're in a non-React environment
+- Use `UIConfigProvider` when:
+  - You prefer React Context pattern
+  - You need per-component-tree configuration
+  - You want to switch configurations dynamically
 
 ## Configuration Options
 
@@ -211,6 +254,30 @@ function MyComponent() {
 ```
 
 ## Advanced Usage
+
+### Modal / Portal Scenarios
+
+When using components inside Modals or Portals, you don't need to nest `UIConfigProvider`:
+
+```tsx
+import { initUIConfig } from '@officesdk/design';
+import { lightTheme } from '@officesdk/design/theme';
+
+// Initialize once at app startup
+initUIConfig({
+  theme: lightTheme,
+  icons: iconRegistry,
+});
+
+function Modal({ children }) {
+  return (
+    <Portal>
+      {/* Components automatically use global config - no Provider needed */}
+      {children}
+    </Portal>
+  );
+}
+```
 
 ### Merging Configurations
 

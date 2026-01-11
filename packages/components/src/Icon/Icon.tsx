@@ -1,6 +1,7 @@
 import React from 'react';
 import { styled } from '../utils/styled';
 import { useIconRegistry } from './IconProvider';
+import { getGlobalIconRegistry } from '../UIConfigProvider/configManager';
 
 export interface IconProps {
   /**
@@ -94,7 +95,10 @@ export const Icon: React.FC<IconProps> = ({
   style,
   onClick,
 }) => {
-  const registry = useIconRegistry();
+  const contextRegistry = useIconRegistry();
+  const globalRegistry = getGlobalIconRegistry();
+  // Use context registry first, fallback to global registry
+  const registry = contextRegistry || globalRegistry;
 
   // Priority: custom children > src > registry icon by name
   let iconElement: React.ReactNode = children;
@@ -116,7 +120,9 @@ export const Icon: React.FC<IconProps> = ({
     if (IconComponent) {
       iconElement = <IconComponent />;
     } else if (process.env.NODE_ENV !== 'production') {
-      console.warn(`Icon "${name}" not found in registry. Make sure IconProvider is set up.`);
+      console.warn(
+        `Icon "${name}" not found in registry. Make sure IconProvider is set up or call initUIConfig() with icons.`
+      );
     }
   }
 

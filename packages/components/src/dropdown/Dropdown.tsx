@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import RcDropdown from 'rc-dropdown';
 import type { DropdownProps as RcDropdownProps } from 'rc-dropdown';
 import 'rc-dropdown/assets/index.css';
+import { DropdownGlobalStyles } from './globalStyle';
+import { styleManager } from '../utils/styleManager';
 
 export interface DropdownProps extends Omit<Partial<RcDropdownProps>, 'prefixCls' | 'placement'> {
   /**
@@ -88,6 +90,11 @@ export const Dropdown: React.FC<DropdownProps> = ({
   getPopupContainer,
   ...rest
 }) => {
+  // Inject styles on first render using styleManager
+  useEffect(() => {
+    styleManager.inject('od-dropdown-styles', DropdownGlobalStyles);
+  }, []);
+
   const [internalVisible, setInternalVisible] = useState(defaultVisible);
 
   const isControlled = controlledVisible !== undefined;
