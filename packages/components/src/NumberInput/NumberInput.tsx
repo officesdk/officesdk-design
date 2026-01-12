@@ -51,11 +51,15 @@ export interface NumberInputProps {
    */
   unit?: string;
   /**
-   * Callback when value changes
-   * @param fixedValue - The clamped value within min/max range
-   * @param rawValue - The original input value before clamping
+   * Placeholder text
    */
-  onChange?: (fixedValue: number, rawValue: number) => void;
+  placeholder?: string;
+  /**
+   * Callback when value changes
+   * @param fixedValue - The clamped value within min/max range (can be undefined if empty)
+   * @param rawValue - The original input value before clamping (can be undefined if empty)
+   */
+  onChange?: (fixedValue: number | undefined, rawValue: number | undefined) => void;
   /**
    * Custom className
    */
@@ -294,7 +298,7 @@ const DownArrow = () => (
  */
 export const NumberInput: React.FC<NumberInputProps> = ({
   value: controlledValue,
-  defaultValue = 0,
+  defaultValue,
   min = -Infinity,
   max = Infinity,
   step = 1,
@@ -305,11 +309,12 @@ export const NumberInput: React.FC<NumberInputProps> = ({
   formatter,
   parser,
   unit,
+  placeholder,
   onChange,
   className,
   style,
 }) => {
-  const [internalValue, setInternalValue] = useState<number>(controlledValue ?? defaultValue);
+  const [internalValue, setInternalValue] = useState<number | undefined>(controlledValue ?? defaultValue);
   const [displayValue, setDisplayValue] = useState<string>('');
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -318,7 +323,10 @@ export const NumberInput: React.FC<NumberInputProps> = ({
 
   // Format value for display
   const formatValue = useCallback(
-    (val: number): string => {
+    (val: number | undefined): string => {
+      if (val === undefined) {
+        return '';
+      }
       if (formatter) {
         return formatter(val);
       }
@@ -351,7 +359,10 @@ export const NumberInput: React.FC<NumberInputProps> = ({
 
   // Clamp value to min/max
   const clampValue = useCallback(
-    (val: number): number => {
+    (val: number | undefined): number | undefined => {
+      if (val === undefined) {
+        return undefined;
+      }
       return Math.max(min, Math.min(max, val));
     },
     [min, max]
@@ -359,7 +370,7 @@ export const NumberInput: React.FC<NumberInputProps> = ({
 
   // Handle value change
   const handleValueChange = useCallback(
-    (newValue: number) => {
+    (newValue: number | undefined) => {
       const clampedValue = clampValue(newValue);
 
       if (controlledValue === undefined) {
@@ -374,13 +385,15 @@ export const NumberInput: React.FC<NumberInputProps> = ({
   // Increment value
   const increment = useCallback(() => {
     if (disabled) return;
-    handleValueChange(value + step);
+    const currentValue = value ?? 0;
+    handleValueChange(currentValue + step);
   }, [disabled, value, step, handleValueChange]);
 
   // Decrement value
   const decrement = useCallback(() => {
     if (disabled) return;
-    handleValueChange(value - step);
+    const currentValue = value ?? 0;
+    handleValueChange(currentValue - step);
   }, [disabled, value, step, handleValueChange]);
 
   // Handle input change
@@ -391,18 +404,28 @@ export const NumberInput: React.FC<NumberInputProps> = ({
   // Handle input blur
   const handleBlur = useCallback(() => {
     setIsFocused(false);
-    const parsed = parseValue(displayValue);
-    if (parsed !== null) {
-      handleValueChange(parsed);
+    const trimmedValue = displayValue.trim();
+    if (trimmedValue === '') {
+      handleValueChange(undefined);
+      setDisplayValue('');
     } else {
-      setDisplayValue(formatValue(value));
+      const parsed = parseValue(trimmedValue);
+      if (parsed !== null) {
+        handleValueChange(parsed);
+      } else {
+        setDisplayValue(formatValue(value));
+      }
     }
   }, [displayValue, parseValue, handleValueChange, value, formatValue]);
 
   // Handle input focus
   const handleFocus = useCallback(() => {
     setIsFocused(true);
-    setDisplayValue(String(value));
+    if (value !== undefined) {
+      setDisplayValue(String(value));
+    } else {
+      setDisplayValue('');
+    }
   }, [value]);
 
   // Handle keyboard events
@@ -440,6 +463,7 @@ export const NumberInput: React.FC<NumberInputProps> = ({
           onBlur={handleBlur}
           onKeyDown={handleKeyDown}
           disabled={disabled}
+          placeholder={placeholder}
           $size={size}
           $disabled={disabled}
         />

@@ -82,7 +82,7 @@ const SliderWrapper = styled.div<{
   display: flex;
   align-items: center;
   padding: ${({ $size }) => ($size === 'small' ? '7px 0' : '7px 0')};
-  padding-right: ${({ $size }) => ($size === 'small' ? '83px' : '72px')};
+  padding-right: ${({ $size }) => ($size === 'small' ? '8px' : '8px')};
   min-width: 0;
 `;
 
@@ -117,9 +117,20 @@ export const SpinButton: React.FC<SpinButtonProps> = ({
   const value = controlledValue !== undefined ? controlledValue : internalValue;
 
   // Handle value change from NumberInput or Slider
+  // NumberInput passes (fixedValue, rawValue), Slider passes single value
   const handleValueChange = useCallback(
-    (newValue: number | null) => {
-      if (newValue === null) return;
+    (fixedValue: number | undefined | null, rawValue?: number | undefined) => {
+      // Handle both NumberInput signature (fixedValue, rawValue) and Slider signature (single value)
+      // If rawValue is undefined, it means this is from Slider (single value)
+      // If rawValue is defined, it means this is from NumberInput (two parameters)
+      const newValue = rawValue === undefined
+        ? (fixedValue ?? 0) // Slider: single value
+        : (fixedValue ?? 0); // NumberInput: use fixedValue
+
+      if (newValue === null) {
+        onChange?.(null);
+        return;
+      }
 
       if (controlledValue === undefined) {
         setInternalValue(newValue);
