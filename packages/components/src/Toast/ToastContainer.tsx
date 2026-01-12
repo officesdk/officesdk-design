@@ -15,6 +15,7 @@ interface ToastContextValue {
   info: (message: React.ReactNode, options?: Partial<ToastProps>) => string;
   error: (message: React.ReactNode, options?: Partial<ToastProps>) => string;
   warn: (message: React.ReactNode, options?: Partial<ToastProps>) => string;
+  loading: (message: React.ReactNode, options?: Partial<ToastProps>) => string;
 }
 
 const ToastContext = createContext<ToastContextValue | null>(null);
@@ -144,6 +145,10 @@ export const ToastContainer: React.FC<ToastContainerProps> = ({
     return showToast({ ...options, variant: 'warn', message });
   }, [showToast]);
 
+  const loading = useCallback((message: React.ReactNode, options?: Partial<ToastProps>) => {
+    return showToast({ ...options, variant: 'loading', message });
+  }, [showToast]);
+
   const contextValue: ToastContextValue = {
     showToast,
     hideToast,
@@ -151,6 +156,7 @@ export const ToastContainer: React.FC<ToastContainerProps> = ({
     info,
     error,
     warn,
+    loading,
   };
 
   return (

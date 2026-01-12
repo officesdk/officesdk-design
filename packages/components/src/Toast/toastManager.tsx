@@ -234,6 +234,13 @@ class ToastManager {
   }
 
   /**
+   * Show loading toast
+   */
+  loading(message: React.ReactNode, options?: Partial<ToastProps>): string {
+    return this.show({ ...options, variant: 'loading', message });
+  }
+
+  /**
    * Destroy the toast container
    */
   destroy() {
@@ -305,6 +312,7 @@ export const toast = {
   info: (message: React.ReactNode, options?: Partial<ToastProps>) => toastManager.info(message, options),
   error: (message: React.ReactNode, options?: Partial<ToastProps>) => toastManager.error(message, options),
   warn: (message: React.ReactNode, options?: Partial<ToastProps>) => toastManager.warn(message, options),
+  loading: (message: React.ReactNode, options?: Partial<ToastProps>) => toastManager.loading(message, options),
   destroy: () => toastManager.destroy(),
 };
 

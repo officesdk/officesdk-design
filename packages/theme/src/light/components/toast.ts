@@ -42,5 +42,13 @@ export const toast: ToastConfig = {
       size: { width: '20px', height: '20px' },
     },
   },
+  loading: {
+    background: colors.palettes.blue['1'],
+    borderColor: colors.palettes.blue['2'],
+    icon: {
+      url: '',
+      size: { width: '20px', height: '20px' },
+    },
+  },
 };
 

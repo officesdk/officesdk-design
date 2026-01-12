@@ -12,7 +12,7 @@ const meta: Meta<typeof Toast> = {
   argTypes: {
     variant: {
       control: 'radio',
-      options: ['success', 'info', 'error', 'warn'],
+      options: ['success', 'info', 'error', 'warn', 'loading'],
       description: 'Toast variant type',
     },
     message: {
@@ -87,6 +87,13 @@ export const Warn: Story = {
   args: {
     variant: 'warn',
     message: 'Warning: This action cannot be undone.',
+  },
+};
+
+export const Loading: Story = {
+  args: {
+    variant: 'loading',
+    message: 'Loading data, please wait...',
   },
 };
 
@@ -263,6 +270,7 @@ export const AllVariantsShowcase: Story = {
       <Toast variant="info" message="This is an informational message." />
       <Toast variant="error" message="An error occurred. Please try again." />
       <Toast variant="warn" message="Warning: This action cannot be undone." />
+      <Toast variant="loading" message="Loading data, please wait..." />
 
       <h3 style={{ marginTop: '24px', marginBottom: '8px', fontSize: '16px', fontWeight: 600 }}>
         With Action Button

@@ -89,6 +89,28 @@ const ToastDemo = () => {
         </button>
 
         <button
+          onClick={() => {
+            const id = toast.loading('Loading data, please wait...');
+            setTimeout(() => {
+              toast.hideToast(id);
+              toast.success('Data loaded successfully!');
+            }, 3000);
+          }}
+          style={{
+            padding: '10px 16px',
+            background: '#5ba0e7',
+            color: 'white',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            fontSize: '14px',
+            fontWeight: 500,
+          }}
+        >
+          Show Loading Toast
+        </button>
+
+        <button
           onClick={() => toast.info('New update available', {
             mainButtonText: 'Update',
             onMainButtonClick: () => alert('Update clicked!'),
@@ -114,6 +136,7 @@ const ToastDemo = () => {
             setTimeout(() => toast.info('Second toast'), 200);
             setTimeout(() => toast.warn('Third toast'), 400);
             setTimeout(() => toast.error('Fourth toast'), 600);
+            setTimeout(() => toast.loading('Fifth toast'), 800);
           }}
           style={{
             padding: '10px 16px',
@@ -145,6 +168,7 @@ const MyComponent = () => {
     toast.info('Info message');
     toast.error('Error message');
     toast.warn('Warning message');
+    toast.loading('Loading...');
 
     // With options
     toast.info('Update available', {

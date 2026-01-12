@@ -3,12 +3,13 @@ import { styled } from '../utils/styled';
 import { Icon } from '../Icon';
 import { Button } from '../Button';
 import { getGlobalTheme } from '../utils/context';
+import loadingGif from './loading.gif';
 
 export interface ToastProps {
   /**
    * Toast variant type
    */
-  variant?: 'success' | 'info' | 'error' | 'warn';
+  variant?: 'success' | 'info' | 'error' | 'warn' | 'loading';
   /**
    * Toast message content (main text)
    */
@@ -64,7 +65,7 @@ export interface ToastProps {
 }
 
 const ToastContainer = styled.div<{
-  $variant: 'success' | 'info' | 'error' | 'warn';
+  $variant: 'success' | 'info' | 'error' | 'warn' | 'loading';
 }>`
   display: inline-flex;
   align-items: center;
@@ -92,7 +93,7 @@ const ToastContainer = styled.div<{
 `;
 
 const IconWrapper = styled.div<{
-  $variant: 'success' | 'info' | 'error' | 'warn';
+  $variant: 'success' | 'info' | 'error' | 'warn' | 'loading';
   $hasDescription: boolean;
 }>`
   display: flex;
@@ -138,36 +139,46 @@ const ActionGroup = styled.div`
 // Default icons for each variant
 const SuccessIcon = () => (
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="10" cy="10" r="8" fill="#4ea44b"/>
-    <path d="M6 10L9 13L14 7" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <circle cx="10" cy="10" r="8" fill="#4ea44b" />
+    <path
+      d="M6 10L9 13L14 7"
+      stroke="white"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   </svg>
 );
 
 const InfoIcon = () => (
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="10" cy="10" r="8" fill="#5ba0e7"/>
-    <path d="M10 9V14M10 6H10.01" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+    <circle cx="10" cy="10" r="8" fill="#5ba0e7" />
+    <path d="M10 9V14M10 6H10.01" stroke="white" strokeWidth="2" strokeLinecap="round" />
   </svg>
 );
 
 const ErrorIcon = () => (
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="10" cy="10" r="8" fill="#e95555"/>
-    <path d="M7 7L13 13M13 7L7 13" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+    <circle cx="10" cy="10" r="8" fill="#e95555" />
+    <path d="M7 7L13 13M13 7L7 13" stroke="white" strokeWidth="2" strokeLinecap="round" />
   </svg>
 );
 
 const WarnIcon = () => (
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="10" cy="10" r="8" fill="#ebe361"/>
-    <path d="M10 6V11M10 14H10.01" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+    <circle cx="10" cy="10" r="8" fill="#ebe361" />
+    <path d="M10 6V11M10 14H10.01" stroke="white" strokeWidth="2" strokeLinecap="round" />
   </svg>
 );
 
 const CloseIconSvg = () => (
   <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M9 3L3 9M3 3L9 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+    <path d="M9 3L3 9M3 3L9 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
   </svg>
+);
+
+const LoadingIcon = () => (
+  <img src={loadingGif} alt="Loading" width="20" height="20" />
 );
 
 /**
@@ -202,7 +213,7 @@ const CloseIconSvg = () => (
  * />
  */
 export const Toast: React.FC<ToastProps> = ({
-  variant = 'info' as 'success' | 'info' | 'error' | 'warn',
+  variant = 'info' as 'success' | 'info' | 'error' | 'warn' | 'loading',
   message,
   description,
   mainButtonText,
@@ -260,6 +271,7 @@ export const Toast: React.FC<ToastProps> = ({
       info: <InfoIcon />,
       error: <ErrorIcon />,
       warn: <WarnIcon />,
+      loading: <LoadingIcon />,
     };
     return defaultIcons[variant];
   };
@@ -290,12 +302,7 @@ export const Toast: React.FC<ToastProps> = ({
       {hasActions && (
         <ActionGroup>
           {mainButtonText && onMainButtonClick && (
-            <Button
-              variant="text"
-              colorType="guidance"
-              size="small"
-              onClick={onMainButtonClick}
-            >
+            <Button variant="text" colorType="guidance" size="small" onClick={onMainButtonClick}>
               {mainButtonText}
             </Button>
           )}
@@ -329,5 +336,3 @@ export const Toast: React.FC<ToastProps> = ({
 };
 
 Toast.displayName = 'Toast';
-
-
