@@ -103,7 +103,7 @@
     "yarn": ">=4.0.0"
   },
   "dependencies": {
-    "@officesdk/editor-sdk-core": "0.0.0-alpha.11",
+    "@officesdk/editor-sdk-core": "^0.0.0-alpha.12",
     "rc-tooltip": "^6.0.0"
   }
 }

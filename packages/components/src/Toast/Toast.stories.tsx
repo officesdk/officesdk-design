@@ -175,6 +175,47 @@ export const AutoClose: Story = {
   },
 };
 
+// HTML attributes support
+export const WithHTMLAttributes: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', padding: '20px' }}>
+      <h3 style={{ marginBottom: '8px', fontSize: '16px', fontWeight: 600 }}>
+        HTML Attributes Support
+      </h3>
+      
+      <Toast
+        variant="success"
+        message="Toast with data-testid"
+        data-testid="success-toast"
+      />
+      
+      <Toast
+        variant="info"
+        message="Toast with custom id and title"
+        id="custom-toast-id"
+        title="Information toast"
+        data-test="info-toast"
+      />
+      
+      <Toast
+        variant="error"
+        message="Toast with aria attributes"
+        aria-label="Error notification"
+        aria-describedby="error-description"
+      />
+      
+      <div style={{ marginTop: '16px', padding: '12px', background: '#f9f9f9', borderRadius: '4px' }}>
+        <p style={{ fontSize: '12px', margin: 0 }}>
+          Open DevTools to inspect the HTML attributes (data-testid, id, title, aria-*, etc.)
+        </p>
+      </div>
+    </div>
+  ),
+  parameters: {
+    layout: 'fullscreen',
+  },
+};
+
 // ReactNode message examples
 export const WithReactNodeMessage: Story = {
   render: () => (

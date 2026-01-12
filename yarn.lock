@@ -2648,17 +2648,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@officesdk/editor-sdk-core@npm:0.0.0-alpha.11":
-  version: 0.0.0-alpha.11
-  resolution: "@officesdk/editor-sdk-core@npm:0.0.0-alpha.11"
-  checksum: 10c0/5a3880977c4ee10fdd8277ced5aa78202509bc4ec266a519d26614888e6ee0bd1af17f180dc3e405af6e810a569fb046e7bd11f3ebb341126e8d89a88b70ba1c
-  languageName: node
-  linkType: hard
-
 "@officesdk/editor-sdk-core@npm:0.0.0-alpha.9":
   version: 0.0.0-alpha.9
   resolution: "@officesdk/editor-sdk-core@npm:0.0.0-alpha.9"
   checksum: 10c0/f4158ac2eab24a8bd3f9a34863de50926b8ecef5ba6acd3d9d57bfe627fcf56a1836c02a59034eed129edd229312c2382f283d2595b0d85594e0c718d0a0a3d9
+  languageName: node
+  linkType: hard
+
+"@officesdk/editor-sdk-core@npm:^0.0.0-alpha.12":
+  version: 0.0.0-alpha.12
+  resolution: "@officesdk/editor-sdk-core@npm:0.0.0-alpha.12"
+  checksum: 10c0/63419a7b95d8a72ab8d5271a54036078ddbef78bb8ada3b265ac57120724cfba0c5ca9a3c65a2e51b8b2f9d799010c33f92f0621d5884a241a1abba336600434
   languageName: node
   linkType: hard
 
@@ -10557,7 +10557,7 @@ __metadata:
   resolution: "officesdk-design-monorepo@workspace:."
   dependencies:
     "@changesets/cli": "npm:^2.29.8"
-    "@officesdk/editor-sdk-core": "npm:0.0.0-alpha.11"
+    "@officesdk/editor-sdk-core": "npm:^0.0.0-alpha.12"
     "@storybook/addon-docs": "npm:^7.6.7"
     "@storybook/addon-essentials": "npm:^7.6.7"
     "@storybook/addon-interactions": "npm:^7.6.7"

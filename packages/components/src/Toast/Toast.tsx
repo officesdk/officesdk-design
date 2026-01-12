@@ -5,7 +5,8 @@ import { Button } from '../Button';
 import { getGlobalTheme } from '../utils/context';
 import loadingGif from './loading.gif';
 
-export interface ToastProps {
+export interface ToastProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'className' | 'style' | 'children' | 'onClick'> {
   /**
    * Toast variant type
    */
@@ -227,6 +228,7 @@ export const Toast: React.FC<ToastProps> = ({
   showIcon = true,
   className,
   style,
+  ...restProps
 }) => {
   const [visible, setVisible] = useState(true);
 
@@ -287,6 +289,7 @@ export const Toast: React.FC<ToastProps> = ({
       style={style}
       role="alert"
       aria-live="polite"
+      {...restProps}
     >
       {showIcon && (
         <IconWrapper $variant={variant} $hasDescription={hasDescription}>
