@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, RenderOptions } from '@testing-library/react';
 import { UIConfigProvider, createUIConfig } from '../UIConfigProvider';
-import { lightTheme } from '@officesdk/design-theme';
+import { lightTheme } from '@officesdk/design/theme';
 
 interface AllTheProvidersProps {
   children: React.ReactNode;

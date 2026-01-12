@@ -1,6 +1,6 @@
-import type { Theme } from "@officesdk/design-theme";
+import type { Theme } from "@officesdk/design/theme";
 import type React from "react";
-import { lightTheme } from "@officesdk/design-theme";
+import { lightTheme } from "@officesdk/design/theme";
 
 function deepMerge<T extends Record<string, unknown>>(target: T, ...sources: Partial<T>[]): T {
   if (!sources.length) return target;

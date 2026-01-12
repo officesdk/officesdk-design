@@ -1,4 +1,4 @@
-import { Theme } from '@officesdk/design-theme';
+import { Theme } from '@officesdk/design/theme';
 import type { IconRegistry } from '../Icon/IconProvider';
 
 export type ToastPosition =

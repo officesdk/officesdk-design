@@ -2,7 +2,7 @@ import baseStyled, {
   ThemedStyledInterface
 } from 'styled-components';
 import { getGlobalTheme } from './context';
-import type { Theme } from '@officesdk/design-theme';
+import type { Theme } from '@officesdk/design/theme';
 
 // Helper function to wrap styled component and inject theme via defaultProps
 const wrapWithTheme = (component: any) => {
