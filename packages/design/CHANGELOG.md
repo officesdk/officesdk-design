@@ -1,5 +1,11 @@
 # @officesdk/design
 
+## 0.1.20
+
+### Patch Changes
+
+- edb1574: feat(toast): support HTMLAttributes for Toast component
+
 ## 0.1.19
 
 ### Patch Changes
