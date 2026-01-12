@@ -1,5 +1,11 @@
 # @officesdk/design
 
+## 0.1.18
+
+### Patch Changes
+
+- 74ab9be: feat: support ReactNode for Toast message
+
 ## 0.1.17
 
 ### Patch Changes
