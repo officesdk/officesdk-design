@@ -23,9 +23,9 @@ const config: StorybookConfig = {
           react: path.resolve(__dirname, '../node_modules/react'),
           'react-dom': path.resolve(__dirname, '../node_modules/react-dom'),
           // Resolve workspace packages to their source files for Storybook
-          '@officesdk/design-theme': path.resolve(__dirname, '../packages/theme/src/index.ts'),
-          '@officesdk/design-utils': path.resolve(__dirname, '../packages/utils/src/index.ts'),
-          '@officesdk/design-icons': path.resolve(__dirname, '../packages/icons/src/index.ts'),
+          '@officesdk/design/theme': path.resolve(__dirname, '../packages/theme/src/index.ts'),
+          '@officesdk/design/utils': path.resolve(__dirname, '../packages/utils/src/index.ts'),
+          '@officesdk/design/icons': path.resolve(__dirname, '../packages/icons/src/index.ts'),
         },
       },
     });
