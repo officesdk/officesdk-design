@@ -12,7 +12,7 @@ export interface ToastProps {
   /**
    * Toast message content (main text)
    */
-  message: string;
+  message: React.ReactNode;
   /**
    * Optional description text (shows below message in multiline mode)
    */

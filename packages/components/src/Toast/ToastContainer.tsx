@@ -11,10 +11,10 @@ interface ToastItem extends Omit<ToastProps, 'onClose'> {
 interface ToastContextValue {
   showToast: (props: Omit<ToastProps, 'onClose'>) => string;
   hideToast: (id: string) => void;
-  success: (message: string, options?: Partial<ToastProps>) => string;
-  info: (message: string, options?: Partial<ToastProps>) => string;
-  error: (message: string, options?: Partial<ToastProps>) => string;
-  warn: (message: string, options?: Partial<ToastProps>) => string;
+  success: (message: React.ReactNode, options?: Partial<ToastProps>) => string;
+  info: (message: React.ReactNode, options?: Partial<ToastProps>) => string;
+  error: (message: React.ReactNode, options?: Partial<ToastProps>) => string;
+  warn: (message: React.ReactNode, options?: Partial<ToastProps>) => string;
 }
 
 const ToastContext = createContext<ToastContextValue | null>(null);
@@ -128,19 +128,19 @@ export const ToastContainer: React.FC<ToastContainerProps> = ({
     setToasts((prev) => prev.filter((toast) => toast.id !== id));
   }, []);
 
-  const success = useCallback((message: string, options?: Partial<ToastProps>) => {
+  const success = useCallback((message: React.ReactNode, options?: Partial<ToastProps>) => {
     return showToast({ ...options, variant: 'success', message });
   }, [showToast]);
 
-  const info = useCallback((message: string, options?: Partial<ToastProps>) => {
+  const info = useCallback((message: React.ReactNode, options?: Partial<ToastProps>) => {
     return showToast({ ...options, variant: 'info', message });
   }, [showToast]);
 
-  const error = useCallback((message: string, options?: Partial<ToastProps>) => {
+  const error = useCallback((message: React.ReactNode, options?: Partial<ToastProps>) => {
     return showToast({ ...options, variant: 'error', message });
   }, [showToast]);
 
-  const warn = useCallback((message: string, options?: Partial<ToastProps>) => {
+  const warn = useCallback((message: React.ReactNode, options?: Partial<ToastProps>) => {
     return showToast({ ...options, variant: 'warn', message });
   }, [showToast]);
 

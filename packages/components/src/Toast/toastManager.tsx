@@ -208,28 +208,28 @@ class ToastManager {
   /**
    * Show success toast
    */
-  success(message: string, options?: Partial<ToastProps>): string {
+  success(message: React.ReactNode, options?: Partial<ToastProps>): string {
     return this.show({ ...options, variant: 'success', message });
   }
 
   /**
    * Show info toast
    */
-  info(message: string, options?: Partial<ToastProps>): string {
+  info(message: React.ReactNode, options?: Partial<ToastProps>): string {
     return this.show({ ...options, variant: 'info', message });
   }
 
   /**
    * Show error toast
    */
-  error(message: string, options?: Partial<ToastProps>): string {
+  error(message: React.ReactNode, options?: Partial<ToastProps>): string {
     return this.show({ ...options, variant: 'error', message });
   }
 
   /**
    * Show warning toast
    */
-  warn(message: string, options?: Partial<ToastProps>): string {
+  warn(message: React.ReactNode, options?: Partial<ToastProps>): string {
     return this.show({ ...options, variant: 'warn', message });
   }
 
@@ -300,11 +300,11 @@ export const toast = {
   show: (props: Omit<ToastProps, 'onClose'>) => toastManager.show(props),
   hide: (id: string) => toastManager.hide(id),
   hideAll: () => toastManager.hideAll(),
-  success: (message: string, options?: Partial<ToastProps>) =>
+  success: (message: React.ReactNode, options?: Partial<ToastProps>) =>
     toastManager.success(message, options),
-  info: (message: string, options?: Partial<ToastProps>) => toastManager.info(message, options),
-  error: (message: string, options?: Partial<ToastProps>) => toastManager.error(message, options),
-  warn: (message: string, options?: Partial<ToastProps>) => toastManager.warn(message, options),
+  info: (message: React.ReactNode, options?: Partial<ToastProps>) => toastManager.info(message, options),
+  error: (message: React.ReactNode, options?: Partial<ToastProps>) => toastManager.error(message, options),
+  warn: (message: React.ReactNode, options?: Partial<ToastProps>) => toastManager.warn(message, options),
   destroy: () => toastManager.destroy(),
 };
 

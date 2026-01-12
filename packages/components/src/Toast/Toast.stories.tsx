@@ -168,6 +168,90 @@ export const AutoClose: Story = {
   },
 };
 
+// ReactNode message examples
+export const WithReactNodeMessage: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', padding: '20px' }}>
+      <h3 style={{ marginBottom: '8px', fontSize: '16px', fontWeight: 600 }}>
+        ReactNode Message Examples
+      </h3>
+      
+      <Toast
+        variant="success"
+        message={
+          <span>
+            Operation completed <strong>successfully</strong>!
+          </span>
+        }
+      />
+      
+      <Toast
+        variant="info"
+        message={
+          <div>
+            Please review the{' '}
+            <a
+              href="#"
+              style={{ color: '#5ba0e7', textDecoration: 'underline' }}
+              onClick={(e) => {
+                e.preventDefault();
+                alert('Link clicked!');
+              }}
+            >
+              documentation
+            </a>
+            {' '}for more details.
+          </div>
+        }
+      />
+      
+      <Toast
+        variant="error"
+        message={
+          <>
+            <strong>Error:</strong> Failed to save changes. Please try again.
+          </>
+        }
+        closable
+      />
+      
+      <Toast
+        variant="warn"
+        message={
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <span style={{ fontWeight: 600 }}>Warning</span>
+            <span style={{ fontSize: '12px' }}>This action cannot be undone.</span>
+          </div>
+        }
+      />
+      
+      <Toast
+        variant="success"
+        message={
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span>File uploaded:</span>
+            <code
+              style={{
+                background: 'rgba(0,0,0,0.1)',
+                padding: '2px 6px',
+                borderRadius: '3px',
+                fontSize: '12px',
+              }}
+            >
+              document.pdf
+            </code>
+          </div>
+        }
+        mainButtonText="View"
+        onMainButtonClick={() => console.log('View clicked')}
+      />
+    </div>
+  ),
+  parameters: {
+    layout: 'fullscreen',
+  },
+};
+
 // All variants showcase
 export const AllVariantsShowcase: Story = {
   render: () => (
