@@ -1,5 +1,11 @@
 # @officesdk/design
 
+## 0.1.16
+
+### Patch Changes
+
+- a1c191b: feat: Allow numberInput defaultValue cound be undefind
+
 ## 0.1.15
 
 ### Patch Changes
