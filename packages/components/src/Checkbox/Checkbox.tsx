@@ -133,12 +133,12 @@ const CheckboxBox = styled.div<{
       : theme.components.checkbox.unchecked;
 
     return `
-      ${CheckboxContainer}:hover & {
+      :hover & {
         background: ${stateConfig.backgroundHover};
         border-color: ${stateConfig.borderColorHover};
       }
 
-      ${CheckboxContainer}:active & {
+      :active & {
         border-color: ${stateConfig.borderColorActive};
       }
     `;
