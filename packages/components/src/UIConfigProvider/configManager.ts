@@ -11,7 +11,7 @@ let globalToastConfig: { maxCount?: number; defaultDuration?: number } | null = 
  * Create default render function
  * This will be registered via registerGlobalContext and can be retrieved via getGlobalRenderFunction
  */
-const createDefaultRenderFunction = (): (element: React.ReactElement, container: HTMLElement) => void => {
+export const createDefaultRenderFunction = (): (element: React.ReactElement, container: HTMLElement) => void => {
   return (element: React.ReactElement, container: HTMLElement) => {
     // Try React 18 createRoot first
     if ('createRoot' in ReactDOM) {

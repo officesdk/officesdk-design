@@ -1,6 +1,7 @@
 import type { Theme } from "@officesdk/design/theme";
 import type React from "react";
 import { lightTheme } from "@officesdk/design/theme";
+import { createDefaultRenderFunction } from "../UIConfigProvider/configManager";
 
 function deepMerge<T extends Record<string, unknown>>(target: T, ...sources: Partial<T>[]): T {
   if (!sources.length) return target;
@@ -38,7 +39,7 @@ export const getGlobalTheme = (): Theme => {
 };
 
 // Store render function globally to avoid circular dependency
-let globalRenderFunction: ((element: React.ReactElement, container: HTMLElement) => void) | null = null;
+let globalRenderFunction: ((element: React.ReactElement, container: HTMLElement) => void) | null = createDefaultRenderFunction();
 
 export const getGlobalRenderFunction = () => globalRenderFunction;
 

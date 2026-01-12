@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useEffect } from 'react';
-import ReactDOM from 'react-dom';
 import { IconProvider } from '../Icon/IconProvider';
 import { ToastContainer } from '../Toast/ToastContainer';
 import type { UIConfig } from './types';
@@ -50,24 +49,11 @@ export interface UIConfigProviderProps {
 export const UIConfigProvider: React.FC<UIConfigProviderProps> = ({ config, children }) => {
   // Initialize global config on mount
   useEffect(() => {
-    // Create render function compatible with React 18 and below
-    const renderFunction = (element: React.ReactElement, container: HTMLElement) => {
-      if ('createRoot' in ReactDOM) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const { createRoot } = ReactDOM as any;
-        const root = createRoot(container);
-        root.render(element);
-      } else {
-        // Fallback to React 17 and below
-        // eslint-disable-next-line react/no-deprecated
-        ReactDOM.render(element, container);
-      }
-    };
 
     // Register render function first
     registerGlobalContext({
       theme: config.theme,
-      render: renderFunction,
+      render: config.renderFunction,
     });
 
     // Then initialize full config

@@ -136,5 +136,9 @@ export interface UIConfig {
    * Accessibility configuration
    */
   a11y?: A11yConfig;
+  /**
+   * Render function
+   */
+  renderFunction?: (element: React.ReactElement, container: HTMLElement) => void;
 }
 
