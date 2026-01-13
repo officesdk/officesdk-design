@@ -1,5 +1,12 @@
 # @officesdk/design
 
+## 0.1.23
+
+### Patch Changes
+
+- 00c93c1: fix: fix radio hover backgroundColor after checked
+  chore: update button theme config
+
 ## 0.1.22
 
 ### Patch Changes
