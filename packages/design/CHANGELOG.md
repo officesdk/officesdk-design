@@ -1,5 +1,11 @@
 # @officesdk/design
 
+## 0.1.25
+
+### Patch Changes
+
+- c9c9d84: chore: add rc-dropdown to dependenices
+
 ## 0.1.24
 
 ### Patch Changes
