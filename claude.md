@@ -282,6 +282,7 @@ export const Primary: Story = {
 
 **The recommended way** to configure the UI library is using `initUIConfig()` instead of `UIConfigProvider`:
 
+{% raw %}
 ```tsx
 import { initUIConfig } from '@officesdk/design';
 import { lightTheme } from '@officesdk/design/theme';
@@ -303,6 +304,7 @@ function App() {
   return <Button>Click me</Button>;
 }
 ```
+{% endraw %}
 
 **Benefits of `initUIConfig`:**
 - ✅ No React Provider dependency - works in non-React environments
@@ -326,6 +328,7 @@ function App() {
 
 If you need per-component-tree configuration or prefer the React Context pattern:
 
+{% raw %}
 ```tsx
 import { UIConfigProvider } from '@officesdk/design';
 import { lightTheme } from '@officesdk/design/theme';
@@ -347,6 +350,7 @@ function App() {
   );
 }
 ```
+{% endraw %}
 
 Note: `UIConfigProvider` is still supported but `initUIConfig` is recommended for most use cases.
 
@@ -354,6 +358,7 @@ Note: `UIConfigProvider` is still supported but `initUIConfig` is recommended fo
 
 ### Using Theme
 
+{% raw %}
 ```tsx
 import styled from 'styled-components';
 
@@ -364,6 +369,7 @@ const StyledButton = styled.button`
   font-size: ${({ theme }) => theme.typography.fontSize.md};
 `;
 ```
+{% endraw %}
 
 ### Using Icons
 
