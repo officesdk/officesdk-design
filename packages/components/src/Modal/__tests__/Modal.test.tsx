@@ -110,6 +110,46 @@ describe('Modal', () => {
         Content
       </Modal>
     );
-    expect(screen.getByText('OK')).toBeDisabled();
+    expect(screen.getByText('OK').closest('button')).toBeDisabled();
+  });
+
+  it('renders message dialog variant', () => {
+    render(
+      <Modal visible={true} variant="message" title="Message Dialog">
+        Content
+      </Modal>
+    );
+    expect(screen.getByText('Message Dialog')).toBeInTheDocument();
+    expect(screen.getByText('Content')).toBeInTheDocument();
+  });
+
+  it('renders functional dialog variant', () => {
+    render(
+      <Modal visible={true} variant="functional" title="Functional Dialog">
+        Content
+      </Modal>
+    );
+    expect(screen.getByText('Functional Dialog')).toBeInTheDocument();
+    expect(screen.getByText('Content')).toBeInTheDocument();
+  });
+
+  it('renders blue dialog variant', () => {
+    render(
+      <Modal visible={true} variant="blue" title="Blue Dialog">
+        Content
+      </Modal>
+    );
+    expect(screen.getByText('Blue Dialog')).toBeInTheDocument();
+    expect(screen.getByText('Content')).toBeInTheDocument();
+  });
+
+  it('renders with dark mask type', () => {
+    render(
+      <Modal visible={true} maskType="dark" title="Dark Mask Modal">
+        Content
+      </Modal>
+    );
+    expect(screen.getByText('Dark Mask Modal')).toBeInTheDocument();
+    expect(screen.getByText('Content')).toBeInTheDocument();
   });
 });

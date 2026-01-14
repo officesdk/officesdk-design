@@ -1,4 +1,13 @@
 import { createGlobalStyle } from 'styled-components';
+import { getGlobalTheme } from '../utils/context';
+import type { ModalConfig } from '@officesdk/design/theme';
+
+// Get theme with modal config type assertion
+const theme = getGlobalTheme() as unknown as {
+  components: {
+    modal: ModalConfig;
+  };
+};
 
 export const ModalGlobalStyles = createGlobalStyle`
   .osd-modal {
@@ -13,9 +22,13 @@ export const ModalGlobalStyles = createGlobalStyle`
     right: 0;
     left: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.45);
+    background-color: ${() => theme.components.modal.default.maskLight};
     height: 100%;
     z-index: 1000;
+  }
+
+  .osd-modal-mask-dark {
+    background-color: ${() => theme.components.modal.default.maskDark};
   }
 
   .osd-modal-mask-hidden {
@@ -37,14 +50,34 @@ export const ModalGlobalStyles = createGlobalStyle`
     outline: 0;
   }
 
-  .osd-modal-content {
+  .osd-modal-section {
     position: relative;
-    padding: 24px;
-    background: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.08);
-    border-radius: 8px;
+    padding: ${() => theme.components.modal.default.padding};
+    background: ${() => theme.components.modal.default.background};
+    border: ${() => theme.components.modal.default.border};
+    box-shadow: ${() => theme.components.modal.default.shadow};
+    border-radius: ${() => theme.components.modal.default.borderRadius};
     box-sizing: border-box;
+  }
+
+  .osd-modal-section-blue {
+    background: ${() => theme.components.modal.blue.background};
+    border: ${() => theme.components.modal.blue.border};
+    border-radius: ${() => theme.components.modal.blue.borderRadius};
+  }
+
+  .osd-modal-section-message {
+    max-width: ${() => theme.components.modal.message.maxWidth};
+    min-width: ${() => theme.components.modal.message.minWidth};
+    max-height: ${() => theme.components.modal.message.maxHeight};
+    min-height: ${() => theme.components.modal.message.minHeight};
+  }
+
+  .osd-modal-section-functional {
+    max-width: ${() => theme.components.modal.functional.maxWidth};
+    min-width: ${() => theme.components.modal.functional.minWidth};
+    max-height: ${() => theme.components.modal.functional.maxHeight};
+    min-height: ${() => theme.components.modal.functional.minHeight};
   }
 
   .osd-modal-close {
@@ -81,28 +114,28 @@ export const ModalGlobalStyles = createGlobalStyle`
   }
 
   .osd-modal-header {
-    margin-bottom: 16px;
+    margin-bottom: ${() => theme.components.modal.default.headerMarginBottom};
     padding-right: 24px;
   }
 
   .osd-modal-title {
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 24px;
-    color: #141414;
+    font-size: ${() => theme.components.modal.default.titleFontSize};
+    font-weight: ${() => theme.components.modal.default.titleFontWeight};
+    line-height: ${() => theme.components.modal.default.titleLineHeight};
+    color: ${() => theme.components.modal.default.titleColor};
   }
 
   .osd-modal-body {
-    font-size: 14px;
-    line-height: 22px;
-    color: #333;
+    font-size: ${() => theme.components.modal.default.bodyFontSize};
+    line-height: ${() => theme.components.modal.default.bodyLineHeight};
+    color: ${() => theme.components.modal.default.bodyColor};
   }
 
   .osd-modal-footer {
-    margin-top: 24px;
+    margin-top: ${() => theme.components.modal.default.footerMarginTop};
     display: flex;
     justify-content: flex-end;
-    gap: 8px;
+    gap: ${() => theme.components.modal.default.footerGap};
   }
 
   .osd-modal.zoom-enter,
