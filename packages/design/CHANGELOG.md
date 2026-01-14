@@ -1,5 +1,12 @@
 # @officesdk/design
 
+## 0.1.26
+
+### Patch Changes
+
+- 5445891: chore: Add icon story to button and add borderRadius to toolbarButton
+- 7ed6d9d: refactor(toolbarButton): support ReactNode for icon/label and rename active to isActive
+
 ## 0.1.25
 
 ### Patch Changes
