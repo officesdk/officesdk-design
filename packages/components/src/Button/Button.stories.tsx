@@ -222,6 +222,46 @@ export const IconVariantBorderless: Story = {
   },
 };
 
+// ========== Icon Variant Sizes ==========
+export const IconVariantAllSizes: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', padding: '20px' }}>
+      <div>
+        <h3 style={{ marginBottom: '12px' }}>Icon Variant - Bordered (All Sizes)</h3>
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+          <Button variant="icon" size="small" icon={<CloseIcon />} iconBordered />
+          <Button variant="icon" size="medium" icon={<CloseIcon />} iconBordered />
+          <Button variant="icon" size="large" icon={<CloseIcon />} iconBordered />
+          <Button variant="icon" size="extraLarge" icon={<CloseIcon />} iconBordered />
+        </div>
+      </div>
+
+      <div>
+        <h3 style={{ marginBottom: '12px' }}>Icon Variant - Borderless (All Sizes)</h3>
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+          <Button variant="icon" size="small" icon={<RefreshIcon />} iconBordered={false} />
+          <Button variant="icon" size="medium" icon={<RefreshIcon />} iconBordered={false} />
+          <Button variant="icon" size="large" icon={<RefreshIcon />} iconBordered={false} />
+          <Button variant="icon" size="extraLarge" icon={<RefreshIcon />} iconBordered={false} />
+        </div>
+      </div>
+
+      <div>
+        <h3 style={{ marginBottom: '12px' }}>Icon Variant - Disabled States</h3>
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+          <Button variant="icon" size="small" icon={<CloseIcon />} iconBordered disabled />
+          <Button variant="icon" size="medium" icon={<CloseIcon />} iconBordered disabled />
+          <Button variant="icon" size="large" icon={<CloseIcon />} iconBordered={false} disabled />
+          <Button variant="icon" size="extraLarge" icon={<CloseIcon />} iconBordered={false} disabled />
+        </div>
+      </div>
+    </div>
+  ),
+  parameters: {
+    layout: 'fullscreen',
+  },
+};
+
 // ========== Size Variation ==========
 export const SizeSmall: Story = {
   args: {

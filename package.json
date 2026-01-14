@@ -16,15 +16,9 @@
   "workspaces": [
     "packages/*"
   ],
-  "peerDependencies": {
-    "rc-tooltip": "^6.0.0",
-    "react": ">=16.9.0",
-    "react-dom": ">=16.9.0",
-    "styled-components": "^5.3.0"
-  },
   "scripts": {
     "dev": "storybook dev -p 6006",
-    "build": "yarn workspaces foreach -At run build",
+    "build": "yarn workspaces foreach -At run build && cd packages/design && yarn build",
     "build:storybook": "storybook build",
     "test": "vitest",
     "test:ui": "vitest --ui",
@@ -101,9 +95,5 @@
   "engines": {
     "node": ">=20.0.0",
     "yarn": ">=4.0.0"
-  },
-  "dependencies": {
-    "@officesdk/editor-sdk-core": "^0.0.0-alpha.12",
-    "rc-tooltip": "^6.0.0"
   }
 }

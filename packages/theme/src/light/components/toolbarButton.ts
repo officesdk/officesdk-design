@@ -1,5 +1,5 @@
 import { ToolbarButtonConfig } from '@officesdk/editor-sdk-core/shared';
-import { boxShadow, colors } from '../base';
+import { borderRadius, boxShadow, colors } from '../base';
 
 export const toolbarButton: ToolbarButtonConfig = {
   boxShadow: {
@@ -32,6 +32,7 @@ export const toolbarButton: ToolbarButtonConfig = {
   layout: {
     padding: '0',
     height: '28px',
+    borderRadius: borderRadius.small,
     content: {
       padding: '0 4px',
       gap: '0px',

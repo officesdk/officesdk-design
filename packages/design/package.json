@@ -74,15 +74,15 @@
   ],
   "sideEffects": false,
   "dependencies": {
-    "@officesdk/editor-sdk-core": "0.0.0-alpha.9",
+    "@officesdk/editor-sdk-core": "0.0.0-alpha.13",
     "rc-dropdown": "^4.2.1",
     "rc-menu": "^9.0.0",
     "rc-tooltip": "^6.0.0",
     "rc-virtual-list": "^3.0.0"
   },
   "peerDependencies": {
-    "react": ">=16.9.0",
-    "react-dom": ">=16.9.0",
+    "react": ">=16.14.0",
+    "react-dom": ">=16.14.0",
     "styled-components": ">=5.2.0"
   },
   "devDependencies": {
@@ -92,7 +92,7 @@
     "@officesdk/design-utils": "workspace:*"
   },
   "scripts": {
-    "build": "node build.js",
+    "build": "yarn clean && node build.js",
     "clean": "rm -rf dist"
   }
 }

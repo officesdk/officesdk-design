@@ -60,6 +60,7 @@ const ToolbarButtonContainer = styled.div<{
   border-radius: 2px;
   transition: border-color 0.15s ease;
   box-sizing: border-box;
+  overflow: hidden;
 
   ${({ $disabled, $isActive, theme }) => {
     const config = theme.components.toolbarButton;
@@ -103,6 +104,7 @@ const ToolbarButtonContainer = styled.div<{
     return `
       height: ${config.layout.height};
       padding: ${config.layout.padding};
+      border-radius: ${config.layout.borderRadius};
     `;
   }}
 `;
