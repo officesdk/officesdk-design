@@ -1,4 +1,4 @@
-import { borderRadius, boxShadow, colors } from '../base';
+import { borderRadius, boxShadow, colors, typography } from '../base';
 
 export interface ModalVariantSize {
   maxWidth: string;
@@ -8,63 +8,50 @@ export interface ModalVariantSize {
   defaultWidth: string;
 }
 
+export interface ModalBaseConfig {
+  background: string;
+  border: string;
+  borderRadius: string;
+  shadow: string;
+  maskLight: string;
+  maskDark: string;
+  maskZIndex: number;
+  titleColor: string;
+  titleFontSize: string;
+  titleFontWeight: number;
+  titleLineHeight: string;
+  bodyColor: string;
+  bodyFontSize: string;
+  bodyLineHeight: string;
+  padding: string;
+  closeButtonHoverBackground: string;
+  closeButtonActiveBackground: string;
+}
+
 export interface ModalConfig {
-  default: {
-    background: string;
-    border: string;
-    borderRadius: string;
-    shadow: string;
-    maskLight: string;
-    maskDark: string;
-    titleColor: string;
-    titleFontSize: string;
-    titleFontWeight: number;
-    titleLineHeight: string;
-    bodyColor: string;
-    bodyFontSize: string;
-    bodyLineHeight: string;
-    padding: string;
-    headerMarginBottom: string;
-    footerMarginTop: string;
-    footerGap: string;
-    defaultWidth: string;
-  };
-  message: ModalVariantSize;
+  message: ModalBaseConfig & ModalVariantSize;
   functional: ModalVariantSize;
-  blue: {
-    background: string;
-    border: string;
-    borderRadius: string;
-    shadow: string;
-    titleColor: string;
-    bodyColor: string;
-    defaultWidth: string;
-  };
 }
 
 export const modal: ModalConfig = {
-  default: {
+  message: {
     background: colors.palettes.gray['0'],
     border: `1px solid ${colors.palettes.transparency['5']}`,
     borderRadius: borderRadius.medium,
     shadow: boxShadow.xl,
     maskLight: colors.mask.light,
-    // Dark mask uses gray['120'] at 80% opacity as per Figma design
-    maskDark: 'rgba(44, 48, 51, 0.8)',
+    maskDark: colors.mask.dark,
+    maskZIndex: 1000,
     titleColor: colors.palettes.gray['120'],
-    titleFontSize: '16px',
-    titleFontWeight: 600,
-    titleLineHeight: '24px',
+    titleFontSize: typography.title.fontSize.l,
+    titleFontWeight: typography.title.fontWeight.semibold,
+    titleLineHeight: typography.title.lineHeight.medium,
     bodyColor: colors.palettes.gray['120'],
-    bodyFontSize: '14px',
-    bodyLineHeight: '24px',
+    bodyFontSize: typography.paragraph.fontSize.m,
+    bodyLineHeight: typography.paragraph.lineHeight.medium,
     padding: '24px',
-    headerMarginBottom: '16px',
-    footerMarginTop: '24px',
-    footerGap: '8px',
-    defaultWidth: '460px',
-  },
-  message: {
+    closeButtonHoverBackground: colors.palettes.transparency['5'],
+    closeButtonActiveBackground: colors.palettes.transparency['10'],
     maxWidth: '400px',
     minWidth: '360px',
     maxHeight: '50vh',
@@ -77,14 +64,5 @@ export const modal: ModalConfig = {
     maxHeight: '80vh',
     minHeight: '380px',
     defaultWidth: '640px',
-  },
-  blue: {
-    background: colors.palettes.blue['1'],
-    border: `1px solid ${colors.palettes.transparency['10']}`,
-    borderRadius: borderRadius.large,
-    shadow: boxShadow.xl,
-    titleColor: colors.palettes.gray['120'],
-    bodyColor: colors.palettes.gray['120'],
-    defaultWidth: 'auto',
   },
 };

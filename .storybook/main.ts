@@ -19,13 +19,13 @@ const config: StorybookConfig = {
       resolve: {
         preserveSymlinks: true,
         alias: {
-          'styled-components': path.resolve(process.cwd(), 'node_modules/styled-components'),
-          react: path.resolve(process.cwd(), 'node_modules/react'),
-          'react-dom': path.resolve(process.cwd(), 'node_modules/react-dom'),
+          'styled-components': path.resolve(__dirname, '../node_modules/styled-components'),
+          react: path.resolve(__dirname, '../node_modules/react'),
+          'react-dom': path.resolve(__dirname, '../node_modules/react-dom'),
           // Resolve workspace packages to their source files for Storybook
-          '@officesdk/design/theme': path.resolve(process.cwd(), 'packages/theme/src/index.ts'),
-          '@officesdk/design/utils': path.resolve(process.cwd(), 'packages/utils/src/index.ts'),
-          '@officesdk/design/icons': path.resolve(process.cwd(), 'packages/icons/src/index.ts'),
+          '@officesdk/design/theme': path.resolve(__dirname, '../packages/theme/src/index.ts'),
+          '@officesdk/design/utils': path.resolve(__dirname, '../packages/utils/src/index.ts'),
+          '@officesdk/design/icons': path.resolve(__dirname, '../packages/icons/src/index.ts'),
         },
       },
     });

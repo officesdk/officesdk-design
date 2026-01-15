@@ -27,22 +27,14 @@ describe('Input', () => {
     });
 
     it('should render with prefixNode', () => {
-      render(
-        <Input
-          prefixNode={<span data-testid="prefix-icon">🔍</span>}
-          placeholder="Search"
-        />
-      );
+      render(<Input prefixNode={<span data-testid="prefix-icon">🔍</span>} placeholder="Search" />);
       expect(screen.getByTestId('prefix-icon')).toBeInTheDocument();
       expect(screen.getByPlaceholderText('Search')).toBeInTheDocument();
     });
 
     it('should render with suffixNode', () => {
       render(
-        <Input
-          suffixNode={<span data-testid="suffix-icon">×</span>}
-          placeholder="Enter text"
-        />
+        <Input suffixNode={<span data-testid="suffix-icon">×</span>} placeholder="Enter text" />
       );
       expect(screen.getByTestId('suffix-icon')).toBeInTheDocument();
       expect(screen.getByPlaceholderText('Enter text')).toBeInTheDocument();
@@ -61,16 +53,12 @@ describe('Input', () => {
     });
 
     it('should render with custom className', () => {
-      const { container } = render(
-        <Input className="custom-class" placeholder="Test" />
-      );
+      const { container } = render(<Input className="custom-class" placeholder="Test" />);
       expect(container.querySelector('.custom-class')).toBeInTheDocument();
     });
 
     it('should render with custom style', () => {
-      const { container } = render(
-        <Input style={{ width: '500px' }} placeholder="Test" />
-      );
+      const { container } = render(<Input style={{ width: '500px' }} placeholder="Test" />);
       const wrapper = container.querySelector('div');
       expect(wrapper).toHaveStyle({ width: '500px' });
     });
@@ -99,12 +87,12 @@ describe('Input', () => {
     it('should handle value changes', async () => {
       const user = userEvent.setup();
       const handleChange = vi.fn();
-      
+
       render(<Input onChange={handleChange} placeholder="Type here" />);
       const input = screen.getByPlaceholderText('Type here');
-      
+
       await user.type(input, 'Hello');
-      
+
       expect(handleChange).toHaveBeenCalled();
       expect(input).toHaveValue('Hello');
     });
@@ -112,37 +100,37 @@ describe('Input', () => {
     it('should handle focus events', async () => {
       const user = userEvent.setup();
       const handleFocus = vi.fn();
-      
+
       render(<Input onFocus={handleFocus} placeholder="Focus test" />);
       const input = screen.getByPlaceholderText('Focus test');
-      
+
       await user.click(input);
-      
+
       expect(handleFocus).toHaveBeenCalledTimes(1);
     });
 
     it('should handle blur events', async () => {
       const user = userEvent.setup();
       const handleBlur = vi.fn();
-      
+
       render(<Input onBlur={handleBlur} placeholder="Blur test" />);
       const input = screen.getByPlaceholderText('Blur test');
-      
+
       await user.click(input);
       await user.tab();
-      
+
       expect(handleBlur).toHaveBeenCalledTimes(1);
     });
 
     it('should not trigger onChange when disabled', async () => {
       const user = userEvent.setup();
       const handleChange = vi.fn();
-      
+
       render(<Input disabled onChange={handleChange} placeholder="Disabled" />);
       const input = screen.getByPlaceholderText('Disabled');
-      
+
       await user.type(input, 'Hello');
-      
+
       expect(handleChange).not.toHaveBeenCalled();
       expect(input).toHaveValue('');
     });
@@ -150,14 +138,12 @@ describe('Input', () => {
     it('should not trigger onChange when readonly', async () => {
       const user = userEvent.setup();
       const handleChange = vi.fn();
-      
-      render(
-        <Input readOnly onChange={handleChange} value="Readonly" />
-      );
+
+      render(<Input readOnly onChange={handleChange} value="Readonly" />);
       const input = screen.getByDisplayValue('Readonly');
-      
+
       await user.type(input, 'Hello');
-      
+
       expect(handleChange).not.toHaveBeenCalled();
       expect(input).toHaveValue('Readonly');
     });
@@ -166,13 +152,13 @@ describe('Input', () => {
   describe('Controlled vs Uncontrolled', () => {
     it('should work as uncontrolled component', async () => {
       const user = userEvent.setup();
-      
+
       render(<Input defaultValue="Initial" placeholder="Uncontrolled" />);
       const input = screen.getByDisplayValue('Initial');
-      
+
       await user.clear(input);
       await user.type(input, 'New value');
-      
+
       expect(input).toHaveValue('New value');
     });
 
@@ -188,13 +174,13 @@ describe('Input', () => {
           />
         );
       };
-      
+
       render(<TestComponent />);
       const input = screen.getByDisplayValue('Initial');
-      
+
       await user.clear(input);
       await user.type(input, 'New value');
-      
+
       expect(input).toHaveValue('New value');
     });
   });
@@ -224,20 +210,20 @@ describe('Input', () => {
 
     it('should be keyboard navigable', async () => {
       const user = userEvent.setup();
-      
+
       render(
         <>
           <Input placeholder="First" />
           <Input placeholder="Second" />
         </>
       );
-      
+
       const firstInput = screen.getByPlaceholderText('First');
       const secondInput = screen.getByPlaceholderText('Second');
-      
+
       firstInput.focus();
       expect(firstInput).toHaveFocus();
-      
+
       await user.tab();
       expect(secondInput).toHaveFocus();
     });
@@ -246,21 +232,20 @@ describe('Input', () => {
   describe('ForwardRef', () => {
     it('should forward ref to input element', () => {
       const ref = React.createRef<HTMLInputElement>();
-      
+
       render(<Input ref={ref} placeholder="Ref test" />);
-      
+
       expect(ref.current).toBeInstanceOf(HTMLInputElement);
       expect(ref.current?.placeholder).toBe('Ref test');
     });
 
     it('should allow calling focus via ref', () => {
       const ref = React.createRef<HTMLInputElement>();
-      
+
       render(<Input ref={ref} placeholder="Focus via ref" />);
-      
+
       ref.current?.focus();
       expect(ref.current).toHaveFocus();
     });
   });
 });
-

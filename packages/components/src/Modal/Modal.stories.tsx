@@ -14,7 +14,7 @@ const meta: Meta<typeof Modal> = {
     },
     variant: {
       control: 'select',
-      options: ['default', 'message', 'functional', 'blue'],
+      options: ['message', 'functional'],
       description: 'Modal variant type',
     },
     maskType: {
@@ -206,16 +206,6 @@ export const FunctionalDialog: Story = {
     title: 'Functional Dialog',
     children:
       'This is a functional dialog with a default width of 640px (max 800px, min 400px). It is typically used for more complex interactions.',
-  },
-};
-
-export const BlueDialog: Story = {
-  render: (args) => <ModalDemo {...args} />,
-  args: {
-    variant: 'blue',
-    title: 'Important Announcement',
-    children:
-      'This is a blue dialog variant with a light blue background, typically used for announcements or special notifications.',
   },
 };
 

@@ -2,6 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import RcDialog from 'rc-dialog';
 import type { DialogProps } from 'rc-dialog';
 import { Button } from '../Button';
+import { Icon } from '../Icon';
 import { ModalGlobalStyles } from './globalStyle';
 import { styleManager } from '../utils/styleManager';
 import { getGlobalTheme } from '../utils/context';
@@ -14,12 +15,10 @@ export interface ModalProps extends DialogProps {
   visible?: boolean;
   /**
    * Modal variant type
-   * - 'default': Standard modal (460px width)
    * - 'message': Message dialog (max 400px, min 360px)
    * - 'functional': Functional dialog (default 640px, max 800px, min 400px)
-   * - 'blue': Blue background modal for announcements
    */
-  variant?: 'default' | 'message' | 'functional' | 'blue';
+  variant?: 'message' | 'functional';
   /**
    * Mask layer type
    * - 'light': Light mask (rgba(65,70,75,0.5))
@@ -148,7 +147,7 @@ export interface ModalProps extends DialogProps {
  */
 export const Modal: React.FC<ModalProps> = ({
   visible = false,
-  variant = 'default',
+  variant = 'message',
   maskType = 'light',
   title,
   width,
@@ -161,6 +160,7 @@ export const Modal: React.FC<ModalProps> = ({
   disabledOkButton = false,
   prefixCls = 'osd-modal',
   closable = true,
+  closeIcon,
   mask = true,
   maskClosable = true,
   className,
@@ -170,7 +170,7 @@ export const Modal: React.FC<ModalProps> = ({
   const handleClose = useCallback(
     (e: React.SyntheticEvent) => {
       onClose?.(e);
-      onCancel?.(e as React.MouseEvent);
+      onCancel?.(e as React.MouseEvent | React.KeyboardEvent);
     },
     [onClose, onCancel]
   );
@@ -191,31 +191,26 @@ export const Modal: React.FC<ModalProps> = ({
   const getDefaultWidth = () => {
     if (width !== undefined) return width;
     switch (variant) {
-      case 'message':
-        return theme.components.modal.message.defaultWidth;
       case 'functional':
         return theme.components.modal.functional.defaultWidth;
-      case 'blue':
-        return theme.components.modal.blue.defaultWidth;
+      case 'message':
       default:
-        return theme.components.modal.default.defaultWidth;
+        return theme.components.modal.message.defaultWidth;
     }
   };
 
-  // Build className for modal section based on variant
-  const getSectionClassName = () => {
+  // Build className for modal content based on variant
+  const getContentClassName = () => {
     switch (variant) {
-      case 'blue':
-        return `${prefixCls}-section-blue`;
       case 'message':
-        return `${prefixCls}-section-message`;
+        return `${prefixCls}-content-message`;
       case 'functional':
-        return `${prefixCls}-section-functional`;
+        return `${prefixCls}-content-functional`;
       default:
-        return undefined;
+        return `${prefixCls}-content-message`;
     }
   };
-  const sectionClassName = getSectionClassName();
+  const contentClassName = getContentClassName();
 
   // Build className for mask
   const maskClassName = maskType === 'dark' ? `${prefixCls}-mask-dark` : undefined;
@@ -238,7 +233,7 @@ export const Modal: React.FC<ModalProps> = ({
 
     const cancelButton =
       cancelText === null ? null : (
-        <Button key="cancel" variant="outlined" colorType="default" onClick={onCancel}>
+        <Button key="cancel" variant="outlined" colorType="default" onClick={(e) => handleClose(e)}>
           {cancelText ?? 'Cancel'}
         </Button>
       );
@@ -251,13 +246,19 @@ export const Modal: React.FC<ModalProps> = ({
     );
   }
 
-  // Build classNames for semantic elements (mask and section)
+  // Build classNames for semantic elements (mask and content)
   const semanticClassNames: Record<string, string> = {};
   if (maskClassName) {
     semanticClassNames.mask = maskClassName;
   }
-  if (sectionClassName) {
-    semanticClassNames.section = sectionClassName;
+  if (contentClassName) {
+    semanticClassNames.content = contentClassName;
+  }
+
+  // Build styles to apply width to content instead of root
+  const semanticStyles: Record<string, React.CSSProperties> = {};
+  if (width !== undefined) {
+    semanticStyles.content = { width };
   }
 
   return (
@@ -265,12 +266,14 @@ export const Modal: React.FC<ModalProps> = ({
       {...restProps}
       visible={visible}
       title={title}
-      width={getDefaultWidth()}
+      width={width === undefined ? getDefaultWidth() : undefined}
       prefixCls={prefixCls}
       closable={closable}
+      closeIcon={closeIcon ?? <Icon name="close" size={16} />}
       mask={mask}
       maskClosable={maskClosable}
       classNames={Object.keys(semanticClassNames).length > 0 ? semanticClassNames : undefined}
+      styles={Object.keys(semanticStyles).length > 0 ? semanticStyles : undefined}
       className={className}
       onClose={handleClose}
       footer={footer === undefined ? defaultFooter : footer}
