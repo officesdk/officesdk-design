@@ -12,6 +12,7 @@ import { tooltip } from './tooltip';
 import { toolbarButton } from './toolbarButton';
 import { menu } from './menu';
 import { dropdownButton, dropdown } from './dropdown';
+import { modal } from './modal';
 
 export {
   button,
@@ -29,6 +30,7 @@ export {
   inputNumber,
   tooltip,
   toolbarButton,
+  modal,
 };
 
 export const components = {
@@ -46,5 +48,6 @@ export const components = {
   tooltip,
   toolbarButton,
   menu,
-  dropdownButton
+  dropdownButton,
+  modal,
 };

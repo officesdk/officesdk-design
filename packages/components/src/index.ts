@@ -37,6 +37,9 @@ export type { ToolbarButtonProps } from './ToolbarButton';
 export { DropdownButton, Menu, Dropdown, MenuGlobalStyles, DropdownGlobalStyles } from './dropdown';
 export type { DropdownButtonProps, MenuProps, MenuItem, MenuGroup, MenuDivider, MenuItemType, DropdownProps } from './dropdown';
 
+export { Modal, ModalGlobalStyles } from './Modal';
+export type { ModalProps } from './Modal';
+
 export {
   UIConfigProvider,
   useUIConfig,

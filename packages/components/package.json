@@ -51,7 +51,8 @@
   },
   "dependencies": {
     "@officesdk/design-theme": "workspace:*",
-    "@officesdk/design-utils": "workspace:*"
+    "@officesdk/design-utils": "workspace:*",
+    "rc-dialog": "^10.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.47",

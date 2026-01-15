@@ -1,5 +1,6 @@
 import baseStyled, {
-  ThemedStyledInterface
+  ThemedStyledInterface,
+  createGlobalStyle as baseCreateGlobalStyle
 } from 'styled-components';
 import { getGlobalTheme } from './context';
 import type { Theme } from '@officesdk/design/theme';
@@ -40,4 +41,8 @@ Object.keys(baseStyled).forEach((key) => {
 // Export with proper typing
 export const styled = styledWithBase as ThemedStyledInterface<Theme>;
 
-
+// Export createGlobalStyle with theme support
+export const createGlobalStyle = (...args: Parameters<typeof baseCreateGlobalStyle>) => {
+  const GlobalStyleComponent = baseCreateGlobalStyle(...args);
+  return wrapWithTheme(GlobalStyleComponent);
+};

@@ -4,3 +4,4 @@ import { lightTheme } from './light';
 export type Theme = CommonThemeConfig;
 export const theme: Theme = lightTheme;
 export { lightTheme } from './light';
+export type { ModalConfig, ModalVariantSize, ModalBaseConfig } from './light/components/modal';
