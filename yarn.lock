@@ -2582,6 +2582,7 @@ __metadata:
     tsup: "npm:^8.0.1"
     typescript: "npm:^5.3.3"
   peerDependencies:
+    rc-dialog: ^10.0.0
     rc-dropdown: ^4.0.0
     rc-menu: ^9.0.0
     rc-tooltip: ^6.0.0

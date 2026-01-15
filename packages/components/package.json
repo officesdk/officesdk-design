@@ -41,6 +41,7 @@
     "rename-mts": "mv dist/esm/index.d.mts dist/esm/index.d.ts"
   },
   "peerDependencies": {
+    "rc-dialog": "^10.0.0",
     "rc-dropdown": "^4.0.0",
     "rc-menu": "^9.0.0",
     "rc-tooltip": "^6.0.0",
@@ -51,8 +52,7 @@
   },
   "dependencies": {
     "@officesdk/design-theme": "workspace:*",
-    "@officesdk/design-utils": "workspace:*",
-    "rc-dialog": "^10.0.0"
+    "@officesdk/design-utils": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "^18.2.47",
