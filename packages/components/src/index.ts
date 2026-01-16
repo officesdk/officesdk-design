@@ -40,6 +40,9 @@ export type { DropdownButtonProps, MenuProps, MenuItem, MenuGroup, MenuDivider, 
 export { Modal, ModalGlobalStyles } from './Modal';
 export type { ModalProps } from './Modal';
 
+export { Loading } from './Loading';
+export type { LoadingProps } from './Loading';
+
 export {
   UIConfigProvider,
   useUIConfig,

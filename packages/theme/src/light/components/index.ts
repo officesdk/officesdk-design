@@ -13,6 +13,7 @@ import { toolbarButton } from './toolbarButton';
 import { menu } from './menu';
 import { dropdownButton, dropdown } from './dropdown';
 import { modal } from './modal';
+import { loading } from './loading';
 
 export {
   button,
@@ -31,6 +32,7 @@ export {
   tooltip,
   toolbarButton,
   modal,
+  loading,
 };
 
 export const components = {
@@ -50,4 +52,5 @@ export const components = {
   menu,
   dropdownButton,
   modal,
+  loading,
 };
