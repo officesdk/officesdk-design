@@ -1,5 +1,11 @@
 # @officesdk/design
 
+## 0.1.27
+
+### Patch Changes
+
+- 18dcec8: new modal component
+
 ## 0.1.26
 
 ### Patch Changes
