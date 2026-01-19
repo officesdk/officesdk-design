@@ -172,16 +172,33 @@ export const WithDelay: Story = {
 };
 
 // ========== Custom Indicator ==========
+const SpinningIcon = () => (
+  <>
+    <style>
+      {`
+        @keyframes loading-spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+      `}
+    </style>
+    <span
+      style={{
+        display: 'inline-block',
+        fontSize: '24px',
+        animation: 'loading-spin 1s linear infinite',
+      }}
+    >
+      ⏳
+    </span>
+  </>
+);
+
 export const CustomIndicator: Story = {
   render: () => (
     <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
       <div style={{ textAlign: 'center' }}>
-        <Loading
-          size="large"
-          indicator={
-            <span style={{ fontSize: '24px', animation: 'spin 1s linear infinite' }}>⏳</span>
-          }
-        />
+        <Loading size="large" indicator={<SpinningIcon />} />
         <p style={{ marginTop: '8px', fontSize: '12px', color: '#666' }}>Custom Element</p>
       </div>
     </div>

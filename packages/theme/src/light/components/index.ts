@@ -35,6 +35,9 @@ export {
   loading,
 };
 
+export type { LoadingConfig, LoadingSizeConfig, LoadingWrapperConfig, LoadingFullscreenConfig } from './loading';
+export type { ModalConfig, ModalBaseConfig, ModalVariantSize } from './modal';
+
 export const components = {
   toast,
   input,

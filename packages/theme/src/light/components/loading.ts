@@ -9,7 +9,31 @@ import { colors } from '../base';
  * - medium: 24x24 (for list/table refresh)
  * - large: 32x32 (for full page refresh)
  */
-export const loading = {
+
+export interface LoadingSizeConfig {
+  size: string;
+}
+
+export interface LoadingWrapperConfig {
+  overlayBackground: string;
+  contentOpacity: number;
+}
+
+export interface LoadingFullscreenConfig {
+  background: string;
+  zIndex: number;
+}
+
+export interface LoadingConfig {
+  small: LoadingSizeConfig;
+  medium: LoadingSizeConfig;
+  large: LoadingSizeConfig;
+  tipColor: string;
+  wrapper: LoadingWrapperConfig;
+  fullscreen: LoadingFullscreenConfig;
+}
+
+export const loading: LoadingConfig = {
   // Size configurations
   small: {
     size: '16px',
