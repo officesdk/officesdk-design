@@ -163,4 +163,24 @@ describe('Loading', () => {
       expect(container.querySelector('.custom-loading')).toBeInTheDocument();
     });
   });
+
+  describe('Custom Indicator', () => {
+    it('should render custom indicator as string (image URL)', () => {
+      render(<Loading indicator="/custom-loading.gif" />);
+      const img = screen.getByRole('status');
+      expect(img).toHaveAttribute('src', '/custom-loading.gif');
+    });
+
+    it('should render custom indicator as React element', () => {
+      render(<Loading indicator={<span data-testid="custom-spinner">Loading</span>} />);
+      expect(screen.getByTestId('custom-spinner')).toBeInTheDocument();
+    });
+
+    it('should apply size to custom indicator wrapper', () => {
+      const { container } = render(
+        <Loading size="large" indicator={<span>Custom</span>} />
+      );
+      expect(container.querySelector('span[role="status"]')).toBeInTheDocument();
+    });
+  });
 });

@@ -1,6 +1,7 @@
 import React from 'react';
 import { styled } from '../utils/styled';
 import loadingGif from './assets/loading.gif';
+import type { LoadingConfig } from '@officesdk/design-theme';
 
 export interface LoadingProps {
   /**
@@ -42,17 +43,8 @@ export interface LoadingProps {
   indicator?: React.ReactNode | string;
 }
 
-interface LoadingThemeConfig {
-  small: { size: string };
-  medium: { size: string };
-  large: { size: string };
-  tipColor: string;
-  wrapper: { overlayBackground: string; contentOpacity: number };
-  fullscreen: { background: string; zIndex: number };
-}
-
-const getLoadingConfig = (theme: { components: Record<string, unknown> }): LoadingThemeConfig => {
-  return theme.components.loading as LoadingThemeConfig;
+const getLoadingConfig = (theme: { components: Record<string, unknown> }): LoadingConfig => {
+  return theme.components.loading as LoadingConfig;
 };
 
 const SpinnerImage = styled.img<{
