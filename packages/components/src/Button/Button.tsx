@@ -114,7 +114,6 @@ const StyledButton = styled.button<{
   justify-content: center;
   cursor: pointer;
   outline: none;
-  border: none;
   width: ${({ $fullWidth }) => ($fullWidth ? '100%' : 'auto')};
 
   /* Size variants */
@@ -144,36 +143,50 @@ const StyledButton = styled.button<{
 
   /* Variant and color type styles */
   ${({ $variant, $colorType, $iconBordered, theme }) => {
+    // Helper function to combine inset border and external shadow
+    const combineShadows = (insetBorder: string, externalShadow: string) => {
+      if (!insetBorder) {
+        // No inset border, return external shadow only (or 'none')
+        return externalShadow || 'none';
+      }
+      if (externalShadow === 'none') {
+        return insetBorder;
+      }
+      return `${insetBorder}, ${externalShadow}`;
+    };
+
     // Handle icon variant buttons
     if ($variant === 'icon') {
       const baseVariant = $iconBordered ? 'outlined' : 'text';
       const styles = theme.components.button[baseVariant]['default'];
+      // Icon variant: use transparent border when not bordered, otherwise use border color
+      const borderColor = $iconBordered ? styles.borderColor : 'transparent';
+      const borderColorHover = $iconBordered ? styles.borderColorHover : 'transparent';
+      const borderColorActive = $iconBordered ? styles.borderColorActive : 'transparent';
+      const borderColorDisabled = $iconBordered ? styles.borderColorDisabled : 'transparent';
 
       return `
         background: ${styles.background};
         color: ${styles.color};
-        border: 1px solid ${styles.borderColor};
-        box-shadow: ${styles.boxShadow};
+        border: none;
+        box-shadow: ${combineShadows(`inset 0 0 0 1px ${borderColor}`, styles.boxShadow)};
 
         &:hover:not(:disabled) {
           background: ${styles.backgroundHover};
           color: ${styles.colorHover};
-          border-color: ${styles.borderColorHover};
-          box-shadow: ${styles.boxShadowHover};
+          box-shadow: ${combineShadows(`inset 0 0 0 1px ${borderColorHover}`, styles.boxShadowHover)};
         }
 
         &:active:not(:disabled) {
           background: ${styles.backgroundActive};
           color: ${styles.colorActive};
-          border-color: ${styles.borderColorActive};
-          box-shadow: ${styles.boxShadowActive};
+          box-shadow: ${combineShadows(`inset 0 0 0 1px ${borderColorActive}`, styles.boxShadowActive)};
         }
 
         &:disabled {
           background: ${styles.backgroundDisabled};
           color: ${styles.colorDisabled};
-          border-color: ${styles.borderColorDisabled};
-          box-shadow: ${styles.boxShadowDisabled};
+          box-shadow: ${combineShadows(`inset 0 0 0 1px ${borderColorDisabled}`, styles.boxShadowDisabled)};
           cursor: not-allowed;
         }
       `;
@@ -195,32 +208,61 @@ const StyledButton = styled.button<{
         effectiveColorType as keyof (typeof theme.components.button)[typeof variant]
       ];
 
+    // Get border width and color based on variant
+    // Solid and text variants: no border (width 0)
+    // Outlined variant: 1px border
+    const needsBorder = variant === 'outlined';
+    const borderWidth = needsBorder ? '1px' : '0px';
+
+    const getBorderColor = (state: 'normal' | 'hover' | 'active' | 'disabled' = 'normal') => {
+      if (!needsBorder) {
+        // Solid and text variants don't need border color
+        return 'transparent';
+      }
+      // Outlined variant: use border color from theme
+      const stateKey =
+        state === 'normal'
+          ? 'borderColor'
+          : `borderColor${state.charAt(0).toUpperCase() + state.slice(1)}`;
+      return styles[stateKey as keyof typeof styles] as string;
+    };
+
+    const borderColor = getBorderColor('normal');
+    const borderColorHover = getBorderColor('hover');
+    const borderColorActive = getBorderColor('active');
+    const borderColorDisabled = getBorderColor('disabled');
+
+    // Helper to create inset border shadow (only for outlined variant)
+    const getInsetBorder = (color: string) => {
+      if (borderWidth === '0px') {
+        return '';
+      }
+      return `inset 0 0 0 ${borderWidth} ${color}`;
+    };
+
     return `
       background: ${styles.background};
       color: ${styles.color};
-      border: 1px solid ${styles.borderColor};
-      box-shadow: ${styles.boxShadow};
+      border: none;
+      box-shadow: ${combineShadows(getInsetBorder(borderColor), styles.boxShadow)};
       font-weight: ${styles.fontWeight};
 
       &:hover:not(:disabled) {
         background: ${styles.backgroundHover};
         color: ${styles.colorHover};
-        border-color: ${styles.borderColorHover};
-        box-shadow: ${styles.boxShadowHover};
+        box-shadow: ${combineShadows(getInsetBorder(borderColorHover), styles.boxShadowHover)};
       }
 
       &:active:not(:disabled) {
         background: ${styles.backgroundActive};
         color: ${styles.colorActive};
-        border-color: ${styles.borderColorActive};
-        box-shadow: ${styles.boxShadowActive};
+        box-shadow: ${combineShadows(getInsetBorder(borderColorActive), styles.boxShadowActive)};
       }
 
       &:disabled {
         background: ${styles.backgroundDisabled};
         color: ${styles.colorDisabled};
-        border-color: ${styles.borderColorDisabled};
-        box-shadow: ${styles.boxShadowDisabled};
+        box-shadow: ${combineShadows(getInsetBorder(borderColorDisabled), styles.boxShadowDisabled)};
         cursor: not-allowed;
       }
     `;
