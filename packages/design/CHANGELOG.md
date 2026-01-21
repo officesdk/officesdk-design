@@ -1,5 +1,12 @@
 # @officesdk/design
 
+## 0.1.28
+
+### Patch Changes
+
+- 4aab354: refactor: optimize Tabs and DropdownButton rendering 或 pref: refine styling for Tabs and DropdownButton
+- a9f0af7: refactor: update button theme and border rendering strategy
+
 ## 0.1.27
 
 ### Patch Changes
