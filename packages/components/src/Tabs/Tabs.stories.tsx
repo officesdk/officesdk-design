@@ -2,6 +2,28 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Tabs } from './Tabs';
 import { useState } from 'react';
 
+// Icon components for demonstration
+const HomeIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M2 6L8 2L14 6V13C14 13.5523 13.5523 14 13 14H3C2.44772 14 2 13.5523 2 13V6Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M6 14V9H10V14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+const UserIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="8" cy="5" r="3" stroke="currentColor" strokeWidth="1.5"/>
+    <path d="M2 14C2 11.7909 4.68629 10 8 10C11.3137 10 14 11.7909 14 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+  </svg>
+);
+
+const SettingsIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="8" cy="8" r="2" stroke="currentColor" strokeWidth="1.5"/>
+    <path d="M8 2V3M8 13V14M14 8H13M3 8H2M12.5 3.5L11.8 4.2M4.2 11.8L3.5 12.5M12.5 12.5L11.8 11.8M4.2 4.2L3.5 3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+  </svg>
+);
+
 const meta: Meta<typeof Tabs> = {
   title: 'Components/Tabs',
   component: Tabs,
@@ -36,6 +58,19 @@ export const Line: Story = {
   },
 };
 
+// Long label
+export const LongLabel: Story = {
+  args: {
+    items: [
+      { key: '1', label: 'Enabled Tab with a long label should be truncated' },
+      { key: '2', label: 'Another Tab' },
+      { key: '3', label: 'Another Tab' },
+    ],
+    variant: 'line',
+    defaultActiveKey: '1',
+  },
+};
+
 // Card variant
 export const Card: Story = {
   args: {
@@ -49,9 +84,48 @@ export const Card: Story = {
 export const WithDisabled: Story = {
   args: {
     items: [
-      { key: '1', label: 'Enabled Tab' },
+      { key: '1', label: 'Enabled Tab ' },
       { key: '2', label: 'Disabled Tab', disabled: true },
       { key: '3', label: 'Another Tab' },
+    ],
+    variant: 'line',
+    defaultActiveKey: '1',
+  },
+};
+
+// With icons
+export const WithIcons: Story = {
+  args: {
+    items: [
+      { key: '1', label: 'Home', icon: <HomeIcon /> },
+      { key: '2', label: 'Profile', icon: <UserIcon /> },
+      { key: '3', label: 'Settings', icon: <SettingsIcon /> },
+    ],
+    variant: 'line',
+    defaultActiveKey: '1',
+  },
+};
+
+// With icons (Card variant)
+export const WithIconsCard: Story = {
+  args: {
+    items: [
+      { key: '1', label: 'Home', icon: <HomeIcon /> },
+      { key: '2', label: 'Profile', icon: <UserIcon /> },
+      { key: '3', label: 'Settings', icon: <SettingsIcon /> },
+    ],
+    variant: 'card',
+    defaultActiveKey: '1',
+  },
+};
+
+// With icons and long labels
+export const WithIconsLongLabel: Story = {
+  args: {
+    items: [
+      { key: '1', label: 'Home Dashboard with very long label', icon: <HomeIcon /> },
+      { key: '2', label: 'User Profile Settings', icon: <UserIcon /> },
+      { key: '3', label: 'Settings', icon: <SettingsIcon /> },
     ],
     variant: 'line',
     defaultActiveKey: '1',

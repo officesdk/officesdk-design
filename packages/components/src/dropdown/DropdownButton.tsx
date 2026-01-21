@@ -75,6 +75,7 @@ const DropdownButtonContainer = styled.button<{
   box-sizing: border-box;
   transition: all 0.2s ease;
   font-family: 'PingFang SC', sans-serif;
+  width: 100%;
 
   ${({ $size, theme }) => {
     const config = theme.components?.dropdownButton;

@@ -74,7 +74,7 @@
   ],
   "sideEffects": false,
   "dependencies": {
-    "@officesdk/editor-sdk-core": "0.0.0-alpha.13",
+    "@officesdk/editor-sdk-core": "0.0.0-alpha.14",
     "rc-dialog": "^10.0.0",
     "rc-dropdown": "^4.2.1",
     "rc-menu": "^9.0.0",

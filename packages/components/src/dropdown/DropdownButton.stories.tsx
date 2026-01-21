@@ -94,6 +94,61 @@ export const WithIcon: Story = {
 };
 
 /**
+ * Long text with ellipsis
+ */
+export const LongTextEllipsis: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <div>
+        <div style={{ marginBottom: '8px', fontSize: '12px', color: '#666' }}>
+          Framed with long text (width: 200px)
+        </div>
+        <div style={{ width: '200px' }}>
+          <DropdownButton
+            variant="framed"
+            value="This is a very long text that should be truncated with ellipsis"
+          />
+        </div>
+      </div>
+      <div>
+        <div style={{ marginBottom: '8px', fontSize: '12px', color: '#666' }}>
+          Framed with icon and long text (width: 240px)
+        </div>
+        <div style={{ width: '240px' }}>
+          <DropdownButton
+            variant="framed"
+            icon={<CardIcon />}
+            value="This is a very long text that should be truncated with ellipsis when combined with icon"
+          />
+        </div>
+      </div>
+      <div>
+        <div style={{ marginBottom: '8px', fontSize: '12px', color: '#666' }}>
+          Frameless with long text (width: 180px)
+        </div>
+        <div style={{ width: '180px' }}>
+          <DropdownButton
+            variant="frameless"
+            value="This is a very long text that should be truncated with ellipsis"
+          />
+        </div>
+      </div>
+      <div>
+        <div style={{ marginBottom: '8px', fontSize: '12px', color: '#666' }}>
+          Long placeholder (width: 200px)
+        </div>
+        <div style={{ width: '200px' }}>
+          <DropdownButton
+            variant="framed"
+            placeholder="This is a very long placeholder that should also be truncated"
+          />
+        </div>
+      </div>
+    </div>
+  ),
+};
+
+/**
  * Open state
  */
 export const OpenState: Story = {

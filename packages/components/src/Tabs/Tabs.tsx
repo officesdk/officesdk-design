@@ -9,7 +9,7 @@ export interface TabItem {
   /**
    * Tab label
    */
-  label: string;
+  label: string | React.ReactNode;
   /**
    * Whether the tab is disabled
    */
@@ -53,11 +53,32 @@ export interface TabsProps {
    * Custom style
    */
   style?: React.CSSProperties;
+  /**
+   * Custom className for tab item
+   */
+  tabItemClassName?: string;
+  /**
+   * Custom style for tab item
+   */
+  tabItemStyle?: React.CSSProperties;
 }
 
-const TabContainer = styled.div`
+const TabContainer = styled.div<{
+  $variant: 'line' | 'card';
+}>`
   display: flex;
   flex-direction: column;
+
+  ${({ $variant, theme }) => {
+
+    const variantConfig = theme.components.tab[$variant];
+    const sizeConfig = theme.components.tab.large;
+    return `
+      height: ${sizeConfig.height};
+      border-radius: ${sizeConfig.borderRadius};
+      background-color: ${variantConfig.backgroundColor};
+    `;
+  }}
 `;
 
 const TabList = styled.div<{
@@ -66,6 +87,9 @@ const TabList = styled.div<{
   display: flex;
   align-items: center;
   position: relative;
+  width: 100%;
+  height: 100%;
+
 
   ${({ $variant, theme }) => {
     const variantConfig = theme.components.tab[$variant];
@@ -103,8 +127,7 @@ const TabItem = styled.button<{
   ${({ theme }) => {
     const sizeConfig = theme.components.tab.large;
     return `
-      height: ${sizeConfig.height};
-      padding: ${sizeConfig.padding};
+      height: 100%;
       font-size: ${sizeConfig.fontSize};
       line-height: ${sizeConfig.lineHeight};
       border-radius: ${sizeConfig.borderRadius};
@@ -119,7 +142,6 @@ const TabItem = styled.button<{
     if ($disabled) {
       return `
         background: ${itemConfig.backgroundDisabled};
-        border-color: ${itemConfig.borderColorDisabled};
         color: ${itemConfig.colorDisabled};
       `;
     }
@@ -127,8 +149,8 @@ const TabItem = styled.button<{
     if ($active) {
       return `
         background: ${itemConfig.backgroundActive};
-        border-color: ${itemConfig.borderColorActive};
         color: ${itemConfig.colorActive};
+        font-weight: 500;
       `;
     }
 
@@ -139,22 +161,25 @@ const TabItem = styled.button<{
     `;
   }}
 
-  ${({ $variant, $disabled, theme }) => {
+  ${({ $variant, $disabled, theme, $active }) => {
     if ($disabled) return '';
 
     const variantConfig = theme.components.tab[$variant];
     const itemConfig = variantConfig.item;
 
+    const isHoverNormal = !$active && !$disabled;
+
     return `
       &:hover {
-        background: ${itemConfig.backgroundHover};
-        border-color: ${itemConfig.borderColorHover};
-        color: ${itemConfig.colorHover};
+        background: ${ isHoverNormal ? itemConfig.backgroundHover : ''};
+        border-color: ${ isHoverNormal ? itemConfig.borderColorHover : ''};
+        color: ${ isHoverNormal ? itemConfig.colorHover : ''};
       }
     `;
   }}
 
-  ${({ $variant, $active }) => {
+  ${({ $variant, $active, $disabled, theme }) => {
+    // Line variant: show underline when active
     if ($variant === 'line' && $active) {
       return `
         &::after {
@@ -169,22 +194,49 @@ const TabItem = styled.button<{
       `;
     }
 
+    // Card variant: use box-shadow inset for border
     if ($variant === 'card') {
+      const variantConfig = theme.components.tab[$variant];
+      const itemConfig = variantConfig.item;
+
+      // Get border color based on state
+      let borderColor: string;
+      if ($disabled) {
+        borderColor = itemConfig.borderColorDisabled;
+      } else if ($active) {
+        borderColor = itemConfig.borderColorActive;
+      } else {
+        borderColor = itemConfig.borderColor;
+      }
+
+
       return `
-        border: 1px solid;
-        ${
-          $active
-            ? `
-          border-bottom-color: transparent;
-          margin-bottom: -1px;
-        `
-            : ''
+        box-shadow: inset 0 0 0 1px ${borderColor};
+        flex-grow: 1;
+        flex-shrink: 1;
+        &:hover {
         }
       `;
     }
 
     return '';
   }}
+
+  ${({ $variant }) => {
+    if ($variant === 'line') {
+      return `
+        max-width: 160px;
+      `;
+    }
+    return '';
+  }}
+`;
+
+const TabItemLabel = styled.span`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
 `;
 
 /**
@@ -211,6 +263,8 @@ export const Tabs: React.FC<TabsProps> = ({
   onChange,
   className,
   style,
+  tabItemClassName,
+  tabItemStyle,
 }) => {
   const [internalActiveKey, setInternalActiveKey] = useState<string>(
     controlledActiveKey ?? defaultActiveKey ?? items[0]?.key ?? ''
@@ -232,7 +286,7 @@ export const Tabs: React.FC<TabsProps> = ({
   );
 
   return (
-    <TabContainer className={className} style={style}>
+    <TabContainer $variant={variant} className={className} style={style}>
       <TabList $variant={variant} role="tablist">
         {items.map((item) => (
           <TabItem
@@ -246,9 +300,11 @@ export const Tabs: React.FC<TabsProps> = ({
             aria-disabled={item.disabled}
             disabled={item.disabled}
             type="button"
+            className={tabItemClassName}
+            style={tabItemStyle}
           >
-            {item.icon && <span>{item.icon}</span>}
-            {item.label}
+            {!!item.icon && item.icon}
+            {typeof item.label === 'string' ? <TabItemLabel>{item.label}</TabItemLabel> : item.label}
           </TabItem>
         ))}
       </TabList>

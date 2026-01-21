@@ -29,7 +29,7 @@ export const tab: TabConfig = {
       backgroundDisabled: 'transparent',
       borderColor: 'transparent',
       borderColorHover: 'transparent',
-      borderColorActive: colors.palettes.transparency['10'],
+      borderColorActive: colors.palettes.transparency['20'],
       borderColorDisabled: 'transparent',
       color: colors.palettes.transparency['60'],
       colorHover: colors.palettes.brand,
@@ -39,14 +39,15 @@ export const tab: TabConfig = {
     layout: {
       gap: '0',
     },
+    backgroundColor: colors.palettes.gray['8'],
   },
   large: {
-    height: '40px',
+    height: '32px',
     padding: '10px 16px',
     fontSize: '14px',
     lineHeight: '20px',
     borderRadius: '4px',
-    fontWeight: 500,
+    fontWeight: 400,
   },
 };
 
