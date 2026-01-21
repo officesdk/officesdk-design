@@ -3,7 +3,7 @@ import { styled } from '../utils/styled';
 import { Icon } from '../Icon';
 import { Button } from '../Button';
 import { getGlobalTheme } from '../utils/context';
-import loadingGif from './loading.gif';
+import loadingGif from '../assets/loading.gif';
 
 export interface ToastProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'className' | 'style' | 'children' | 'onClick'> {

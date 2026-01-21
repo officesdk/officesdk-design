@@ -1,5 +1,9 @@
 import { defineConfig } from 'tsup';
 
+const assetLoaders = {
+  '.gif': 'dataurl' as const,
+};
+
 export default defineConfig([
   {
     entry: ['src/index.ts'],
@@ -21,6 +25,7 @@ export default defineConfig([
     },
     clean: true,
     sourcemap: true,
+    loader: assetLoaders,
     external: [
       'react',
       'react-dom',
@@ -54,6 +59,7 @@ export default defineConfig([
     },
     clean: false,
     sourcemap: true,
+    loader: assetLoaders,
     external: [
       'react',
       'react-dom',
@@ -73,4 +79,3 @@ export default defineConfig([
     },
   },
 ]);
-

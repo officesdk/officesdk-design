@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from '../utils/styled';
-import loadingGif from './assets/loading.gif';
-import type { LoadingConfig } from '@officesdk/design-theme';
+import loadingGif from '../assets/loading.gif';
+import { lightTheme, type LoadingConfig } from '@officesdk/design-theme';
 
 export interface LoadingProps {
   /**
@@ -43,8 +43,11 @@ export interface LoadingProps {
   indicator?: React.ReactNode | string;
 }
 
-const getLoadingConfig = (theme: { components: Record<string, unknown> }): LoadingConfig => {
-  return theme.components.loading as LoadingConfig;
+const defaultLoadingConfig = lightTheme.components.loading;
+
+const getLoadingConfig = (theme?: { components?: Record<string, unknown> }): LoadingConfig => {
+  const loadingConfig = theme?.components?.loading as LoadingConfig | undefined;
+  return loadingConfig ?? defaultLoadingConfig;
 };
 
 const SpinnerImage = styled.img<{
@@ -253,7 +256,7 @@ export const Loading: React.FC<LoadingProps> = ({
   }
 
   // Standalone spinner (no children)
-  if (!children) {
+  if (React.Children.count(children) === 0) {
     if (!shouldShow) return null;
     return (
       <LoadingContainer $fullscreen={false} className={className}>

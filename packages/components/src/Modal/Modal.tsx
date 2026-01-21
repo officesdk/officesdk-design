@@ -6,7 +6,8 @@ import { Icon } from '../Icon';
 import { ModalGlobalStyles } from './globalStyle';
 import { styleManager } from '../utils/styleManager';
 import { getGlobalTheme } from '../utils/context';
-import type { ModalConfig } from '@officesdk/design/theme';
+import type { ModalConfig } from '@officesdk/design-theme';
+
 
 export interface ModalProps extends DialogProps {
   /**

@@ -4,8 +4,15 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+// Safely get directory path, works in both ESM and CommonJS
+const getDirname = () => {
+  if (typeof __dirname !== 'undefined') {
+    return __dirname;
+  }
+  return dirname(fileURLToPath(import.meta.url));
+};
+
+const currentDir = getDirname();
 
 const config: StorybookConfig = {
   stories: ['../docs/**/*.mdx', '../packages/**/*.stories.@(js|jsx|ts|tsx|mdx)'],
@@ -24,13 +31,13 @@ const config: StorybookConfig = {
       resolve: {
         preserveSymlinks: true,
         alias: {
-          'styled-components': path.resolve(__dirname, '../node_modules/styled-components'),
-          react: path.resolve(__dirname, '../node_modules/react'),
-          'react-dom': path.resolve(__dirname, '../node_modules/react-dom'),
+          'styled-components': path.resolve(currentDir, '../node_modules/styled-components'),
+          react: path.resolve(currentDir, '../node_modules/react'),
+          'react-dom': path.resolve(currentDir, '../node_modules/react-dom'),
           // Resolve workspace packages to their source files for Storybook
-          '@officesdk/design/theme': path.resolve(__dirname, '../packages/theme/src/index.ts'),
-          '@officesdk/design/utils': path.resolve(__dirname, '../packages/utils/src/index.ts'),
-          '@officesdk/design/icons': path.resolve(__dirname, '../packages/icons/src/index.ts'),
+          '@officesdk/design/theme': path.resolve(currentDir, '../packages/theme/src/index.ts'),
+          '@officesdk/design/utils': path.resolve(currentDir, '../packages/utils/src/index.ts'),
+          '@officesdk/design/icons': path.resolve(currentDir, '../packages/icons/src/index.ts'),
         },
       },
     });
