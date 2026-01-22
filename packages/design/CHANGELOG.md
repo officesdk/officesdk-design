@@ -1,5 +1,11 @@
 # @officesdk/design
 
+## 0.1.29
+
+### Patch Changes
+
+- d2920b4: style: evenly distribute TabItem widths
+
 ## 0.1.28
 
 ### Patch Changes
