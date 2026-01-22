@@ -58,8 +58,8 @@ export const Line: Story = {
   },
 };
 
-// Long label
-export const LongLabel: Story = {
+// Long label line
+export const LongLabelLine: Story = {
   args: {
     items: [
       { key: '1', label: 'Enabled Tab with a long label should be truncated' },
@@ -67,6 +67,18 @@ export const LongLabel: Story = {
       { key: '3', label: 'Another Tab' },
     ],
     variant: 'line',
+    defaultActiveKey: '1',
+  },
+};
+
+export const LongLabelCard: Story = {
+  args: {
+    items: [
+      { key: '1', label: 'Enabled Tab with a long label should be truncated' },
+      { key: '2', label: 'Another Tab' },
+      { key: '3', label: 'Another Tab' },
+    ],
+    variant: 'card',
     defaultActiveKey: '1',
   },
 };

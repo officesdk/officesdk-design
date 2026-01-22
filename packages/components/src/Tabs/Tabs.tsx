@@ -212,8 +212,8 @@ const TabItem = styled.button<{
 
       return `
         box-shadow: inset 0 0 0 1px ${borderColor};
-        flex-grow: 1;
-        flex-shrink: 1;
+        flex: 1;
+        overflow: hidden;
         &:hover {
         }
       `;
