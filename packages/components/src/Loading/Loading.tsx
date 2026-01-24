@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { styled } from '../utils/styled';
 import loadingGif from '../assets/loading.gif';
-import { lightTheme, type LoadingConfig } from '@officesdk/design-theme';
+import { getGlobalTheme } from '../utils/context';
 
 export interface LoadingProps {
   /**
@@ -43,75 +43,75 @@ export interface LoadingProps {
   indicator?: React.ReactNode | string;
 }
 
-const defaultLoadingConfig = lightTheme.components.loading;
-
-const getLoadingConfig = (theme?: { components?: Record<string, unknown> }): LoadingConfig => {
-  const loadingConfig = theme?.components?.loading as LoadingConfig | undefined;
-  return loadingConfig ?? defaultLoadingConfig;
+// Shared size styles for indicators
+const getIndicatorSize = (size: LoadingProps['size'], theme: any) => {
+  const sizeConfig = theme.components.loading[size || 'medium'];
+  return `
+    width: ${sizeConfig.size};
+    height: ${sizeConfig.size};
+  `;
 };
 
-const SpinnerImage = styled.img<{
-  $size: LoadingProps['size'];
-}>`
+const SpinnerImage = styled.img<{ $size: LoadingProps['size'] }>`
   display: inline-block;
-
-  ${({ $size, theme }) => {
-    const loadingConfig = getLoadingConfig(theme);
-    const sizeConfig = loadingConfig[$size || 'medium'];
-
-    return `
-      width: ${sizeConfig.size};
-      height: ${sizeConfig.size};
-    `;
-  }}
+  ${({ $size, theme }) => getIndicatorSize($size, theme)}
 `;
 
-const CustomIndicatorWrapper = styled.span<{
-  $size: LoadingProps['size'];
-}>`
+const CustomIndicatorWrapper = styled.span<{ $size: LoadingProps['size'] }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  ${({ $size, theme }) => getIndicatorSize($size, theme)}
+`;
+
+const CSSSpinner = styled.div<{ $size: LoadingProps['size'] }>`
+  display: inline-block;
+  border-radius: 50%;
+  box-sizing: border-box;
 
   ${({ $size, theme }) => {
-    const loadingConfig = getLoadingConfig(theme);
+    const loadingConfig = theme.components.loading;
     const sizeConfig = loadingConfig[$size || 'medium'];
+    const { color, animation } = loadingConfig.indicator;
+    const sizeValue = Number.parseFloat(sizeConfig.size);
+    const borderWidth = Math.max(2, Math.round((Number.isNaN(sizeValue) ? 24 : sizeValue) / 12));
 
     return `
       width: ${sizeConfig.size};
       height: ${sizeConfig.size};
+      border: ${borderWidth}px solid rgba(0, 0, 0, 0.1);
+      border-top-color: ${color};
+      animation: loading-spin ${animation.duration} ${animation.timingFunction} infinite;
+
+      @keyframes loading-spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
     `;
   }}
 `;
 
-const LoadingContainer = styled.div<{
-  $fullscreen: boolean;
-}>`
+const LoadingContainer = styled.div<{ $fullscreen: boolean }>`
   display: inline-flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: ${({ theme }) => theme.components.loading.indicator.gap};
 
-  ${({ $fullscreen, theme }) => {
-    if (!$fullscreen) return '';
-    const loadingConfig = getLoadingConfig(theme);
-    return `
+  ${({ $fullscreen, theme }) =>
+    $fullscreen &&
+    `
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: ${loadingConfig.fullscreen.zIndex};
-      background: ${loadingConfig.fullscreen.background};
-    `;
-  }}
+      inset: 0;
+      z-index: ${theme.components.loading.fullscreen.zIndex};
+      background: ${theme.components.loading.fullscreen.background};
+    `}
 `;
 
 const Tip = styled.span`
   font-size: 14px;
   line-height: 1.5;
-  color: ${({ theme }) => getLoadingConfig(theme).tipColor};
+  color: ${({ theme }) => theme.components.loading.tipColor};
 `;
 
 const Wrapper = styled.div`
@@ -121,33 +121,30 @@ const Wrapper = styled.div`
 const WrapperContent = styled.div<{ $spinning: boolean }>`
   transition: opacity 0.3s;
   opacity: ${({ $spinning, theme }) =>
-    $spinning ? getLoadingConfig(theme).wrapper.contentOpacity : 1};
+    $spinning ? theme.components.loading.wrapper.contentOpacity : 1};
   pointer-events: ${({ $spinning }) => ($spinning ? 'none' : 'auto')};
 `;
 
 const WrapperOverlay = styled.div`
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
   z-index: 1;
-  background: ${({ theme }) => getLoadingConfig(theme).wrapper.overlayBackground};
+  background: ${({ theme }) => theme.components.loading.wrapper.overlayBackground};
+  gap: ${({ theme }) => theme.components.loading.indicator.gap};
 `;
 
 /**
  * Loading Component
  *
- * A loading component that displays an animated GIF indicator.
- * By default uses a built-in loading GIF, but supports custom indicators.
+ * A loading component that displays an animated indicator.
+ * Supports GIF/CSS defaults via theme configuration or custom indicators via props.
  *
  * @example
- * // Basic usage
+ * // Basic usage (uses theme default indicator type)
  * <Loading />
  *
  * @example
@@ -188,89 +185,86 @@ export const Loading: React.FC<LoadingProps> = ({
   children,
   indicator,
 }) => {
-  const [shouldShow, setShouldShow] = React.useState(delay === 0 && spinning);
+  const [shouldShow, setShouldShow] = useState(delay === 0 && spinning);
 
-  React.useEffect(() => {
-    if (spinning) {
-      if (delay > 0) {
-        const timer = setTimeout(() => {
-          setShouldShow(true);
-        }, delay);
-        return () => clearTimeout(timer);
-      } else {
-        setShouldShow(true);
-      }
-    } else {
+  // Simplified effect: only set timer when delay > 0 and spinning
+  useEffect(() => {
+    if (!spinning) {
       setShouldShow(false);
+      return;
     }
+
+    if (delay <= 0) {
+      setShouldShow(true);
+      return;
+    }
+
+    const timer = setTimeout(() => setShouldShow(true), delay);
+    return () => clearTimeout(timer);
   }, [spinning, delay]);
 
+  // Render indicator - not memoized because theme can change dynamically via registerGlobalTheme
   const renderIndicator = () => {
+    const a11yProps = { role: 'status' as const, 'aria-label': 'Loading' };
+
     // Custom indicator as string (image URL)
     if (typeof indicator === 'string') {
-      return (
-        <SpinnerImage
-          $size={size}
-          src={indicator}
-          alt="Loading"
-          role="status"
-          aria-label="Loading"
-        />
-      );
+      return <SpinnerImage $size={size} src={indicator} alt="Loading" {...a11yProps} />;
     }
+
     // Custom indicator as React element
     if (indicator) {
       return (
-        <CustomIndicatorWrapper $size={size} role="status" aria-label="Loading">
+        <CustomIndicatorWrapper $size={size} {...a11yProps}>
           {indicator}
         </CustomIndicatorWrapper>
       );
     }
-    // Default GIF indicator
+
+    // Default indicator from theme
+    const { indicator: indicatorConfig } = getGlobalTheme().components.loading;
+
+    if (indicatorConfig.defaultType === 'css') {
+      return <CSSSpinner $size={size} {...a11yProps} />;
+    }
+
     return (
       <SpinnerImage
         $size={size}
-        src={loadingGif}
+        src={indicatorConfig.defaultImage || loadingGif}
         alt="Loading"
-        role="status"
-        aria-label="Loading"
+        {...a11yProps}
       />
     );
   };
 
-  const spinnerElement = (
+  // Render spinner with optional tip
+  const renderSpinner = () => (
     <>
       {renderIndicator()}
       {tip && <Tip>{tip}</Tip>}
     </>
   );
 
-  // Fullscreen mode
-  if (fullscreen) {
-    if (!shouldShow) return null;
-    return (
-      <LoadingContainer $fullscreen className={className}>
-        {spinnerElement}
-      </LoadingContainer>
-    );
-  }
-
-  // Standalone spinner (no children)
-  if (React.Children.count(children) === 0) {
-    if (!shouldShow) return null;
-    return (
-      <LoadingContainer $fullscreen={false} className={className}>
-        {spinnerElement}
-      </LoadingContainer>
-    );
-  }
+  const hasChildren = React.Children.count(children) > 0;
 
   // Wrapper mode (with children)
+  if (hasChildren) {
+    return (
+      <Wrapper className={className}>
+        <WrapperContent $spinning={shouldShow}>{children}</WrapperContent>
+        {shouldShow && <WrapperOverlay>{renderSpinner()}</WrapperOverlay>}
+      </Wrapper>
+    );
+  }
+
+  // Standalone or fullscreen mode (no children)
+  if (!shouldShow) return null;
+
   return (
-    <Wrapper className={className}>
-      <WrapperContent $spinning={shouldShow}>{children}</WrapperContent>
-      {shouldShow && <WrapperOverlay>{spinnerElement}</WrapperOverlay>}
-    </Wrapper>
+    <LoadingContainer $fullscreen={fullscreen} className={className}>
+      {renderSpinner()}
+    </LoadingContainer>
   );
 };
 

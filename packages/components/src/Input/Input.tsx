@@ -449,13 +449,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       onBlur,
       value,
       onChange,
+      defaultValue,
       ...rest
     },
     ref
   ) => {
     const [isFocused, setIsFocused] = useState(false);
     const [internalValue, setInternalValue] = useState(
-      value !== undefined ? value : (rest.defaultValue as string) || ''
+      value !== undefined ? value : (defaultValue as string) || ''
     );
 
     // Controlled vs Uncontrolled

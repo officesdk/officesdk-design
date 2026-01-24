@@ -10,7 +10,7 @@ afterEach(() => {
 // Mock matchMedia
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
-  value: vi.fn().mockImplementation(query => ({
+  value: vi.fn().mockImplementation((query) => ({
     matches: false,
     media: query,
     onchange: null,
@@ -33,3 +33,9 @@ global.IntersectionObserver = class IntersectionObserver {
   unobserve() {}
 } as any;
 
+const originalGetComputedStyle = window.getComputedStyle.bind(window);
+Object.defineProperty(window, 'getComputedStyle', {
+  configurable: true,
+  value: (element: Element, pseudoElement?: string) =>
+    pseudoElement ? originalGetComputedStyle(element) : originalGetComputedStyle(element),
+});

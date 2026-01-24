@@ -14,4 +14,10 @@ export { lightTheme } from './light';
 
 // Export config types for components to use
 export type { ModalConfig, ModalVariantSize, ModalBaseConfig } from './light/components/modal';
-export type { LoadingConfig, LoadingSizeConfig, LoadingWrapperConfig, LoadingFullscreenConfig } from './light/components/loading';
+export type {
+  LoadingConfig,
+  LoadingSizeConfig,
+  LoadingIndicatorConfig,
+  LoadingWrapperConfig,
+  LoadingFullscreenConfig,
+} from './light/components/loading';
