@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { screen, waitFor, cleanup } from '@testing-library/react';
+import { screen, waitFor, cleanup, render as rtlRender } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { render } from '../../__tests__/test-utils';
 import { ToastContainer, useToast } from '../ToastContainer';
@@ -313,14 +313,23 @@ describe('ToastContainer', () => {
 
   describe('Error Handling', () => {
     it('should throw error when useToast is used outside ToastContainer', () => {
+      const onError = vi.fn();
       const TestComponentWithoutContainer = () => {
-        const toast = useToast();
-        expect(() => toast.success('Test')).toThrow('useToast must be used within ToastContainer');
+        try {
+          useToast();
+        } catch (error) {
+          onError(error);
+        }
         return null;
       };
 
-      expect(() => render(<TestComponentWithoutContainer />)).toThrow();
+      const { unmount } = rtlRender(<TestComponentWithoutContainer />);
+      expect(onError).toHaveBeenCalledTimes(1);
+      expect(onError).toHaveBeenCalledWith(expect.any(Error));
+      expect((onError.mock.calls[0][0] as Error).message).toBe(
+        'useToast must be used within ToastContainer'
+      );
+      unmount();
     });
   });
 });
-

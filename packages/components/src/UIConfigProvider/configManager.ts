@@ -4,14 +4,18 @@ import { registerGlobalContext } from '../utils/context';
 import ReactDOM from 'react-dom';
 
 let globalConfig: UIConfig | null = null;
-let globalIconRegistry: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> | null = null;
+let globalIconRegistry: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> | null =
+  null;
 let globalToastConfig: { maxCount?: number; defaultDuration?: number } | null = null;
 
 /**
  * Create default render function
  * This will be registered via registerGlobalContext and can be retrieved via getGlobalRenderFunction
  */
-export const createDefaultRenderFunction = (): (element: React.ReactElement, container: HTMLElement) => void => {
+export const createDefaultRenderFunction = (): ((
+  element: React.ReactElement,
+  container: HTMLElement
+) => void) => {
   return (element: React.ReactElement, container: HTMLElement) => {
     // Try React 18 createRoot first
     if ('createRoot' in ReactDOM) {

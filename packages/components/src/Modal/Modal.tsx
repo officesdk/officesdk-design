@@ -6,8 +6,6 @@ import { Icon } from '../Icon';
 import { ModalGlobalStyles } from './globalStyle';
 import { styleManager } from '../utils/styleManager';
 import { getGlobalTheme } from '../utils/context';
-import type { ModalConfig } from '@officesdk/design-theme';
-
 
 export interface ModalProps extends DialogProps {
   /**
@@ -181,103 +179,64 @@ export const Modal: React.FC<ModalProps> = ({
     styleManager.inject('osd-modal-styles', ModalGlobalStyles);
   }, []);
 
-  // Get theme with modal config
-  const theme = getGlobalTheme() as unknown as {
-    components: {
-      modal: ModalConfig;
-    };
+  // Get modal config from theme
+  const modalConfig = getGlobalTheme().components.modal;
+
+  // Calculate width - use prop if provided, otherwise use theme default
+  const modalWidth = width ?? modalConfig[variant].defaultWidth;
+
+  // Build classNames for semantic elements
+  const classNames = {
+    ...(maskType === 'dark' && { mask: `${prefixCls}-mask-dark` }),
+    content: `${prefixCls}-content-${variant}`,
   };
 
-  // Calculate default width based on variant using theme values
-  const getDefaultWidth = () => {
-    if (width !== undefined) return width;
-    switch (variant) {
-      case 'functional':
-        return theme.components.modal.functional.defaultWidth;
-      case 'message':
-      default:
-        return theme.components.modal.message.defaultWidth;
-    }
-  };
+  // Build styles for custom width
+  const styles: Record<string, React.CSSProperties> | undefined =
+    width !== undefined ? { content: { width } } : undefined;
 
-  // Build className for modal content based on variant
-  const getContentClassName = () => {
-    switch (variant) {
-      case 'message':
-        return `${prefixCls}-content-message`;
-      case 'functional':
-        return `${prefixCls}-content-functional`;
-      default:
-        return `${prefixCls}-content-message`;
-    }
-  };
-  const contentClassName = getContentClassName();
+  // Build default footer when not provided
+  const renderFooter = () => {
+    if (footer !== undefined) return footer;
 
-  // Build className for mask
-  const maskClassName = maskType === 'dark' ? `${prefixCls}-mask-dark` : undefined;
-
-  // Build default footer
-  let defaultFooter: React.ReactNode = null;
-  if (footer === undefined) {
-    const okButton =
-      okText === null ? null : (
-        <Button
-          key="confirm"
-          variant="solid"
-          colorType="guidance"
-          onClick={onOk}
-          disabled={disabledOkButton}
-        >
-          {okText ?? 'OK'}
-        </Button>
-      );
-
-    const cancelButton =
-      cancelText === null ? null : (
-        <Button key="cancel" variant="outlined" colorType="default" onClick={(e) => handleClose(e)}>
-          {cancelText ?? 'Cancel'}
-        </Button>
-      );
-
-    defaultFooter = (
+    return (
       <>
-        {cancelButton}
-        {okButton}
+        {cancelText !== null && (
+          <Button key="cancel" variant="outlined" colorType="default" onClick={handleClose}>
+            {cancelText ?? 'Cancel'}
+          </Button>
+        )}
+        {okText !== null && (
+          <Button
+            key="confirm"
+            variant="solid"
+            colorType="guidance"
+            onClick={onOk}
+            disabled={disabledOkButton}
+          >
+            {okText ?? 'OK'}
+          </Button>
+        )}
       </>
     );
-  }
-
-  // Build classNames for semantic elements (mask and content)
-  const semanticClassNames: Record<string, string> = {};
-  if (maskClassName) {
-    semanticClassNames.mask = maskClassName;
-  }
-  if (contentClassName) {
-    semanticClassNames.content = contentClassName;
-  }
-
-  // Build styles to apply width to content instead of root
-  const semanticStyles: Record<string, React.CSSProperties> = {};
-  if (width !== undefined) {
-    semanticStyles.content = { width };
-  }
+  };
 
   return (
     <RcDialog
       {...restProps}
       visible={visible}
       title={title}
-      width={width === undefined ? getDefaultWidth() : undefined}
+      width={width === undefined ? modalWidth : undefined}
       prefixCls={prefixCls}
       closable={closable}
-      closeIcon={closeIcon ?? <Icon name="close" size={16} />}
+      closeIcon={closeIcon ?? <Icon name="close" size={19.2} />}
       mask={mask}
       maskClosable={maskClosable}
-      classNames={Object.keys(semanticClassNames).length > 0 ? semanticClassNames : undefined}
-      styles={Object.keys(semanticStyles).length > 0 ? semanticStyles : undefined}
+      classNames={classNames}
+      styles={styles}
       className={className}
       onClose={handleClose}
-      footer={footer === undefined ? defaultFooter : footer}
+      footer={renderFooter()}
     >
       {children}
     </RcDialog>

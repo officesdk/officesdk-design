@@ -1,17 +1,41 @@
 import { colors } from '../base';
 
-/**
- * Loading component theme configuration
- * Based on Figma design: https://www.figma.com/design/pzDsFwxBseCBUBQrfWo8Cm
- *
- * Sizes:
- * - small: 16x16 (for dropdown menus, search refresh, etc.)
- * - medium: 24x24 (for list/table refresh)
- * - large: 32x32 (for full page refresh)
- */
-
 export interface LoadingSizeConfig {
   size: string;
+}
+
+export interface LoadingIndicatorConfig {
+  /**
+   * Type of the default indicator
+   * - 'gif': Uses animated GIF image
+   * - 'css': Uses CSS animation (rotating spinner)
+   */
+  defaultType: 'gif' | 'css';
+  /**
+   * Default indicator image URL (used when type is 'gif')
+   */
+  defaultImage?: string;
+  /**
+   * Indicator color (used for CSS animations)
+   */
+  color: string;
+  /**
+   * CSS animation configuration
+   */
+  animation: {
+    /**
+     * Animation duration
+     */
+    duration: string;
+    /**
+     * Animation timing function
+     */
+    timingFunction: string;
+  };
+  /**
+   * Gap between indicator and tip text
+   */
+  gap: string;
 }
 
 export interface LoadingWrapperConfig {
@@ -28,6 +52,7 @@ export interface LoadingConfig {
   small: LoadingSizeConfig;
   medium: LoadingSizeConfig;
   large: LoadingSizeConfig;
+  indicator: LoadingIndicatorConfig;
   tipColor: string;
   wrapper: LoadingWrapperConfig;
   fullscreen: LoadingFullscreenConfig;
@@ -43,6 +68,18 @@ export const loading: LoadingConfig = {
   },
   large: {
     size: '32px',
+  },
+
+  // Indicator configuration
+  indicator: {
+    defaultType: 'gif',
+    defaultImage: undefined, // Will use built-in GIF if not specified
+    color: colors.palettes.brand,
+    animation: {
+      duration: '1s',
+      timingFunction: 'linear',
+    },
+    gap: '8px',
   },
 
   // Tip text color

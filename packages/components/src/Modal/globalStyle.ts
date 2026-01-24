@@ -1,6 +1,4 @@
 import { createGlobalStyle } from '../utils/styled';
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const ModalGlobalStyles = createGlobalStyle`
   .osd-modal {
     position: relative;
@@ -10,17 +8,14 @@ export const ModalGlobalStyles = createGlobalStyle`
 
   .osd-modal-mask {
     position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    background-color: ${(props: any) => props.theme.components.modal.message.maskLight};
+    inset: 0;
+    background-color: ${({ theme }) => theme.components.modal.message.maskLight};
     height: 100%;
-    z-index: ${(props: any) => props.theme.components.modal.message.maskZIndex};
+    z-index: ${({ theme }) => theme.components.modal.message.maskZIndex};
   }
 
   .osd-modal-mask-dark {
-    background-color: ${(props: any) => props.theme.components.modal.message.maskDark};
+    background-color: ${({ theme }) => theme.components.modal.message.maskDark};
   }
 
   .osd-modal-mask-hidden {
@@ -30,14 +25,11 @@ export const ModalGlobalStyles = createGlobalStyle`
   .osd-modal-wrap {
     position: fixed;
     overflow: auto;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: ${(props: any) => props.theme.components.modal.message.maskZIndex};
+    z-index: ${({ theme }) => theme.components.modal.message.maskZIndex};
     -webkit-overflow-scrolling: touch;
     outline: 0;
   }
@@ -46,48 +38,48 @@ export const ModalGlobalStyles = createGlobalStyle`
     position: relative;
     display: flex;
     flex-direction: column;
-    padding: ${(props: any) => props.theme.components.modal.message.padding};
-    background: ${(props: any) => props.theme.components.modal.message.background};
-    border: ${(props: any) => props.theme.components.modal.message.border};
-    box-shadow: ${(props: any) => props.theme.components.modal.message.shadow};
-    border-radius: ${(props: any) => props.theme.components.modal.message.borderRadius};
+    padding: ${({ theme }) => theme.components.modal.message.padding};
+    background: ${({ theme }) => theme.components.modal.message.background};
+    border: ${({ theme }) => theme.components.modal.message.border};
+    box-shadow: ${({ theme }) => theme.components.modal.message.shadow};
+    border-radius: ${({ theme }) => theme.components.modal.message.borderRadius};
     box-sizing: border-box;
   }
 
   .osd-modal-section-message {
-    max-width: ${(props: any) => props.theme.components.modal.message.maxWidth};
-    min-width: ${(props: any) => props.theme.components.modal.message.minWidth};
-    max-height: ${(props: any) => props.theme.components.modal.message.maxHeight};
-    min-height: ${(props: any) => props.theme.components.modal.message.minHeight};
+    max-width: ${({ theme }) => theme.components.modal.message.maxWidth};
+    min-width: ${({ theme }) => theme.components.modal.message.minWidth};
+    max-height: ${({ theme }) => theme.components.modal.message.maxHeight};
+    min-height: ${({ theme }) => theme.components.modal.message.minHeight};
   }
 
   .osd-modal-section-functional {
-    max-width: ${(props: any) => props.theme.components.modal.functional.maxWidth};
-    min-width: ${(props: any) => props.theme.components.modal.functional.minWidth};
-    max-height: ${(props: any) => props.theme.components.modal.functional.maxHeight};
-    min-height: ${(props: any) => props.theme.components.modal.functional.minHeight};
+    max-width: ${({ theme }) => theme.components.modal.functional.maxWidth};
+    min-width: ${({ theme }) => theme.components.modal.functional.minWidth};
+    max-height: ${({ theme }) => theme.components.modal.functional.maxHeight};
+    min-height: ${({ theme }) => theme.components.modal.functional.minHeight};
   }
 
   .osd-modal-content-message {
-    max-width: ${(props: any) => props.theme.components.modal.message.maxWidth};
-    min-width: ${(props: any) => props.theme.components.modal.message.minWidth};
-    max-height: ${(props: any) => props.theme.components.modal.message.maxHeight};
-    min-height: ${(props: any) => props.theme.components.modal.message.minHeight};
+    max-width: ${({ theme }) => theme.components.modal.message.maxWidth};
+    min-width: ${({ theme }) => theme.components.modal.message.minWidth};
+    max-height: ${({ theme }) => theme.components.modal.message.maxHeight};
+    min-height: ${({ theme }) => theme.components.modal.message.minHeight};
   }
 
   .osd-modal-content-functional {
-    max-width: ${(props: any) => props.theme.components.modal.functional.maxWidth};
-    min-width: ${(props: any) => props.theme.components.modal.functional.minWidth};
-    max-height: ${(props: any) => props.theme.components.modal.functional.maxHeight};
-    min-height: ${(props: any) => props.theme.components.modal.functional.minHeight};
+    max-width: ${({ theme }) => theme.components.modal.functional.maxWidth};
+    min-width: ${({ theme }) => theme.components.modal.functional.minWidth};
+    max-height: ${({ theme }) => theme.components.modal.functional.maxHeight};
+    min-height: ${({ theme }) => theme.components.modal.functional.minHeight};
   }
 
   .osd-modal-close {
     position: absolute;
-    right: 16px;
-    top: 16px;
+    right: 32px;
+    top: 24px;
     z-index: 10;
-    padding: 4px;
+    padding: 2.4px;
     line-height: 1;
     border: 0;
     outline: 0;
@@ -101,11 +93,11 @@ export const ModalGlobalStyles = createGlobalStyle`
   }
 
   .osd-modal-close:hover {
-    background: ${(props: any) => props.theme.components.modal.message.closeButtonHoverBackground};
+    background: ${({ theme }) => theme.components.modal.message.closeButtonHoverBackground};
   }
 
   .osd-modal-close:active {
-    background: ${(props: any) => props.theme.components.modal.message.closeButtonActiveBackground};
+    background: ${({ theme }) => theme.components.modal.message.closeButtonActiveBackground};
   }
 
   .osd-modal-header {
@@ -114,17 +106,17 @@ export const ModalGlobalStyles = createGlobalStyle`
   }
 
   .osd-modal-title {
-    font-size: ${(props: any) => props.theme.components.modal.message.titleFontSize};
-    font-weight: ${(props: any) => props.theme.components.modal.message.titleFontWeight};
-    line-height: ${(props: any) => props.theme.components.modal.message.titleLineHeight};
-    color: ${(props: any) => props.theme.components.modal.message.titleColor};
+    font-size: ${({ theme }) => theme.components.modal.message.titleFontSize};
+    font-weight: ${({ theme }) => theme.components.modal.message.titleFontWeight};
+    line-height: ${({ theme }) => theme.components.modal.message.titleLineHeight};
+    color: ${({ theme }) => theme.components.modal.message.titleColor};
   }
 
   .osd-modal-body {
     flex: 1;
-    font-size: ${(props: any) => props.theme.components.modal.message.bodyFontSize};
-    line-height: ${(props: any) => props.theme.components.modal.message.bodyLineHeight};
-    color: ${(props: any) => props.theme.components.modal.message.bodyColor};
+    font-size: ${({ theme }) => theme.components.modal.message.bodyFontSize};
+    line-height: ${({ theme }) => theme.components.modal.message.bodyLineHeight};
+    color: ${({ theme }) => theme.components.modal.message.bodyColor};
   }
 
   .osd-modal-footer {

@@ -72,7 +72,9 @@
     "dist",
     "README.md"
   ],
-  "sideEffects": false,
+  "sideEffects": [
+    "**/*.css"
+  ],
   "dependencies": {
     "@officesdk/editor-sdk-core": "0.0.0-alpha.13",
     "rc-dialog": "^10.0.0",

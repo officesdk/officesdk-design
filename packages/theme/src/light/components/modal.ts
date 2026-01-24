@@ -49,7 +49,7 @@ export const modal: ModalConfig = {
     bodyColor: colors.palettes.gray['120'],
     bodyFontSize: typography.paragraph.fontSize.m,
     bodyLineHeight: typography.paragraph.lineHeight.medium,
-    padding: '24px',
+    padding: '24px 32px',
     closeButtonHoverBackground: colors.palettes.transparency['5'],
     closeButtonActiveBackground: colors.palettes.transparency['10'],
     maxWidth: '400px',

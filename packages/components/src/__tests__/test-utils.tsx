@@ -2,6 +2,7 @@ import React from 'react';
 import { render, RenderOptions } from '@testing-library/react';
 import { UIConfigProvider, createUIConfig } from '../UIConfigProvider';
 import { lightTheme } from '@officesdk/design/theme';
+import { iconRegistry } from '@officesdk/design/icons';
 
 interface AllTheProvidersProps {
   children: React.ReactNode;
@@ -9,7 +10,7 @@ interface AllTheProvidersProps {
 
 const testConfig = createUIConfig({
   theme: lightTheme,
-  icons: {},
+  icons: iconRegistry,
   toast: {
     defaultDuration: 0, // Disable auto-close in tests
     maxCount: 10,

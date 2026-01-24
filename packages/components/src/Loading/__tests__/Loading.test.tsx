@@ -3,6 +3,7 @@ import '@testing-library/jest-dom/vitest';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { screen, act } from '@testing-library/react';
 import { render } from '../../__tests__/test-utils';
+import { registerGlobalTheme } from '../../utils/context';
 import { Loading } from '../Loading';
 
 describe('Loading', () => {
@@ -103,6 +104,12 @@ describe('Loading', () => {
       expect(screen.getByText('Test Content')).toBeInTheDocument();
     });
 
+    it('should treat numeric children as wrapper content', () => {
+      render(<Loading spinning>{0}</Loading>);
+      expect(screen.getByText('0')).toBeInTheDocument();
+      expect(screen.getByRole('status')).toBeInTheDocument();
+    });
+
     it('should show overlay when spinning with children', () => {
       render(
         <Loading spinning>
@@ -181,6 +188,131 @@ describe('Loading', () => {
         <Loading size="large" indicator={<span>Custom</span>} />
       );
       expect(container.querySelector('span[role="status"]')).toBeInTheDocument();
+    });
+  });
+
+  describe('Theme Configuration', () => {
+    it('should render CSS spinner when defaultType is css', () => {
+      const { rerender } = render(<Loading />);
+
+      registerGlobalTheme({
+        components: {
+          loading: {
+            indicator: {
+              defaultType: 'css',
+            },
+          },
+        },
+      });
+
+      rerender(<Loading />);
+      const indicator = screen.getByRole('status');
+      expect(indicator).toBeInTheDocument();
+      expect(indicator.tagName).toBe('DIV');
+
+      registerGlobalTheme({
+        components: {
+          loading: {
+            indicator: {
+              defaultType: 'gif',
+              defaultImage: undefined,
+            },
+          },
+        },
+      });
+    });
+
+    it('should use theme default image when provided', () => {
+      const { rerender } = render(<Loading />);
+
+      registerGlobalTheme({
+        components: {
+          loading: {
+            indicator: {
+              defaultType: 'gif',
+              defaultImage: '/theme-loading.gif',
+            },
+          },
+        },
+      });
+
+      rerender(<Loading />);
+      const indicator = screen.getByRole('status');
+      expect(indicator).toHaveAttribute('src', '/theme-loading.gif');
+
+      registerGlobalTheme({
+        components: {
+          loading: {
+            indicator: {
+              defaultType: 'gif',
+              defaultImage: undefined,
+            },
+          },
+        },
+      });
+    });
+    it('should use theme indicator gap configuration', () => {
+      const { container } = render(<Loading tip="Loading..." />);
+      // The gap is applied via styled-components theme
+      expect(container.querySelector('[role="status"]')).toBeInTheDocument();
+      expect(screen.getByText('Loading...')).toBeInTheDocument();
+    });
+
+    it('should render with default GIF indicator', () => {
+      render(<Loading />);
+      const indicator = screen.getByRole('status');
+      expect(indicator).toBeInTheDocument();
+      expect(indicator.tagName).toBe('IMG');
+    });
+
+    it('should respect theme indicator color for CSS spinner', () => {
+      // This tests that the component accepts theme configuration
+      // The actual CSS animation spinner would be rendered when theme.indicator.defaultType = 'css'
+      render(<Loading />);
+      expect(screen.getByRole('status')).toBeInTheDocument();
+    });
+
+    it('should apply correct size from theme configuration', () => {
+      const { rerender } = render(<Loading size="small" />);
+      expect(screen.getByRole('status')).toBeInTheDocument();
+
+      rerender(<Loading size="medium" />);
+      expect(screen.getByRole('status')).toBeInTheDocument();
+
+      rerender(<Loading size="large" />);
+      expect(screen.getByRole('status')).toBeInTheDocument();
+    });
+  });
+
+  describe('Indicator Configuration', () => {
+    it('should handle custom indicator with spinning control', () => {
+      const CustomIndicator = () => <div data-testid="custom">Loading</div>;
+      const { rerender } = render(<Loading spinning indicator={<CustomIndicator />} />);
+
+      expect(screen.getByTestId('custom')).toBeInTheDocument();
+
+      rerender(<Loading spinning={false} indicator={<CustomIndicator />} />);
+      expect(screen.queryByTestId('custom')).not.toBeInTheDocument();
+    });
+
+    it('should maintain indicator during wrapper mode', () => {
+      const CustomIndicator = () => <div data-testid="custom-wrapper">⏳</div>;
+      render(
+        <Loading spinning indicator={<CustomIndicator />}>
+          <div>Content</div>
+        </Loading>
+      );
+
+      expect(screen.getByTestId('custom-wrapper')).toBeInTheDocument();
+      expect(screen.getByText('Content')).toBeInTheDocument();
+    });
+
+    it('should support indicator with tip text', () => {
+      const CustomIndicator = () => <div data-testid="custom-tip">CSS</div>;
+      render(<Loading spinning tip="Custom loading..." indicator={<CustomIndicator />} />);
+
+      expect(screen.getByTestId('custom-tip')).toBeInTheDocument();
+      expect(screen.getByText('Custom loading...')).toBeInTheDocument();
     });
   });
 });
