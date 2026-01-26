@@ -331,7 +331,11 @@ export const CustomCSSIndicator: Story = {
         <div>
           <h4 style={{ margin: '0 0 16px 0', fontSize: '14px', fontWeight: 600 }}>Wrapper Mode</h4>
           <div style={{ width: '400px' }}>
-            <Loading spinning={spinning} tip="Loading content..." indicator={<CSSSpinner size={24} />}>
+            <Loading
+              spinning={spinning}
+              tip="Loading content..."
+              indicator={<CSSSpinner size={24} />}
+            >
               <div
                 style={{
                   padding: '24px',
@@ -431,6 +435,14 @@ export const CustomURLIndicator: Story = {
   render: (args) => {
     const [spinning, setSpinning] = React.useState(args.spinning ?? true);
 
+    // More compact spinner URLs (better for demos)
+    const spinnerURLs = {
+      // Transparent background spinner (recommended)
+      transparent: 'https://i.gifer.com/ZKZg.gif',
+      // Alternative: Use data URL for a simple CSS-based spinner
+      // Or use your own custom loading.gif from assets
+    };
+
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
         <div>
@@ -454,13 +466,19 @@ export const CustomURLIndicator: Story = {
             Using URL String as Indicator
           </h4>
           <p style={{ margin: '0 0 16px 0', fontSize: '12px', color: '#666' }}>
-            Pass a URL string to the indicator prop to use a custom image.
+            Pass a URL string to the indicator prop to use a custom image. Note: Use images with
+            transparent backgrounds for best results.
           </p>
-          <Loading
-            {...args}
-            spinning={spinning}
-            indicator="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif"
-          />
+          <div
+            style={{
+              padding: '16px',
+              background: '#fafafa',
+              borderRadius: '8px',
+              display: 'inline-block',
+            }}
+          >
+            <Loading {...args} spinning={spinning} indicator={spinnerURLs.transparent} />
+          </div>
         </div>
 
         <div>
@@ -469,7 +487,7 @@ export const CustomURLIndicator: Story = {
             <Loading
               spinning={spinning}
               tip="Loading content..."
-              indicator="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif"
+              indicator={spinnerURLs.transparent}
             >
               <div
                 style={{
@@ -481,10 +499,35 @@ export const CustomURLIndicator: Story = {
               >
                 <h3 style={{ margin: '0 0 12px 0', fontSize: '16px' }}>Content Title</h3>
                 <p style={{ margin: 0, color: '#666', fontSize: '14px' }}>
-                  Content with custom URL indicator.
+                  Content with custom URL indicator. For production use, host your own loading
+                  images.
                 </p>
               </div>
             </Loading>
+          </div>
+        </div>
+
+        <div>
+          <h4 style={{ margin: '0 0 16px 0', fontSize: '14px', fontWeight: 600 }}>
+            Important Notes
+          </h4>
+          <div
+            style={{
+              padding: '16px',
+              background: '#fff7e6',
+              border: '1px solid #ffd591',
+              borderRadius: '8px',
+              fontSize: '12px',
+              lineHeight: '1.6',
+            }}
+          >
+            <p style={{ margin: '0 0 8px 0', fontWeight: 600 }}>Best Practices:</p>
+            <ul style={{ margin: 0, paddingLeft: '20px' }}>
+              <li>Use images with transparent backgrounds</li>
+              <li>Ensure the image is square and properly sized (16px, 24px, or 32px)</li>
+              <li>Host your own images for production (avoid third-party URLs)</li>
+              <li>Consider using CSS indicators for better performance</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -587,7 +630,14 @@ export const WithClassName: Story = {
 // Custom tip component with icon
 const TipWithIcon: React.FC<{ text: string }> = ({ text }) => (
   <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+    >
       <circle cx="12" cy="12" r="10" />
       <line x1="12" y1="16" x2="12" y2="12" />
       <line x1="12" y1="8" x2="12.01" y2="8" />

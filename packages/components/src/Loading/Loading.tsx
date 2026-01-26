@@ -55,6 +55,7 @@ const getIndicatorSize = (size: LoadingProps['size'], theme: any) => {
 const SpinnerImage = styled.img<{ $size: LoadingProps['size'] }>`
   display: inline-block;
   ${({ $size, theme }) => getIndicatorSize($size, theme)}
+  object-fit: contain;
 `;
 
 const CustomIndicatorWrapper = styled.span<{ $size: LoadingProps['size'] }>`
@@ -91,12 +92,12 @@ const CSSSpinner = styled.div<{ $size: LoadingProps['size'] }>`
   }}
 `;
 
-const LoadingContainer = styled.div<{ $fullscreen: boolean }>`
+const LoadingContainer = styled.div<{ $fullscreen: boolean; $hasTip: boolean }>`
   display: inline-flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: ${({ theme }) => theme.components.loading.indicator.gap};
+  gap: ${({ $hasTip, theme }) => ($hasTip ? theme.components.loading.indicator.gap : '0')};
 
   ${({ $fullscreen, theme }) =>
     $fullscreen &&
@@ -125,7 +126,7 @@ const WrapperContent = styled.div<{ $spinning: boolean }>`
   pointer-events: ${({ $spinning }) => ($spinning ? 'none' : 'auto')};
 `;
 
-const WrapperOverlay = styled.div`
+const WrapperOverlay = styled.div<{ $hasTip: boolean }>`
   position: absolute;
   inset: 0;
   display: flex;
@@ -134,7 +135,7 @@ const WrapperOverlay = styled.div`
   justify-content: center;
   z-index: 1;
   background: ${({ theme }) => theme.components.loading.wrapper.overlayBackground};
-  gap: ${({ theme }) => theme.components.loading.indicator.gap};
+  gap: ${({ $hasTip, theme }) => ($hasTip ? theme.components.loading.indicator.gap : '0')};
 `;
 
 /**
@@ -253,7 +254,7 @@ export const Loading: React.FC<LoadingProps> = ({
     return (
       <Wrapper className={className}>
         <WrapperContent $spinning={shouldShow}>{children}</WrapperContent>
-        {shouldShow && <WrapperOverlay>{renderSpinner()}</WrapperOverlay>}
+        {shouldShow && <WrapperOverlay $hasTip={!!tip}>{renderSpinner()}</WrapperOverlay>}
       </Wrapper>
     );
   }
@@ -262,7 +263,7 @@ export const Loading: React.FC<LoadingProps> = ({
   if (!shouldShow) return null;
 
   return (
-    <LoadingContainer $fullscreen={fullscreen} className={className}>
+    <LoadingContainer $fullscreen={fullscreen} $hasTip={!!tip} className={className}>
       {renderSpinner()}
     </LoadingContainer>
   );
