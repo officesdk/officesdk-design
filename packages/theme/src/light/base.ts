@@ -192,6 +192,27 @@ export const colors = {
     gray: palettes.gray,
     transparency: palettes.transparency,
   },
+  text: {
+    content: palettes.transparency['120'],
+    default: palettes.transparency['100'],
+    medium: palettes.transparency['80'],
+    secondary: palettes.transparency['60'],
+    disabled: palettes.transparency['30'],
+    white: palettes.gray['0'],
+    alert: palettes.red['6'],
+    guidance: palettes.blue['6'],
+  },
+
+  decorate: {
+    june: '#DE7F83',
+    july: '#F3833A',
+    october: '#C3AB7C',
+    february: '#80BE7F',
+    november: '#7AE6F5',
+    december: '#3861AF',
+    april: '#9C8EC1',
+
+  }
 };
 
 export const boxShadow = {
