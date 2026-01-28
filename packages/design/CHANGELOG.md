@@ -1,5 +1,11 @@
 # @officesdk/design
 
+## 0.2.1
+
+### Patch Changes
+
+- b20b0ab: chore: add text color and decorate color to theme
+
 ## 0.2.0
 
 ### Minor Changes
