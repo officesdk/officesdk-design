@@ -1,5 +1,12 @@
 # @officesdk/design
 
+## 0.2.0
+
+### Minor Changes
+
+- 2510109: add loading component
+  fix modal style
+
 ## 0.1.29
 
 ### Patch Changes
