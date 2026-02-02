@@ -24,6 +24,20 @@ export const dropdownButton: DropdownButtonConfig = {
     active: colors.palettes.gray['0'],
     disabled: colors.palettes.gray['5'],
   },
+  frameLessBackground: {
+    normal: 'transparent',
+    hover: colors.palettes.transparency['5'],
+    active: colors.palettes.transparency['10'],
+    disabled: 'transparent',
+    error: 'transparent',
+  },
+  borderColor: {
+    error: colors.palettes.red['6'],
+    normal: colors.palettes.transparency['10'],
+    hover: colors.palettes.transparency['20'],
+    active: colors.palettes.transparency['30'],
+    disabled: colors.palettes.transparency['10'],
+  },
   // Icon configuration
   icon: {
     size: { width: '18px', height: '18px' },
@@ -58,6 +72,15 @@ export const dropdownButton: DropdownButtonConfig = {
       borderRadius: borderRadius.small,
     },
     medium: {
+      padding: '6px 12px',
+      fontSize: '13px',
+      height: '32px',
+      gap: '8px',
+      iconSize: { width: '18px', height: '18px' },
+      indicatorSize: { width: '18px', height: '18px' },
+      borderRadius: borderRadius.small
+    },
+    small: {
       padding: '4px 8px',
       fontSize: '13px',
       height: '28px',

@@ -19,6 +19,7 @@ export const input: InputConfig = {
       placeholderColorHover: colors.palettes.transparency['30'],
       textColorNormal: colors.palettes.gray['120'],
       textColorDisabled: colors.palettes.transparency['30'],
+      textColorReadOnly: colors.palettes.transparency['30'],
     },
     mini: {
       height: '20px',
@@ -106,6 +107,7 @@ export const input: InputConfig = {
       placeholderColorHover: colors.palettes.transparency['30'],
       textColorNormal: colors.palettes.gray['120'],
       textColorDisabled: colors.palettes.transparency['30'],
+      textColorReadOnly: colors.palettes.transparency['30'],
     },
     mini: {
       height: '24px',

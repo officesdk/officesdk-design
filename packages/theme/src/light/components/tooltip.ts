@@ -4,7 +4,7 @@ import { TooltipConfig } from '@officesdk/editor-sdk-core/shared';
 export const tooltip: TooltipConfig = {
   arrow: {
     size: { width: '8px', height: '8px' },
-    borderRadius: '2px',
+    borderRadius: '0',
     boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
   },
   black: {

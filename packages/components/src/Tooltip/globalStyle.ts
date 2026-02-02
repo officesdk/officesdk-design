@@ -1,12 +1,13 @@
 import { createGlobalStyle } from 'styled-components';
 import { getGlobalTheme } from '../utils/context';
 
-const theme = getGlobalTheme()
-
-// Arrow size is 5px, tooltip needs space for the arrow to display
-const arrowSize = 5;
-const paddingDistance = `${arrowSize}px`; // 8px - space for arrow (5px) + gap (3px)
-const arrowDistance = `${arrowSize}px`; // 3px - arrow positioned to overlap with content slightly
+// Helper functions to get arrow config values at runtime
+const getArrowSize = () => parseInt(getGlobalTheme().components.tooltip.arrow.size.width);
+const getArrowRadius = () => getGlobalTheme().components.tooltip.arrow.borderRadius;
+// The rotated square's visible height is arrowSize * 0.707 (half of diagonal)
+const getArrowVisibleHeight = () => Math.round(getArrowSize() * 1.414) / 2;
+const getPaddingDistance = () => `${getArrowVisibleHeight()}px`;
+const getArrowOverlap = () => `${Math.ceil(getArrowVisibleHeight() - getArrowSize() / 2)}px!important`;
 
 // Tooltip global styles - includes base styles and all variant/size combinations
 export const TooltipGlobalStyles = createGlobalStyle`
@@ -39,66 +40,69 @@ export const TooltipGlobalStyles = createGlobalStyle`
     text-align: center;
   }
 
-  /* Tooltip arrow base */
+  /* Tooltip arrow base - rotated square for rounded corners */
   .od-tooltip-arrow {
     position: absolute;
-    width: 0;
-    height: 0;
-    border-color: transparent;
-    border-style: solid;
+    width: ${() => getArrowSize()}px;
+    height: ${() => getArrowSize()}px;
+    transform: rotate(45deg);
   }
 
   .od-tooltip-placement-top,
   .od-tooltip-placement-topLeft,
   .od-tooltip-placement-topRight {
-    padding-bottom: ${paddingDistance};
+    padding-bottom: ${() => getPaddingDistance()};
   }
 
   .od-tooltip-placement-right,
   .od-tooltip-placement-rightTop,
   .od-tooltip-placement-rightBottom {
-    padding-left: ${paddingDistance};
+    padding-left: ${() => getPaddingDistance()};
   }
 
   .od-tooltip-placement-bottom,
   .od-tooltip-placement-bottomLeft,
   .od-tooltip-placement-bottomRight {
-    padding-top: ${paddingDistance};
+    padding-top: ${() => getPaddingDistance()};
   }
 
   .od-tooltip-placement-left,
   .od-tooltip-placement-leftTop,
   .od-tooltip-placement-leftBottom {
-    padding-right: ${paddingDistance};
+    padding-right: ${() => getPaddingDistance()};
   }
 
-  /* Placement specific adjustments - position arrows close to content edge */
+  /* Placement specific adjustments - position arrows to overlap with content edge */
   .od-tooltip-placement-top .od-tooltip-arrow,
   .od-tooltip-placement-topLeft .od-tooltip-arrow,
   .od-tooltip-placement-topRight .od-tooltip-arrow {
-    bottom: ${arrowDistance};
-    margin-left: -${arrowSize}px;
+    bottom: ${() => getArrowOverlap()};
+    margin-left: ${() => `-${getArrowSize() / 2}px`};
+    border-radius: ${() => `0 0 ${getArrowRadius()} 0`};
   }
 
   .od-tooltip-placement-right .od-tooltip-arrow,
   .od-tooltip-placement-rightTop .od-tooltip-arrow,
   .od-tooltip-placement-rightBottom .od-tooltip-arrow {
-    left: ${arrowDistance};
-    margin-top: -${arrowSize}px;
+    left: ${() => getArrowOverlap()};
+    margin-top: ${() => `-${getArrowSize() / 2}px`};
+    border-radius: ${() => `0 0 0 ${getArrowRadius()}`};
   }
 
   .od-tooltip-placement-left .od-tooltip-arrow,
   .od-tooltip-placement-leftTop .od-tooltip-arrow,
   .od-tooltip-placement-leftBottom .od-tooltip-arrow {
-    right: ${arrowDistance};
-    margin-top: -${arrowSize}px;
+    right: ${() => getArrowOverlap()};
+    margin-top: ${() => `-${getArrowSize() / 2}px`};
+    border-radius: ${() => `0 ${getArrowRadius()} 0 0`};
   }
 
   .od-tooltip-placement-bottom .od-tooltip-arrow,
   .od-tooltip-placement-bottomLeft .od-tooltip-arrow,
   .od-tooltip-placement-bottomRight .od-tooltip-arrow {
-    top: ${arrowDistance};
-    margin-left: -${arrowSize}px;
+    top: ${() => getArrowOverlap()};
+    margin-left: ${() => `-${getArrowSize() / 2}px`};
+    border-radius: ${() => `${getArrowRadius()} 0 0 0`};
   }
 
   /* Alignment adjustments */
@@ -182,155 +186,59 @@ export const TooltipGlobalStyles = createGlobalStyle`
 
   /* Black variant */
   .tooltip-variant-black .od-tooltip-inner {
-    background: ${() => theme.components.tooltip.black.background};
-    border: 1px solid ${() => theme.components.tooltip.black.borderColor};
-    color: ${() => theme.components.tooltip.black.color};
-    border-radius: ${() => theme.components.tooltip.black.borderRadius};
-    padding: ${() => theme.components.tooltip.black.padding};
-    box-shadow: ${() => theme.components.tooltip.black.boxShadow};
-    font-size: ${() => theme.components.tooltip.black.fontSize};
-    line-height: ${() => theme.components.tooltip.black.lineHeight};
-    font-weight: ${() => theme.components.tooltip.black.fontWeight};
-    max-width: ${() => theme.components.tooltip.black.maxWidth};
+    background: ${() => getGlobalTheme().components.tooltip.black.background};
+    border: 1px solid ${() => getGlobalTheme().components.tooltip.black.borderColor};
+    color: ${() => getGlobalTheme().components.tooltip.black.color};
+    border-radius: ${() => getGlobalTheme().components.tooltip.black.borderRadius};
+    padding: ${() => getGlobalTheme().components.tooltip.black.padding};
+    box-shadow: ${() => getGlobalTheme().components.tooltip.black.boxShadow};
+    font-size: ${() => getGlobalTheme().components.tooltip.black.fontSize};
+    line-height: ${() => getGlobalTheme().components.tooltip.black.lineHeight};
+    font-weight: ${() => getGlobalTheme().components.tooltip.black.fontWeight};
+    max-width: ${() => getGlobalTheme().components.tooltip.black.maxWidth};
     text-align: left;
     text-decoration: none;
   }
 
-  .tooltip-variant-black.od-tooltip-placement-top .od-tooltip-arrow,
-  .tooltip-variant-black.od-tooltip-placement-topLeft .od-tooltip-arrow,
-  .tooltip-variant-black.od-tooltip-placement-topRight .od-tooltip-arrow {
-    bottom: ${arrowDistance};
-    margin-left: -${arrowSize}px;
-    border-width: ${arrowSize}px ${arrowSize}px 0;
-    border-top-color: ${() => theme.components.tooltip.black.background};
-  }
-
-  .tooltip-variant-black.od-tooltip-placement-right .od-tooltip-arrow,
-  .tooltip-variant-black.od-tooltip-placement-rightTop .od-tooltip-arrow,
-  .tooltip-variant-black.od-tooltip-placement-rightBottom .od-tooltip-arrow {
-    left: ${arrowDistance};
-    margin-top: -${arrowSize}px;
-    border-width: ${arrowSize}px ${arrowSize}px ${arrowSize}px 0;
-    border-right-color: ${() => theme.components.tooltip.black.background};
-  }
-
-  .tooltip-variant-black.od-tooltip-placement-left .od-tooltip-arrow,
-  .tooltip-variant-black.od-tooltip-placement-leftTop .od-tooltip-arrow,
-  .tooltip-variant-black.od-tooltip-placement-leftBottom .od-tooltip-arrow {
-    right: ${arrowDistance};
-    margin-top: -${arrowSize}px;
-    border-width: ${arrowSize}px 0 ${arrowSize}px ${arrowSize}px;
-    border-left-color: ${() => theme.components.tooltip.black.background};
-  }
-
-  .tooltip-variant-black.od-tooltip-placement-bottom .od-tooltip-arrow,
-  .tooltip-variant-black.od-tooltip-placement-bottomLeft .od-tooltip-arrow,
-  .tooltip-variant-black.od-tooltip-placement-bottomRight .od-tooltip-arrow {
-    top: ${arrowDistance};
-    margin-left: -${arrowSize}px;
-    border-width: 0 ${arrowSize}px ${arrowSize}px;
-    border-bottom-color: ${() => theme.components.tooltip.black.background};
+  .tooltip-variant-black .od-tooltip-arrow {
+    background: ${() => getGlobalTheme().components.tooltip.black.background};
   }
 
   /* White variant - small size */
   .tooltip-variant-white.tooltip-size-small .od-tooltip-inner {
-    background: ${() => theme.components.tooltip.white.small.background};
-    border: 1px solid ${() => theme.components.tooltip.white.small.borderColor};
-    color: ${() => theme.components.tooltip.white.small.color};
-    border-radius: ${() => theme.components.tooltip.white.small.borderRadius};
-    padding: ${() => theme.components.tooltip.white.small.padding};
-    box-shadow: ${() => theme.components.tooltip.white.small.boxShadow};
-    font-size: ${() => theme.components.tooltip.white.small.fontSize};
-    line-height: ${() => theme.components.tooltip.white.small.lineHeight};
-    font-weight: ${() => theme.components.tooltip.white.small.fontWeight};
+    background: ${() => getGlobalTheme().components.tooltip.white.small.background};
+    border: 1px solid ${() => getGlobalTheme().components.tooltip.white.small.borderColor};
+    color: ${() => getGlobalTheme().components.tooltip.white.small.color};
+    border-radius: ${() => getGlobalTheme().components.tooltip.white.small.borderRadius};
+    padding: ${() => getGlobalTheme().components.tooltip.white.small.padding};
+    box-shadow: ${() => getGlobalTheme().components.tooltip.white.small.boxShadow};
+    font-size: ${() => getGlobalTheme().components.tooltip.white.small.fontSize};
+    line-height: ${() => getGlobalTheme().components.tooltip.white.small.lineHeight};
+    font-weight: ${() => getGlobalTheme().components.tooltip.white.small.fontWeight};
     text-align: left;
     text-decoration: none;
   }
 
-  .tooltip-variant-white.tooltip-size-small.od-tooltip-placement-top .od-tooltip-arrow,
-  .tooltip-variant-white.tooltip-size-small.od-tooltip-placement-topLeft .od-tooltip-arrow,
-  .tooltip-variant-white.tooltip-size-small.od-tooltip-placement-topRight .od-tooltip-arrow {
-    bottom: ${arrowDistance};
-    margin-left: -${arrowSize}px;
-    border-width: ${arrowSize}px ${arrowSize}px 0;
-    border-top-color: ${() => theme.components.tooltip.white.small.background};
-  }
-
-  .tooltip-variant-white.tooltip-size-small.od-tooltip-placement-right .od-tooltip-arrow,
-  .tooltip-variant-white.tooltip-size-small.od-tooltip-placement-rightTop .od-tooltip-arrow,
-  .tooltip-variant-white.tooltip-size-small.od-tooltip-placement-rightBottom .od-tooltip-arrow {
-    left: ${arrowDistance};
-    margin-top: -${arrowSize}px;
-    border-width: ${arrowSize}px ${arrowSize}px ${arrowSize}px 0;
-    border-right-color: ${() => theme.components.tooltip.white.small.background};
-  }
-
-  .tooltip-variant-white.tooltip-size-small.od-tooltip-placement-left .od-tooltip-arrow,
-  .tooltip-variant-white.tooltip-size-small.od-tooltip-placement-leftTop .od-tooltip-arrow,
-  .tooltip-variant-white.tooltip-size-small.od-tooltip-placement-leftBottom .od-tooltip-arrow {
-    right: ${arrowDistance};
-    margin-top: -${arrowSize}px;
-    border-width: ${arrowSize}px 0 ${arrowSize}px ${arrowSize}px;
-    border-left-color: ${() => theme.components.tooltip.white.small.background};
-  }
-
-  .tooltip-variant-white.tooltip-size-small.od-tooltip-placement-bottom .od-tooltip-arrow,
-  .tooltip-variant-white.tooltip-size-small.od-tooltip-placement-bottomLeft .od-tooltip-arrow,
-  .tooltip-variant-white.tooltip-size-small.od-tooltip-placement-bottomRight .od-tooltip-arrow {
-    top: ${arrowDistance};
-    margin-left: -${arrowSize}px;
-    border-width: 0 ${arrowSize}px ${arrowSize}px;
-    border-bottom-color: ${() => theme.components.tooltip.white.small.background};
+  .tooltip-variant-white.tooltip-size-small .od-tooltip-arrow {
+    background: ${() => getGlobalTheme().components.tooltip.white.small.background};
   }
 
   /* White variant - large size */
   .tooltip-variant-white.tooltip-size-large .od-tooltip-inner {
-    background: ${() => theme.components.tooltip.white.large.background};
-    border: 1px solid ${() => theme.components.tooltip.white.large.borderColor};
-    color: ${() => theme.components.tooltip.white.large.color};
-    border-radius: ${() => theme.components.tooltip.white.large.borderRadius};
-    padding: ${() => theme.components.tooltip.white.large.padding};
-    box-shadow: ${() => theme.components.tooltip.white.large.boxShadow};
-    font-size: ${() => theme.components.tooltip.white.large.fontSize};
-    line-height: ${() => theme.components.tooltip.white.large.lineHeight};
-    font-weight: ${() => theme.components.tooltip.white.large.fontWeight};
+    background: ${() => getGlobalTheme().components.tooltip.white.large.background};
+    border: 1px solid ${() => getGlobalTheme().components.tooltip.white.large.borderColor};
+    color: ${() => getGlobalTheme().components.tooltip.white.large.color};
+    border-radius: ${() => getGlobalTheme().components.tooltip.white.large.borderRadius};
+    padding: ${() => getGlobalTheme().components.tooltip.white.large.padding};
+    box-shadow: ${() => getGlobalTheme().components.tooltip.white.large.boxShadow};
+    font-size: ${() => getGlobalTheme().components.tooltip.white.large.fontSize};
+    line-height: ${() => getGlobalTheme().components.tooltip.white.large.lineHeight};
+    font-weight: ${() => getGlobalTheme().components.tooltip.white.large.fontWeight};
     text-align: left;
     text-decoration: none;
   }
 
-  .tooltip-variant-white.tooltip-size-large.od-tooltip-placement-top .od-tooltip-arrow,
-  .tooltip-variant-white.tooltip-size-large.od-tooltip-placement-topLeft .od-tooltip-arrow,
-  .tooltip-variant-white.tooltip-size-large.od-tooltip-placement-topRight .od-tooltip-arrow {
-    bottom: ${arrowDistance};
-    margin-left: -${arrowSize}px;
-    border-width: ${arrowSize}px ${arrowSize}px 0;
-    border-top-color: ${() => theme.components.tooltip.white.large.borderColor};
-  }
-
-  .tooltip-variant-white.tooltip-size-large.od-tooltip-placement-right .od-tooltip-arrow,
-  .tooltip-variant-white.tooltip-size-large.od-tooltip-placement-rightTop .od-tooltip-arrow,
-  .tooltip-variant-white.tooltip-size-large.od-tooltip-placement-rightBottom .od-tooltip-arrow {
-    left: ${arrowDistance};
-    margin-top: -${arrowSize}px;
-    border-width: ${arrowSize}px ${arrowSize}px ${arrowSize}px 0;
-    border-right-color: ${() => theme.components.tooltip.white.large.background};
-  }
-
-  .tooltip-variant-white.tooltip-size-large.od-tooltip-placement-left .od-tooltip-arrow,
-  .tooltip-variant-white.tooltip-size-large.od-tooltip-placement-leftTop .od-tooltip-arrow,
-  .tooltip-variant-white.tooltip-size-large.od-tooltip-placement-leftBottom .od-tooltip-arrow {
-    right: ${arrowDistance};
-    margin-top: -${arrowSize}px;
-    border-width: ${arrowSize}px 0 ${arrowSize}px ${arrowSize}px;
-    border-left-color: ${() => theme.components.tooltip.white.large.background};
-  }
-
-  .tooltip-variant-white.tooltip-size-large.od-tooltip-placement-bottom .od-tooltip-arrow,
-  .tooltip-variant-white.tooltip-size-large.od-tooltip-placement-bottomLeft .od-tooltip-arrow,
-  .tooltip-variant-white.tooltip-size-large.od-tooltip-placement-bottomRight .od-tooltip-arrow {
-    top: ${arrowDistance};
-    margin-left: -${arrowSize}px;
-    border-width: 0 ${arrowSize}px ${arrowSize}px;
-    border-bottom-color: ${() => theme.components.tooltip.white.large.background};
+  .tooltip-variant-white.tooltip-size-large .od-tooltip-arrow {
+    background: ${() => getGlobalTheme().components.tooltip.white.large.background};
   }
 `;

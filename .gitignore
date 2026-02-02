@@ -14,6 +14,7 @@ dist/
 build/
 *.tsbuildinfo
 storybook-static/
+.storybook-theme
 
 # Logs
 *.log
@@ -55,3 +56,5 @@ yalc.lock
 
 
 .history
+
+.storybook/.local

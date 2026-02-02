@@ -16,9 +16,13 @@ export const tab: TabConfig = {
       colorHover: colors.palettes.brand,
       colorActive: colors.palettes.brand,
       colorDisabled: colors.palettes.transparency['30'],
+      bottomActiveWidth: '2px',
+      bottomActiveBorderRadius: '1px',
+      bottomActiveBackgroundColor: '#41464B',
     },
+    backgroundColor: 'transparent',
     layout: {
-      gap: '24px',
+      gap: '0',
     },
   },
   card: {

@@ -11,44 +11,75 @@ export const toast: ToastConfig = {
     horizontal: '24px',
   },
   success: {
-    background: colors.palettes.green['1'],
-    borderColor: colors.palettes.green['2'],
+    background: '#FFFFFF',
+    borderColor: colors.palettes.transparency['10'],
     icon: {
       url: '',
       size: { width: '20px', height: '20px' },
+    },
+    message: {
+      color: colors.palettes.gray['100'],
     },
   },
   info: {
-    background: colors.palettes.blue['1'],
-    borderColor: colors.palettes.blue['2'],
+    background: '#FFFFFF',
+    borderColor: colors.palettes.transparency['10'],
     icon: {
       url: '',
       size: { width: '20px', height: '20px' },
+    },
+    message: {
+      color: colors.palettes.gray['100'],
     },
   },
   error: {
-    background: colors.palettes.red['1'],
-    borderColor: colors.palettes.red['2'],
+    background: '#FFFFFF',
+    borderColor: colors.palettes.transparency['10'],
     icon: {
       url: '',
       size: { width: '20px', height: '20px' },
+    },
+    message: {
+      color: colors.palettes.gray['100'],
     },
   },
   warn: {
-    background: colors.palettes.yellow['1'],
-    borderColor: colors.palettes.yellow['2'],
+    background: '#FFFFFF',
+    borderColor: colors.palettes.transparency['10'],
     icon: {
       url: '',
       size: { width: '20px', height: '20px' },
+    },
+    message: {
+      color: colors.palettes.gray['100'],
+    },
+  },
+  critical: {
+    background: '#FFFFFF',
+    borderColor: colors.palettes.transparency['10'],
+    icon: {
+      url: '',
+      size: { width: '20px', height: '20px' },
+    },
+    message: {
+      color: colors.palettes.gray['100'],
     },
   },
   loading: {
-    background: colors.palettes.blue['1'],
-    borderColor: colors.palettes.blue['2'],
+    background: '#FFFFFF',
+    borderColor: colors.palettes.transparency['10'],
     icon: {
       url: '',
       size: { width: '20px', height: '20px' },
     },
+    message: {
+      color: colors.palettes.gray['100'],
+    },
+  },
+  closeButton: {
+    icon: {
+      url: ''
+    }
   },
 };
 

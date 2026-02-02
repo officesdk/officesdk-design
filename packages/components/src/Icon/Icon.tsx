@@ -3,6 +3,11 @@ import { styled } from '../utils/styled';
 import { useIconRegistry } from './IconProvider';
 import { getGlobalIconRegistry } from '../UIConfigProvider/configManager';
 
+export interface IconSize {
+  width: string;
+  height: string;
+}
+
 export interface IconProps {
   /**
    * Icon name from registry (requires IconProvider)
@@ -17,9 +22,9 @@ export interface IconProps {
    */
   children?: React.ReactNode;
   /**
-   * Size of the icon (px)
+   * Size of the icon (px or custom width/height)
    */
-  size?: number | string;
+  size?: number | string | IconSize;
   /**
    * Color of the icon (only works with SVG icons, not image src)
    */
@@ -42,15 +47,25 @@ export interface IconProps {
   onClick?: (e: React.MouseEvent) => void;
 }
 
+const getSizeValue = (size: number | string | IconSize, dimension: 'width' | 'height'): string => {
+  if (typeof size === 'number') {
+    return `${size}px`;
+  }
+  if (typeof size === 'string') {
+    return size;
+  }
+  return size[dimension];
+};
+
 const IconContainer = styled.span<{
-  $size: number | string;
+  $size: number | string | IconSize;
   $color: string;
 }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: ${({ $size }) => typeof $size === 'number' ? `${$size}px` : $size};
-  height: ${({ $size }) => typeof $size === 'number' ? `${$size}px` : $size};
+  width: ${({ $size }) => getSizeValue($size, 'width')};
+  height: ${({ $size }) => getSizeValue($size, 'height')};
   color: ${({ $color }) => $color};
   flex-shrink: 0;
   line-height: 1;

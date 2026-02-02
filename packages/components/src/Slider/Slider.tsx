@@ -66,7 +66,7 @@ const SliderTrack = styled.div<{
   position: absolute;
   left: 0;
   right: 0;
-  height: 2px;
+  height: ${({ theme }) => theme.components.slider.track.height};
   background: ${({ theme }) => theme.colors.palettes.transparency['20']};
   border-radius: 1000px;
   top: 50%;
@@ -79,15 +79,15 @@ const SliderFill = styled.div<{
 }>`
   position: absolute;
   left: 0;
-  height: 2px;
-  border-radius: 1px;
+  height: ${({ theme }) => theme.components.slider.track.height};
+  border-radius: ${({ theme }) => theme.components.slider.track.borderRadius};
   top: 50%;
   transform: translateY(-50%);
   width: ${({ $percentage }) => $percentage}%;
   background: ${({ $disabled, theme }) =>
     $disabled
-      ? theme.colors.palettes.transparency['10']
-      : theme.colors.palettes.gray['100']};
+      ? theme.components.slider.track.filledBackgroundDisabled
+      : theme.components.slider.track.filledBackground};
 `;
 
 const SliderThumb = styled.div<{
@@ -96,28 +96,28 @@ const SliderThumb = styled.div<{
   $isDragging: boolean;
 }>`
   position: absolute;
-  width: 10px;
-  height: 10px;
+  width: ${({ theme }) => theme.components.slider.large.thumbSize};
+  height: ${({ theme }) => theme.components.slider.large.thumbSize};
   border-radius: 50%;
   background: ${({ $disabled, theme }) =>
-    $disabled ? theme.colors.palettes.transparency['30'] : theme.colors.palettes.blue['5']};
+    $disabled ? theme.components.slider.thumb.backgroundDisabled : theme.components.slider.thumb.background};
   left: ${({ $percentage }) => $percentage}%;
   top: 50%;
   transform: translate(-50%, -50%);
   cursor: ${({ $disabled }) => ($disabled ? 'not-allowed' : 'grab')};
   transition: ${({ $isDragging }) => ($isDragging ? 'none' : 'left 0.1s ease')};
-  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: ${({ theme }) => theme.components.slider.thumb.boxShadow};
 
-  ${({ $disabled }) =>
+  ${({ $disabled, theme }) =>
     !$disabled &&
     `
     &:hover {
-      box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.15);
+      box-shadow: ${theme.components.slider.thumb.boxShadowHover};
     }
 
     &:active {
       cursor: grabbing;
-      box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.2);
+      box-shadow: ${theme.components.slider.thumb.boxShadowActive};
     }
   `}
 `;

@@ -12,7 +12,7 @@ const meta: Meta<typeof Toast> = {
   argTypes: {
     variant: {
       control: 'radio',
-      options: ['success', 'info', 'error', 'warn', 'loading'],
+      options: ['success', 'info', 'error', 'warn', 'loading', 'critical'],
       description: 'Toast variant type',
     },
     message: {
@@ -87,6 +87,13 @@ export const Warn: Story = {
   args: {
     variant: 'warn',
     message: 'Warning: This action cannot be undone.',
+  },
+};
+
+export const Critical: Story = {
+  args: {
+    variant: 'critical',
+    message: 'Critical: This action is critical and cannot be undone.',
   },
 };
 
@@ -182,13 +189,13 @@ export const WithHTMLAttributes: Story = {
       <h3 style={{ marginBottom: '8px', fontSize: '16px', fontWeight: 600 }}>
         HTML Attributes Support
       </h3>
-      
+
       <Toast
         variant="success"
         message="Toast with data-testid"
         data-testid="success-toast"
       />
-      
+
       <Toast
         variant="info"
         message="Toast with custom id and title"
@@ -196,14 +203,14 @@ export const WithHTMLAttributes: Story = {
         title="Information toast"
         data-test="info-toast"
       />
-      
+
       <Toast
         variant="error"
         message="Toast with aria attributes"
         aria-label="Error notification"
         aria-describedby="error-description"
       />
-      
+
       <div style={{ marginTop: '16px', padding: '12px', background: '#f9f9f9', borderRadius: '4px' }}>
         <p style={{ fontSize: '12px', margin: 0 }}>
           Open DevTools to inspect the HTML attributes (data-testid, id, title, aria-*, etc.)
@@ -223,7 +230,7 @@ export const WithReactNodeMessage: Story = {
       <h3 style={{ marginBottom: '8px', fontSize: '16px', fontWeight: 600 }}>
         ReactNode Message Examples
       </h3>
-      
+
       <Toast
         variant="success"
         message={
@@ -232,7 +239,7 @@ export const WithReactNodeMessage: Story = {
           </span>
         }
       />
-      
+
       <Toast
         variant="info"
         message={
@@ -252,7 +259,7 @@ export const WithReactNodeMessage: Story = {
           </div>
         }
       />
-      
+
       <Toast
         variant="error"
         message={
@@ -262,7 +269,7 @@ export const WithReactNodeMessage: Story = {
         }
         closable
       />
-      
+
       <Toast
         variant="warn"
         message={
@@ -272,7 +279,7 @@ export const WithReactNodeMessage: Story = {
           </div>
         }
       />
-      
+
       <Toast
         variant="success"
         message={

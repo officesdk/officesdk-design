@@ -23,7 +23,7 @@ const meta: Meta<typeof DropdownButton> = {
     },
     size: {
       control: 'radio',
-      options: ['large', 'medium'],
+      options: ['small', 'medium', 'large'],
       description: 'Button size',
     },
     value: {

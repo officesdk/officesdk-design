@@ -2638,7 +2638,7 @@ __metadata:
     "@officesdk/design-icons": "workspace:*"
     "@officesdk/design-theme": "workspace:*"
     "@officesdk/design-utils": "workspace:*"
-    "@officesdk/editor-sdk-core": "npm:0.0.0-alpha.14"
+    "@officesdk/editor-sdk-core": "npm:0.0.0-alpha.17"
     rc-dialog: "npm:^10.0.0"
     rc-dropdown: "npm:^4.2.1"
     rc-menu: "npm:^9.0.0"
@@ -2651,10 +2651,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@officesdk/editor-sdk-core@npm:0.0.0-alpha.14, @officesdk/editor-sdk-core@npm:^0.0.0-alpha.12":
-  version: 0.0.0-alpha.14
-  resolution: "@officesdk/editor-sdk-core@npm:0.0.0-alpha.14"
-  checksum: 10c0/6791146c92b0eeb519d7aeff1f28be5d4bf08954c48633a59f1617ab37a842bfa87fd8ad7b70ebe3d8e292ad43b8c1031dee5ae301068bfb4fafcfc1aa0442bf
+"@officesdk/editor-sdk-core@npm:0.0.0-alpha.17":
+  version: 0.0.0-alpha.17
+  resolution: "@officesdk/editor-sdk-core@npm:0.0.0-alpha.17"
+  checksum: 10c0/39b59ad0f50519b3847ae499e6296d508a30ba0d4f05970f578552a43f0cd8fb6a799a37e3c10b29a688e5d8d14774b8b1c73b6feb855849140a01954420001a
   languageName: node
   linkType: hard
 
@@ -10553,7 +10553,6 @@ __metadata:
   resolution: "officesdk-design-monorepo@workspace:."
   dependencies:
     "@changesets/cli": "npm:^2.29.8"
-    "@officesdk/editor-sdk-core": "npm:^0.0.0-alpha.12"
     "@storybook/addon-docs": "npm:^7.6.7"
     "@storybook/addon-essentials": "npm:^7.6.7"
     "@storybook/addon-interactions": "npm:^7.6.7"

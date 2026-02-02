@@ -80,7 +80,7 @@ const NumberInputContainer = styled.div<{
   align-items: center;
   background: white;
   border: 1px solid;
-  border-radius: 2px;
+  border-radius: ${({ theme, $size }) => theme.components.inputNumber[$size].borderRadius};
   flex-shrink: 0;
 
   ${({ $size }) =>

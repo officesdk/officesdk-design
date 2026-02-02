@@ -98,16 +98,23 @@ const DropdownButtonContainer = styled.button<{
     // Background
     let background = config.background.normal;
     if ($disabled) {
-      background = config.background.disabled;
+      background =
+        $variant === 'frameless'
+          ? config.frameLessBackground.disabled
+          : config.background.disabled;
+    } else if ($variant === 'frameless') {
+      background = config.frameLessBackground.normal;
     }
 
     // Border for framed variant
     let border = 'none';
 
     if ($variant === 'framed') {
-      const borderColor = $error
-        ? theme.colors?.palettes?.red?.['6']
-        : theme.colors?.palettes?.transparency?.['10'];
+      const borderColor = $disabled
+        ? config.borderColor.disabled
+        : $error
+          ? config.borderColor.error
+          : config.borderColor.normal;
       border = `1px solid ${borderColor}`;
     }
 
@@ -120,22 +127,32 @@ const DropdownButtonContainer = styled.button<{
       color: ${color};
 
       &:hover:not(:disabled) {
-        background: ${config.background.hover};
+        background: ${
+          $variant === 'frameless'
+            ? config.frameLessBackground.hover
+            : config.background.hover
+        };
+        color: ${config.color.hover};
         ${
-          $variant === 'framed' && !$error
+          $variant === 'framed'
             ? `
-          border-color: ${theme.colors?.palettes?.transparency?.['20']};
+          border-color: ${$error ? config.borderColor.error : config.borderColor.hover};
         `
             : ''
         }
       }
 
       &:active:not(:disabled) {
-        background: ${config.background.active};
+        background: ${
+          $variant === 'frameless'
+            ? config.frameLessBackground.active
+            : config.background.active
+        };
+        color: ${config.color.active};
         ${
-          $variant === 'framed' && !$error
+          $variant === 'framed'
             ? `
-          border-color: ${theme.colors?.palettes?.transparency?.['30']};
+          border-color: ${$error ? config.borderColor.error : config.borderColor.active};
         `
             : ''
         }

@@ -66,7 +66,7 @@ export const MenuGlobalStyles = createGlobalStyle`
   /* Base menu container */
   .od-menu {
     margin: 0;
-    padding: ${() => theme.components?.dropdown?.padding || '4px 0'};
+    padding: 0;
     list-style: none;
     outline: none;
     box-shadow: none;
@@ -79,7 +79,7 @@ export const MenuGlobalStyles = createGlobalStyle`
   }
 
   /* Menu item */
-  .od-menu-item {
+  .od-menu-item, .od-menu-submenu-title {
     position: relative;
     display: flex;
     align-items: center;
@@ -94,6 +94,7 @@ export const MenuGlobalStyles = createGlobalStyle`
       return `
         padding: ${config?.layout?.padding || '6px 12px'};
         background: ${config?.background?.normal || 'transparent'};
+        border-radius: ${config?.border?.radius || '0'};
       `;
     }}
   }
@@ -119,6 +120,7 @@ export const MenuGlobalStyles = createGlobalStyle`
 
   .od-menu-item-disabled {
     cursor: not-allowed;
+    opacity: 0.3;
     ${() => {
       const config = theme.components?.menu?.menuItem;
       return `
@@ -140,6 +142,34 @@ export const MenuGlobalStyles = createGlobalStyle`
   .od-menu-submenu {
     position: relative;
     list-style: none;
+  }
+
+  .od-menu-submenu-popup {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+
+    ${() => {
+      const dropdownConfig = theme.components?.dropdown;
+
+      return `
+        background: ${dropdownConfig?.background || '#fff'};
+        border: ${dropdownConfig?.border || 'none'};
+        border-radius: ${dropdownConfig?.borderRadius || '4px'};
+        padding: ${dropdownConfig?.padding || '4px 0'};
+        box-shadow: ${dropdownConfig?.boxShadow || 'none'};
+      `;
+    }}
+
+
+
+  }
+
+  .od-menu-submenu-popup.od-menu-submenu .od-menu {
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    padding: 0;
   }
 
   .od-menu-submenu-title {
@@ -180,6 +210,7 @@ export const MenuGlobalStyles = createGlobalStyle`
 
   .od-menu-submenu-disabled .od-menu-submenu-title {
     cursor: not-allowed;
+    opacity: 0.3;
     ${() => {
       const config = theme.components?.menu?.menuItem;
       return `
@@ -197,12 +228,12 @@ export const MenuGlobalStyles = createGlobalStyle`
   /* Submenu popup positioning - add 5px gap */
   .od-menu-submenu-placement-rightTop,
   .od-menu-submenu-placement-rightBottom {
-    padding-left: 5px;
+    /* padding-left: 5px; */
   }
 
   .od-menu-submenu-placement-leftTop,
   .od-menu-submenu-placement-leftBottom {
-    padding-right: 5px;
+    /* padding-right: 5px; */
   }
 
   .od-menu-submenu > .od-menu {

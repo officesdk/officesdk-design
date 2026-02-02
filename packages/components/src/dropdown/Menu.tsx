@@ -7,6 +7,7 @@ import { Input } from '../Input';
 import 'rc-menu/assets/index.css';
 import { MenuGlobalStyles } from './globalStyle';
 import { styleManager } from '../utils/styleManager';
+import { getGlobalTheme } from '../utils/context';
 
 export interface MenuItem {
   type?: 'item';
@@ -105,6 +106,7 @@ const MenuContainer = styled.div`
     const menuConfig = theme.components?.menu;
 
     return `
+      padding: ${dropdownConfig?.padding || '4px 0'};
       background: ${dropdownConfig?.background || '#fff'};
       border: ${menuConfig?.border?.width || '1px'} solid ${menuConfig?.border?.color || 'rgba(65, 70, 75, 0.1)'};
       border-radius: ${menuConfig?.border?.radius || '4px'};
@@ -204,15 +206,13 @@ const LabelText = styled.div<{ $size: 'medium' | 'large'; $disabled: boolean }>`
   white-space: nowrap;
   line-height: 20px;
 
-  ${({ $size, $disabled, theme }) => {
+  ${({ $size, theme }) => {
     const config = theme.components?.menu?.menuItem;
     const sizeConfig = config?.size?.[$size];
     const colorConfig = config?.label?.color;
 
     const fontSize = sizeConfig?.label?.fontSize || '13px';
-    const color = $disabled
-      ? (colorConfig?.disabled || 'rgba(65, 70, 75, 0.3)')
-      : (colorConfig?.normal || '#41464b');
+    const color = colorConfig?.normal || '#41464b'
 
     return `
       font-size: ${fontSize};
@@ -503,6 +503,8 @@ export const Menu: React.FC<MenuProps> = ({
 
   // Render menu item (supports submenu)
   const renderMenuItem = (item: MenuItem): React.ReactNode => {
+    const theme = getGlobalTheme();
+
     // SubMenu
     if (item.children && item.children.length > 0) {
       return (
@@ -510,7 +512,7 @@ export const Menu: React.FC<MenuProps> = ({
           key={item.key}
           title={renderMenuItemContent(item, reserveActiveIconSpace)}
           disabled={item.disabled}
-          popupOffset={[5, 0]}
+          popupOffset={theme.components?.menu?.subMenu?.popupOffset || [15, 0]}
         >
           {item.children.map(child => renderMenuItem(child))}
         </RcSubMenu>

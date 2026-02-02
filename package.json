@@ -18,8 +18,10 @@
   ],
   "scripts": {
     "dev": "storybook dev -p 6006",
+    "dev:theme": "storybook dev -p 6007 -c .storybook-theme",
     "build": "yarn workspaces foreach -At run build && cd packages/design && yarn build",
     "build:storybook": "storybook build",
+    "build:storybook:theme": "storybook build -c .storybook-theme -o storybook-theme-static",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
@@ -96,8 +98,5 @@
   "engines": {
     "node": ">=20.0.0",
     "yarn": ">=4.0.0"
-  },
-  "dependencies": {
-    "@officesdk/editor-sdk-core": "^0.0.0-alpha.12"
   }
 }

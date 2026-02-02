@@ -11,6 +11,12 @@ export const menu: MenuConfig = {
       active: colors.palettes.transparency['10'],
       disabled: 'transparent',
     },
+    border: {
+      radius: '0',
+      color: 'transparent',
+      width: 'none',
+    },
+    borderRadius: '0',
     // Layout
     layout: {
       padding: '6px 12px',
@@ -48,6 +54,23 @@ export const menu: MenuConfig = {
     },
     // Size configurations
     size: {
+      small: {
+        label: {
+          fontSize: '12px',
+          maxWidth: '200px',
+        },
+        description: {
+          fontSize: '10px',
+          maxWidth: '150px',
+        },
+        activeIcon: {
+          size: { width: '16px', height: '16px' },
+        },
+        nextLevelIcon: {
+          size: { width: '16px', height: '16px' },
+        },
+      },
+
       // Medium size (S - 28px)
       medium: {
         label: {
@@ -84,6 +107,11 @@ export const menu: MenuConfig = {
       },
     },
   },
+  boxShadow: {
+    normal: '0 8px 18px 0 rgba(0, 0, 0, 0.06)',
+    hover: '0 8px 18px 0 rgba(0, 0, 0, 0.06)',
+  },
+
   // Border configuration
   border: {
     color: colors.palettes.transparency['10'],
@@ -101,5 +129,9 @@ export const menu: MenuConfig = {
     fontSize: '12px',
     fontWeight: '500',
     color: colors.palettes.transparency['60'],
+  },
+
+  subMenu: {
+    popupOffset: [4, 0],
   },
 };
