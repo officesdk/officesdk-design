@@ -1,5 +1,13 @@
 # @officesdk/design
 
+## 0.2.2
+
+### Patch Changes
+
+- 815d8c0: - fix: prevent slider thumb from following mouse after track click
+  - feat: add vertical direction support for Slider component
+  - feat: add valueMap property support for non-linear slider mapping
+
 ## 0.2.1
 
 ### Patch Changes
