@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { screen } from '@testing-library/react';
+import { screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { render } from '../../__tests__/test-utils';
 import { Slider } from '../Slider';
@@ -197,29 +197,48 @@ describe('Slider', () => {
   });
 
   describe('Callbacks', () => {
-    it('should call onDragStart when dragging starts', async () => {
+    it('should call onDragStart when dragging starts', () => {
       const handleDragStart = vi.fn();
-      const user = userEvent.setup();
+      const { container } = render(<Slider defaultValue={50} onDragStart={handleDragStart} />);
 
-      render(<Slider defaultValue={50} onDragStart={handleDragStart} />);
+      // Find the thumb element (it has onMouseDown handler)
+      const thumb = container.querySelector('[role="slider"] > div:last-child') as HTMLElement;
+      expect(thumb).toBeInTheDocument();
 
-      const slider = screen.getByRole('slider');
-      await user.pointer({ target: slider, keys: '[MouseLeft>]' });
+      // Simulate mousedown on thumb to trigger drag start
+      act(() => {
+        const mouseDownEvent = new MouseEvent('mousedown', { bubbles: true, cancelable: true });
+        thumb.dispatchEvent(mouseDownEvent);
+      });
 
       expect(handleDragStart).toHaveBeenCalled();
     });
 
-    it('should call onDragEnd when dragging ends', async () => {
+    it('should call onDragEnd when dragging ends', () => {
       const handleDragEnd = vi.fn();
-      const user = userEvent.setup();
+      const { container } = render(<Slider defaultValue={50} onDragEnd={handleDragEnd} />);
 
-      render(<Slider defaultValue={50} onDragEnd={handleDragEnd} />);
+      // Find the thumb element
+      const thumb = container.querySelector('[role="slider"] > div:last-child') as HTMLElement;
+      expect(thumb).toBeInTheDocument();
 
-      const slider = screen.getByRole('slider');
-      await user.pointer([
-        { target: slider, keys: '[MouseLeft>]' },
-        { keys: '[/MouseLeft]' },
-      ]);
+      // Simulate drag sequence: mousedown -> mousemove -> mouseup
+      act(() => {
+        const mouseDownEvent = new MouseEvent('mousedown', { bubbles: true, cancelable: true });
+        thumb.dispatchEvent(mouseDownEvent);
+      });
+
+      // Simulate mousemove on document
+      act(() => {
+        const mouseMoveEvent = new MouseEvent('mousemove', { bubbles: true, cancelable: true, clientX: 100 });
+        document.dispatchEvent(mouseMoveEvent);
+      });
+
+      // Simulate mouseup on document to end drag
+      act(() => {
+        const mouseUpEvent = new MouseEvent('mouseup', { bubbles: true, cancelable: true });
+        document.dispatchEvent(mouseUpEvent);
+      });
 
       expect(handleDragEnd).toHaveBeenCalled();
     });
