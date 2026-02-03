@@ -287,6 +287,9 @@ const DropdownArrow = styled.span<{ $disabled: boolean }>`
   }}
 
   svg {
+    width: 100%;
+    height: 100%;
+    display: block;
   }
 `;
 
