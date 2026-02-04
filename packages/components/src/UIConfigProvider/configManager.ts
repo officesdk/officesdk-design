@@ -8,9 +8,6 @@ let globalIconRegistry: Record<string, React.ComponentType<React.SVGProps<SVGSVG
   null;
 let globalToastConfig: { maxCount?: number; defaultDuration?: number } | null = null;
 
-// Separate registry for component-required icons (used as fallback)
-const componentIconRegistry: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {};
-
 /**
  * Create default render function
  * This will be registered via registerGlobalContext and can be retrieved via getGlobalRenderFunction
@@ -123,30 +120,6 @@ export const getUIConfig = (): UIConfig | null => {
  */
 export const getGlobalIconRegistry = () => {
   return globalIconRegistry;
-};
-
-/**
- * Register component-required icons into the component icon registry.
- *
- * Used internally by components (e.g., Modal) to ensure their required icons
- * are available without requiring users to manually include them.
- * These icons are used as fallback when not found in user's registry.
- *
- * @param icons - Record of icon name to icon component
- */
-export const registerComponentIcons = (
-  icons: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>>
-) => {
-  for (const [name, component] of Object.entries(icons)) {
-    componentIconRegistry[name] = component;
-  }
-};
-
-/**
- * Get component icon registry (fallback icons registered by components)
- */
-export const getComponentIconRegistry = () => {
-  return componentIconRegistry;
 };
 
 /**

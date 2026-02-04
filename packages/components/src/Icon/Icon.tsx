@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from '../utils/styled';
 import { useIconRegistry } from './IconProvider';
-import { getGlobalIconRegistry, getComponentIconRegistry } from '../UIConfigProvider/configManager';
+import { getGlobalIconRegistry } from '../UIConfigProvider/configManager';
 
 export interface IconSize {
   width: string;
@@ -114,7 +114,6 @@ export const Icon: React.FC<IconProps> = ({
 }) => {
   const contextRegistry = useIconRegistry();
   const globalRegistry = getGlobalIconRegistry();
-  const componentRegistry = getComponentIconRegistry();
   // Use context registry first, fallback to global registry
   const registry = contextRegistry || globalRegistry;
 
@@ -132,9 +131,9 @@ export const Icon: React.FC<IconProps> = ({
     );
   }
 
-  // If no children and no src, try registry (user's registry first, then component fallback)
+  // If no children and no src, try registry
   if (!iconElement && name) {
-    const IconComponent = registry?.[name] ?? componentRegistry[name];
+    const IconComponent = registry?.[name];
     if (IconComponent) {
       iconElement = <IconComponent />;
     } else if (process.env.NODE_ENV !== 'production') {
