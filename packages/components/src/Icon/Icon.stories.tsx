@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Icon, IconProvider } from './index';
 import {
@@ -45,30 +45,41 @@ const meta: Meta<typeof Icon> = {
 export default meta;
 type Story = StoryObj<typeof Icon>;
 
-const IconGrid: React.FC<{
-  title: string;
-  names: readonly string[];
-  size?: number;
-  color?: string;
-}> = ({ title, names, size, color }) => (
-  <div style={{ marginBottom: '32px' }}>
-    <h3 style={{ marginBottom: '16px', fontSize: '16px', fontWeight: 600, color: '#333' }}>
+const Section: React.FC<{ title: string; description?: string; children: React.ReactNode }> = ({
+  title,
+  description,
+  children,
+}) => (
+  <div style={{ marginBottom: '24px' }}>
+    <h3 style={{ marginBottom: '8px', fontSize: '16px', fontWeight: 600, color: '#333' }}>
       {title}
     </h3>
-    <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-      {names.map((name) => (
-        <div key={name} style={{ textAlign: 'center', width: '72px' }}>
-          <Icon name={name} size={size} color={color} />
-          <div
-            style={{ marginTop: '6px', fontSize: '10px', color: '#888', wordBreak: 'break-all' }}
-          >
-            {name}
-          </div>
-        </div>
-      ))}
-    </div>
+    {description && (
+      <p style={{ marginBottom: '12px', fontSize: '13px', color: '#666', lineHeight: 1.6 }}>
+        {description}
+      </p>
+    )}
+    {children}
   </div>
 );
+
+const Row: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'center' }}>{children}</div>
+);
+
+const CATALOG_TABS = [
+  { id: 'all', label: 'All', names: ICON_NAMES },
+  { id: 'arrows', label: 'Arrows', names: ARROWS_ICONS },
+  { id: 'general', label: 'General', names: GENERAL_ICONS },
+  { id: 'image', label: 'Image', names: IMAGE_ICONS },
+  { id: 'main', label: 'Main Site', names: MAIN_SITE_ICONS },
+  { id: 'status', label: 'Status', names: STATUS_ICONS },
+  { id: 'table', label: 'Table', names: TABLE_ICONS },
+  { id: 'text', label: 'Text', names: TEXT_ICONS },
+  { id: 'utility', label: 'Utility', names: UTILITY_ICONS },
+] as const;
+
+type CatalogTabId = typeof CATALOG_TABS[number]['id'];
 
 // Default: SVG keeps original size and color
 export const Default: Story = {
@@ -79,114 +90,146 @@ export const Default: Story = {
   ),
 };
 
-// Override size
-export const WithSizeOverride: Story = {
-  args: {
-    size: 32,
-    color: '#5BA0E7',
-  },
-  render: (args) => (
-    <Icon {...args}>
-      <CloseIcon />
-    </Icon>
-  ),
-};
-
-// Using icon registry by name
-export const WithIconRegistry: Story = {
-  args: {
-    name: 'close',
-    size: 24,
-  },
-  render: (args) => (
+export const Usage: Story = {
+  name: 'Usage Overview',
+  render: () => (
     <IconProvider icons={iconRegistry}>
-      <Icon {...args} />
+      <div style={{ padding: '24px', maxWidth: '900px' }}>
+        <Section
+          title="Direct Import"
+          description="Use the icon component directly (no registry required)."
+        >
+          <Row>
+            <CheckIcon />
+            <SearchIcon />
+            <CloseIcon />
+          </Row>
+        </Section>
+
+        <Section
+          title="Registry by Name"
+          description="Use IconProvider + name for dynamic rendering."
+        >
+          <Row>
+            <Icon name="check" size={20} />
+            <Icon name="search" size={20} />
+            <Icon name="close" size={20} />
+          </Row>
+        </Section>
+
+        <Section title="External Image" description="Use src for external images (PNG/JPG/SVG).">
+          <Row>
+            <Icon src="https://api.iconify.design/mdi/heart.svg" size={24} />
+            <Icon src="https://api.iconify.design/mdi/star.svg" size={24} />
+          </Row>
+        </Section>
+      </div>
     </IconProvider>
   ),
+  parameters: { layout: 'fullscreen' },
 };
 
-// Using image URL
-export const WithImageUrl: Story = {
-  args: {
-    src: 'https://api.iconify.design/mdi/heart.svg',
-    size: 24,
-  },
-  render: (args) => <Icon {...args} />,
-};
-
-// Different sizes
-export const DifferentSizes: Story = {
+export const Sizes: Story = {
+  name: 'Size Behavior',
   render: () => (
-    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-      {[12, 16, 20, 24, 32, 48].map((s) => (
-        <div key={s} style={{ textAlign: 'center' }}>
-          <Icon size={s}>
-            <SearchIcon />
-          </Icon>
-          <div style={{ marginTop: '4px', fontSize: '11px', color: '#888' }}>{s}px</div>
-        </div>
-      ))}
-    </div>
-  ),
-};
-
-// Different colors
-export const DifferentColors: Story = {
-  render: () => (
-    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-      {['#41464b', '#5BA0E7', '#52C41A', '#FAAD14', '#E95555'].map((c) => (
-        <div key={c} style={{ textAlign: 'center' }}>
-          <Icon size={24} color={c}>
+    <div style={{ padding: '24px', maxWidth: '900px' }}>
+      <Section
+        title="Original SVG Size"
+        description="When no size prop is passed, icons render at their original SVG dimensions."
+      >
+        <Row>
+          <Icon>
             <CheckIcon />
           </Icon>
-          <div style={{ marginTop: '4px', fontSize: '11px', color: '#888' }}>{c}</div>
-        </div>
-      ))}
+          <Icon>
+            <SearchIcon />
+          </Icon>
+          <Icon>
+            <CloseIcon />
+          </Icon>
+        </Row>
+      </Section>
+
+      <Section
+        title="Override Size"
+        description="Use size to enforce a consistent layout across icons."
+      >
+        <Row>
+          {[12, 16, 20, 24, 32, 48].map((s) => (
+            <div key={s} style={{ textAlign: 'center' }}>
+              <Icon size={s}>
+                <SearchIcon />
+              </Icon>
+              <div style={{ marginTop: '4px', fontSize: '11px', color: '#888' }}>{s}px</div>
+            </div>
+          ))}
+        </Row>
+      </Section>
     </div>
   ),
+  parameters: { layout: 'fullscreen' },
 };
 
-// Status icons with color override
-export const StatusIconsColorOverride: Story = {
-  name: 'Status Icons Color Override',
+export const Colors: Story = {
+  name: 'Color Behavior',
   render: () => (
     <IconProvider icons={allIconRegistry}>
-      <div style={{ padding: '24px' }}>
-        <h3 style={{ marginBottom: '16px', fontSize: '16px', fontWeight: 600 }}>
-          Status Icons - Original Colors (no color prop)
-        </h3>
-        <div style={{ display: 'flex', gap: '24px', marginBottom: '32px' }}>
-          {STATUS_ICONS.map((name) => (
-            <div key={name} style={{ textAlign: 'center' }}>
-              <Icon name={name} size={32} />
-              <div style={{ marginTop: '8px', fontSize: '11px', color: '#888' }}>{name}</div>
-            </div>
-          ))}
-        </div>
+      <div style={{ padding: '24px', maxWidth: '900px' }}>
+        <Section
+          title="Stroke-based Icons"
+          description="Most icons use currentColor for stroke. Set color via Icon or parent styles."
+        >
+          <Row>
+            <Icon color="#41464b" size={20}>
+              <SearchIcon />
+            </Icon>
+            <Icon color="#E95555" size={20}>
+              <SearchIcon />
+            </Icon>
+            <Icon color="#5BA0E7" size={20}>
+              <SearchIcon />
+            </Icon>
+          </Row>
+        </Section>
 
-        <h3 style={{ marginBottom: '16px', fontSize: '16px', fontWeight: 600 }}>
-          Status Icons - Custom Color Override
-        </h3>
-        <div style={{ display: 'flex', gap: '24px', marginBottom: '32px' }}>
-          {STATUS_ICONS.map((name) => (
-            <div key={name} style={{ textAlign: 'center' }}>
-              <Icon name={name} size={32} color="#8B5CF6" />
-              <div style={{ marginTop: '8px', fontSize: '11px', color: '#888' }}>{name}</div>
-            </div>
-          ))}
-        </div>
+        <Section
+          title="Fill-based Icons (Status)"
+          description="Status icons keep their default fill colors unless color is provided."
+        >
+          <Row>
+            <Icon name="success" size={24} />
+            <Icon name="error" size={24} />
+            <Icon name="warning" size={24} />
+            <Icon name="success" size={24} color="#8B5CF6" />
+            <Icon name="error" size={24} color="#8B5CF6" />
+            <Icon name="warning" size={24} color="#8B5CF6" />
+          </Row>
+          <div
+            style={{
+              marginTop: '12px',
+              padding: '8px 10px',
+              background: '#f5f5f5',
+              borderRadius: '4px',
+              fontFamily: 'monospace',
+              fontSize: '12px',
+            }}
+          >
+            {`<Icon name="success" />  // default`}
+            <br />
+            {`<Icon name="success" color="#8B5CF6" />  // override`}
+          </div>
+        </Section>
 
         <div
           style={{
             padding: '12px',
-            background: '#f5f5f5',
+            background: '#e6f7ff',
             borderRadius: '6px',
             fontSize: '13px',
-            color: '#666',
+            color: '#1890ff',
           }}
         >
-          <strong>Note:</strong> When <code>color</code> prop is provided, it overrides the
-          hardcoded fill colors in the SVG while preserving white inner elements (checkmarks, etc.).
+          <strong>Tip:</strong> The <code>color</code> prop works for both icon types.
         </div>
       </div>
     </IconProvider>
@@ -195,74 +238,67 @@ export const StatusIconsColorOverride: Story = {
 };
 
 // All icons showcase grouped by category
-export const AllIcons: Story = {
-  render: () => (
-    <IconProvider icons={allIconRegistry}>
-      <div style={{ padding: '24px', maxWidth: '900px' }}>
-        <h2 style={{ marginBottom: '24px', fontSize: '20px', fontWeight: 600 }}>
-          All Icons ({Object.keys(allIconRegistry).length} total)
-        </h2>
-        <IconGrid title={`Arrows (${ARROWS_ICONS.length})`} names={ARROWS_ICONS} size={20} />
-        <IconGrid title={`General (${GENERAL_ICONS.length})`} names={GENERAL_ICONS} size={20} />
-        <IconGrid title={`Image (${IMAGE_ICONS.length})`} names={IMAGE_ICONS} size={20} />
-        <IconGrid title={`Main Site (${MAIN_SITE_ICONS.length})`} names={MAIN_SITE_ICONS} size={20} />
-        <IconGrid title={`Status (${STATUS_ICONS.length})`} names={STATUS_ICONS} size={20} />
-        <IconGrid title={`Table (${TABLE_ICONS.length})`} names={TABLE_ICONS} size={20} />
-        <IconGrid title={`Text (${TEXT_ICONS.length})`} names={TEXT_ICONS} size={20} />
-        <IconGrid title={`Utility (${UTILITY_ICONS.length})`} names={UTILITY_ICONS} size={20} />
-      </div>
-    </IconProvider>
-  ),
-  parameters: { layout: 'fullscreen' },
-};
-
-// Show SVG default sizes (no size override)
-export const OriginalSvgSizes: Story = {
-  name: 'Original SVG Sizes (No Override)',
-  render: () => (
-    <IconProvider icons={allIconRegistry}>
-      <div style={{ padding: '24px' }}>
-        <p style={{ marginBottom: '16px', fontSize: '14px', color: '#666' }}>
-          When no size prop is passed, icons render at their original SVG dimensions.
-        </p>
-        <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-          {['check', 'close', 'bold', 'arrow-down', 'success', 'table'].map((name) => (
-            <div key={name} style={{ textAlign: 'center' }}>
-              <Icon name={name} />
-              <div style={{ marginTop: '8px', fontSize: '11px', color: '#888' }}>{name}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </IconProvider>
-  ),
-  parameters: { layout: 'fullscreen' },
-};
-
-// Interactive icon search and picker
-const IconPicker = () => {
+const IconCatalog: React.FC = () => {
   const [search, setSearch] = useState('');
-  const [selectedIcon, setSelectedIcon] = useState<string | null>(null);
-  const [copied, setCopied] = useState(false);
+  const [selected, setSelected] = useState<string | null>(null);
+  const [copyState, setCopyState] = useState<'idle' | 'copied' | 'failed'>('idle');
+  const [activeTab, setActiveTab] = useState<CatalogTabId>('all');
 
-  const filteredIcons = ICON_NAMES.filter((name) =>
-    name.toLowerCase().includes(search.toLowerCase())
+  const active = CATALOG_TABS.find((t) => t.id === activeTab) || CATALOG_TABS[0];
+
+  const filteredIcons = useMemo(
+    () => active.names.filter((name) => name.toLowerCase().includes(search.toLowerCase())),
+    [active.names, search]
   );
 
-  const copyToClipboard = (name: string) => {
-    const importText = `import { ${name
+  const getImportText = (name: string) =>
+    `import { ${name
       .split('-')
       .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
       .join('')}Icon } from '@officesdk/design/icons';`;
-    navigator.clipboard.writeText(importText);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+
+  const handleSelect = async (name: string) => {
+    setSelected(name);
+    try {
+      if (navigator?.clipboard?.writeText) {
+        await navigator.clipboard.writeText(getImportText(name));
+        setCopyState('copied');
+      } else {
+        setCopyState('failed');
+      }
+    } catch {
+      setCopyState('failed');
+    }
+    setTimeout(() => setCopyState('idle'), 1500);
   };
 
   return (
     <IconProvider icons={allIconRegistry}>
       <div style={{ padding: '24px', maxWidth: '1000px' }}>
-        <div style={{ marginBottom: '24px' }}>
+        <Section
+          title="Icon Catalog"
+          description="Browse by category tab, search by name, and click to copy import."
+        >
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '12px' }}>
+            {CATALOG_TABS.map((tab) => (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => setActiveTab(tab.id)}
+                style={{
+                  padding: '6px 10px',
+                  borderRadius: '6px',
+                  border: activeTab === tab.id ? '1px solid #5BA0E7' : '1px solid #e8e8e8',
+                  background: activeTab === tab.id ? '#f0f7ff' : '#fff',
+                  fontSize: '12px',
+                  cursor: 'pointer',
+                }}
+              >
+                {tab.label} ({tab.names.length})
+              </button>
+            ))}
+          </div>
+
           <input
             type="text"
             placeholder="Search icons..."
@@ -275,101 +311,102 @@ const IconPicker = () => {
               border: '1px solid #d9d9d9',
               borderRadius: '6px',
               outline: 'none',
+              marginBottom: '16px',
             }}
           />
-        </div>
 
-        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-          {filteredIcons.map((name) => (
-            <button
-              key={name}
-              onClick={() => {
-                setSelectedIcon(name);
-                copyToClipboard(name);
-              }}
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '80px',
-                height: '80px',
-                padding: '8px',
-                border: selectedIcon === name ? '2px solid #5BA0E7' : '1px solid #e8e8e8',
-                borderRadius: '8px',
-                background: selectedIcon === name ? '#f0f7ff' : '#fff',
-                cursor: 'pointer',
-                transition: 'all 0.2s',
-              }}
-            >
-              <Icon name={name} size={24} />
-              <span
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+            {filteredIcons.map((name) => (
+              <button
+                key={name}
+                onClick={() => handleSelect(name)}
+                type="button"
                 style={{
-                  marginTop: '6px',
-                  fontSize: '10px',
-                  color: '#666',
-                  textAlign: 'center',
-                  wordBreak: 'break-all',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: '80px',
+                  height: '80px',
+                  padding: '8px',
+                  border: selected === name ? '2px solid #5BA0E7' : '1px solid #e8e8e8',
+                  borderRadius: '8px',
+                  background: selected === name ? '#f0f7ff' : '#fff',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
                 }}
               >
-                {name}
-              </span>
-            </button>
-          ))}
-        </div>
-
-        {selectedIcon && (
-          <div
-            style={{
-              marginTop: '24px',
-              padding: '16px',
-              background: '#f5f5f5',
-              borderRadius: '8px',
-              fontFamily: 'monospace',
-              fontSize: '13px',
-            }}
-          >
-            <div style={{ marginBottom: '8px', color: '#666' }}>
-              {copied ? 'Copied!' : 'Click icon to copy import:'}
-            </div>
-            <code>
-              {`import { ${selectedIcon
-                .split('-')
-                .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
-                .join('')}Icon } from '@officesdk/design/icons';`}
-            </code>
+                <Icon name={name} size={24} />
+                <span
+                  style={{
+                    marginTop: '6px',
+                    fontSize: '10px',
+                    color: '#666',
+                    textAlign: 'center',
+                    wordBreak: 'break-all',
+                  }}
+                >
+                  {name}
+                </span>
+              </button>
+            ))}
           </div>
-        )}
 
-        <div style={{ marginTop: '16px', fontSize: '13px', color: '#888' }}>
-          Showing {filteredIcons.length} of {ICON_NAMES.length} icons
-        </div>
+          {selected && (
+            <div
+              style={{
+                marginTop: '16px',
+                padding: '12px',
+                background: '#f5f5f5',
+                borderRadius: '6px',
+                fontFamily: 'monospace',
+                fontSize: '12px',
+              }}
+            >
+              <div style={{ marginBottom: '6px', color: '#666' }}>
+                {copyState === 'copied'
+                  ? 'Copied!'
+                  : copyState === 'failed'
+                  ? 'Copy failed — please copy manually'
+                  : 'Click icon to copy import:'}
+              </div>
+              <code>{getImportText(selected)}</code>
+            </div>
+          )}
+
+          <div style={{ marginTop: '12px', fontSize: '12px', color: '#888' }}>
+            Showing {filteredIcons.length} of {active.names.length} icons
+          </div>
+        </Section>
       </div>
     </IconProvider>
   );
 };
 
-export const IconSearch: Story = {
-  name: 'Icon Search & Picker',
-  render: () => <IconPicker />,
+export const AllIcons: Story = {
+  name: 'Icon Catalog (Tabs)',
+  render: () => <IconCatalog />,
   parameters: { layout: 'fullscreen' },
 };
 
 // Tree-shakeable custom registry example
-const myIcons = createIconRegistry(allIconRegistry);
+const myIcons = createIconRegistry({
+  check: CheckIcon,
+  close: CloseIcon,
+  search: SearchIcon,
+});
 
 export const TreeShakeable: Story = {
   name: 'Tree-Shakeable Registry',
   render: () => (
     <IconProvider icons={myIcons}>
-      <div style={{ padding: '24px' }}>
+      <div style={{ padding: '24px', maxWidth: '900px' }}>
         <h3 style={{ marginBottom: '16px', fontSize: '16px', fontWeight: 600 }}>
           Tree-Shakeable Custom Registry
         </h3>
         <p style={{ marginBottom: '16px', fontSize: '14px', color: '#666', lineHeight: 1.6 }}>
           Use <code>createIconRegistry</code> to build a custom registry with only the icons you
-          need. This enables tree-shaking — only the icons you import will be included in your
-          bundle.
+          need. This enables tree-shaking — only imported icons will be included in your bundle.
         </p>
 
         <div
@@ -384,30 +421,27 @@ export const TreeShakeable: Story = {
         >
           <pre
             style={{ margin: 0, whiteSpace: 'pre-wrap' }}
-          >{`import { createIconRegistry, CheckIcon, CloseIcon, SearchIcon, SaveIcon, EditIcon } from '@officesdk/design/icons';
+          >{`import { createIconRegistry, CheckIcon, CloseIcon, SearchIcon } from '@officesdk/design/icons';
 
 const myIcons = createIconRegistry({
   check: CheckIcon,
   close: CloseIcon,
   search: SearchIcon,
-  save: SaveIcon,
-  edit: EditIcon,
 });
 
-// Use with IconProvider or initUIConfig
 <IconProvider icons={myIcons}>
   <Icon name="check" size={20} />
 </IconProvider>`}</pre>
         </div>
 
-        <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-          {(['check', 'close', 'search', 'save', 'edit'] as const).map((name) => (
+        <Row>
+          {(['check', 'close', 'search'] as const).map((name) => (
             <div key={name} style={{ textAlign: 'center' }}>
               <Icon name={name} size={24} />
               <div style={{ marginTop: '6px', fontSize: '11px', color: '#888' }}>{name}</div>
             </div>
           ))}
-        </div>
+        </Row>
 
         <div
           style={{
@@ -419,8 +453,8 @@ const myIcons = createIconRegistry({
             color: '#1890ff',
           }}
         >
-          <strong>Tip:</strong> Compare with <code>iconRegistry</code> which includes all 66 icons
-          (~32KB). With <code>createIconRegistry</code>, you only bundle the icons you actually use.
+          <strong>Tip:</strong> For full catalog demos, use <code>allIconRegistry</code>. For
+          production, prefer a minimal registry.
         </div>
       </div>
     </IconProvider>
