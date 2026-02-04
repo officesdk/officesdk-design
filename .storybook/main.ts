@@ -3,6 +3,7 @@ import { mergeConfig } from 'vite';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import svgr from 'vite-plugin-svgr';
 
 // Safely get directory path, works in both ESM and CommonJS
 const getDirname = () => {
@@ -20,6 +21,7 @@ const config: StorybookConfig = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
+    '@storybook/addon-mdx-gfm',
   ],
   framework: {
     name: '@storybook/react-vite',
@@ -28,6 +30,17 @@ const config: StorybookConfig = {
   async viteFinal(config) {
     return mergeConfig(config, {
       base: process.env.NODE_ENV === 'production' ? '/officesdk-design/' : '/',
+      plugins: [
+        svgr({
+          include: '**/*.svg',
+          svgrOptions: {
+            exportType: 'named',
+            namedExport: 'ReactComponent',
+            icon: false,
+            svgo: false,
+          },
+        }),
+      ],
       resolve: {
         preserveSymlinks: true,
         dedupe: ['react', 'react-dom', 'styled-components'],

@@ -1,5 +1,7 @@
 import React, { forwardRef, useState } from 'react';
 import { styled } from '../utils/styled';
+import { Icon } from '../Icon';
+import { CloseIcon } from '@officesdk/design/icons';
 
 type InputSize = 'mini' | 'small' | 'medium' | 'large';
 type LineType = 'outlined' | 'underlined' | 'borderless';
@@ -395,16 +397,6 @@ const AlertLine = styled.div`
   background-color: ${({ theme }) => theme.colors?.palettes?.red?.['6'] || '#E95555'};
 `;
 
-const DefaultClearIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <path
-      d="M8.00148 8.56042L11.3306 11.8884L11.8961 11.3226L8.56774 7.99531L11.8641 4.70566L11.299 4.1394L8.00196 7.42971L4.70055 4.12939L4.13495 4.69517L7.4357 7.99483L4.10889 11.3149L4.674 11.8812L8.00148 8.56042Z"
-      fill="#41464B"
-      fillOpacity="0.6"
-    />
-  </svg>
-);
-
 /**
  * Input Component
  *
@@ -512,7 +504,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         aria-label="Clear"
         tabIndex={-1}
       >
-        {clearIcon || <DefaultClearIcon />}
+        {clearIcon || (
+          <Icon size={16} color="rgba(65, 70, 75, 0.6)">
+            <CloseIcon />
+          </Icon>
+        )}
       </ClearButton>
     ) : null;
 

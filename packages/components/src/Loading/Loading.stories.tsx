@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { Loading } from './Loading';
+import { LoadingIcon } from '@officesdk/design/icons';
 
 const meta: Meta<typeof Loading> = {
   title: 'Components/Loading',
@@ -223,6 +224,30 @@ export const WrapperModeWithTip: Story = {
 
 // ==================== Custom Indicators ====================
 
+// Icon Component Spinner with Animation
+const IconSpinner: React.FC<{ size?: number }> = ({ size = 24 }) => (
+  <>
+    <style>
+      {`
+        @keyframes icon-loading-spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+      `}
+    </style>
+    <div
+      style={{
+        display: 'inline-block',
+        width: `${size}px`,
+        height: `${size}px`,
+        animation: 'icon-loading-spin 1s linear infinite',
+      }}
+    >
+      <LoadingIcon width={size} height={size} />
+    </div>
+  </>
+);
+
 // Custom CSS Spinner Component
 const CSSSpinner: React.FC<{ size?: number }> = ({ size = 24 }) => {
   const borderWidth = Math.max(2, Math.round(size / 12));
@@ -277,6 +302,119 @@ const EmojiSpinner = () => (
     </span>
   </>
 );
+
+export const CustomIconIndicator: Story = {
+  name: 'Custom Indicator - Icon Component',
+  render: (args) => {
+    const [spinning, setSpinning] = React.useState(args.spinning ?? true);
+    const sizeMap = { small: 16, medium: 24, large: 32 };
+    const indicatorSize = sizeMap[args.size || 'medium'];
+
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+        <div>
+          <button
+            onClick={() => setSpinning(!spinning)}
+            style={{
+              padding: '8px 16px',
+              fontSize: '14px',
+              cursor: 'pointer',
+              borderRadius: '4px',
+              border: '1px solid #d9d9d9',
+              background: '#fff',
+            }}
+          >
+            {spinning ? 'Stop Loading' : 'Start Loading'}
+          </button>
+        </div>
+
+        <div>
+          <h4 style={{ margin: '0 0 16px 0', fontSize: '14px', fontWeight: 600 }}>All Sizes</h4>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
+            <div style={{ textAlign: 'center' }}>
+              <Loading size="small" spinning={spinning} indicator={<IconSpinner size={16} />} />
+              <p style={{ marginTop: '8px', fontSize: '12px', color: '#999' }}>Small</p>
+            </div>
+            <div style={{ textAlign: 'center' }}>
+              <Loading size="medium" spinning={spinning} indicator={<IconSpinner size={24} />} />
+              <p style={{ marginTop: '8px', fontSize: '12px', color: '#999' }}>Medium</p>
+            </div>
+            <div style={{ textAlign: 'center' }}>
+              <Loading size="large" spinning={spinning} indicator={<IconSpinner size={32} />} />
+              <p style={{ marginTop: '8px', fontSize: '12px', color: '#999' }}>Large</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h4 style={{ margin: '0 0 16px 0', fontSize: '14px', fontWeight: 600 }}>
+            Controllable (use Controls panel)
+          </h4>
+          <Loading {...args} spinning={spinning} indicator={<IconSpinner size={indicatorSize} />} />
+        </div>
+
+        <div>
+          <h4 style={{ margin: '0 0 16px 0', fontSize: '14px', fontWeight: 600 }}>Wrapper Mode</h4>
+          <div style={{ width: '400px' }}>
+            <Loading
+              spinning={spinning}
+              tip="Loading content..."
+              indicator={<IconSpinner size={24} />}
+            >
+              <div
+                style={{
+                  padding: '24px',
+                  border: '1px solid #e8e8e8',
+                  borderRadius: '8px',
+                  background: '#fff',
+                }}
+              >
+                <h3 style={{ margin: '0 0 12px 0', fontSize: '16px' }}>Content Title</h3>
+                <p style={{ margin: 0, color: '#666', fontSize: '14px' }}>
+                  Content with LoadingIcon from @officesdk/design/icons package.
+                </p>
+              </div>
+            </Loading>
+          </div>
+        </div>
+
+        <div>
+          <h4 style={{ margin: '0 0 16px 0', fontSize: '14px', fontWeight: 600 }}>Usage Example</h4>
+          <div
+            style={{
+              padding: '16px',
+              background: '#f0f9ff',
+              border: '1px solid #91caff',
+              borderRadius: '8px',
+              fontSize: '12px',
+              lineHeight: '1.6',
+              fontFamily: 'monospace',
+            }}
+          >
+            <p style={{ margin: '0 0 8px 0', fontWeight: 600 }}>Code:</p>
+            <pre style={{ margin: 0, whiteSpace: 'pre-wrap' }}>
+              {`import { Loading } from '@officesdk/design';
+import { LoadingIcon } from '@officesdk/design/icons';
+
+<Loading
+  indicator={<LoadingIcon />}
+  spinning={true}
+/>`}
+            </pre>
+          </div>
+        </div>
+      </div>
+    );
+  },
+  args: {
+    size: 'large',
+    spinning: true,
+    tip: 'Loading with icon component...',
+  },
+  parameters: {
+    layout: 'padded',
+  },
+};
 
 export const CustomCSSIndicator: Story = {
   name: 'Custom Indicator - CSS Animation',
@@ -819,6 +957,35 @@ export const Showcase: Story = {
           </div>
           <div style={{ textAlign: 'center' }}>
             <Loading size="large" indicator={<CSSSpinner size={32} />} />
+            <p style={{ marginTop: '8px', fontSize: '12px', color: '#999' }}>Large</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: 600 }}>
+          Icon Component Indicators
+        </h3>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '32px',
+            padding: '24px',
+            background: '#fafafa',
+            borderRadius: '8px',
+          }}
+        >
+          <div style={{ textAlign: 'center' }}>
+            <Loading size="small" indicator={<IconSpinner size={16} />} />
+            <p style={{ marginTop: '8px', fontSize: '12px', color: '#999' }}>Small</p>
+          </div>
+          <div style={{ textAlign: 'center' }}>
+            <Loading size="medium" indicator={<IconSpinner size={24} />} />
+            <p style={{ marginTop: '8px', fontSize: '12px', color: '#999' }}>Medium</p>
+          </div>
+          <div style={{ textAlign: 'center' }}>
+            <Loading size="large" indicator={<IconSpinner size={32} />} />
             <p style={{ marginTop: '8px', fontSize: '12px', color: '#999' }}>Large</p>
           </div>
         </div>

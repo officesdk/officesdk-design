@@ -17,15 +17,18 @@
     "dist"
   ],
   "scripts": {
-    "build": "yarn clean && tsup && yarn rename-mts",
+    "generate:registry": "tsx scripts/generate-registry.ts",
+    "prebuild": "yarn generate:registry",
+    "build": "yarn clean && tsup && yarn build:dts",
+    "build:dts": "tsc --emitDeclarationOnly --outDir dist/esm && cp dist/esm/index.d.ts dist/cjs/index.d.ts",
     "dev": "tsup --watch",
-    "clean": "rm -rf dist",
-    "rename-mts": "mv dist/esm/index.d.mts dist/esm/index.d.ts"
+    "clean": "rm -rf dist"
   },
   "devDependencies": {
     "@svgr/core": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
     "tsup": "^8.0.1",
+    "tsx": "^4.7.0",
     "typescript": "^5.3.3"
   },
   "dependencies": {

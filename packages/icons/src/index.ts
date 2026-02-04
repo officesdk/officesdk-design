@@ -1,83 +1,40 @@
-// Export all icon components for direct use
-export {
-  // General Icons
-  WorkbenchIcon,
-  FormatBrushIcon,
-  ClearFormatIcon,
-  CopyIcon,
-  PasteIcon,
-  CutIcon,
-  DeleteIcon,
-  SelectAllIcon,
-  UndoIcon,
-  RedoIcon,
-  SaveIcon,
-  CheckIcon,
-  HideIcon,
-  PrintIcon,
-  // Main Site Icons
-  FilterIcon,
-  SortIcon,
-  SettingsIcon,
-  CloseIcon,
-  MenuIcon,
-  BackIcon,
-  ListIcon,
-  GridIcon,
-  SearchIcon,
-  EditIcon,
-  ShareIcon,
-  DownloadIcon,
-  UploadIcon,
-  // Text Icons
-  IndentIncreaseIcon,
-  IndentDecreaseIcon,
-  AlignLeftIcon,
-  AlignCenterIcon,
-  AlignRightIcon,
-  AlignJustifyIcon,
-  ListBulletIcon,
-  ListNumberIcon,
-  BoldIcon,
-  ItalicIcon,
-  UnderlineIcon,
-  StrikethroughIcon,
-  LinkIcon,
-  // Image Icons
-  ImageIcon,
-  RotateLeftIcon,
-  RotateRightIcon,
-  FlipHorizontalIcon,
-  FlipVerticalIcon,
-  // Table Icons
-  TableIcon,
-  FreezeIcon,
-  MergeCellsIcon,
-  SplitCellsIcon,
-  // Arrow Icons
-  ArrowUpIcon,
-  ArrowDownIcon,
-  ArrowLeftIcon,
-  ArrowRightIcon,
-  ChevronUpIcon,
-  ChevronDownIcon,
-  // Utility Icons
-  PlusIcon,
-  MinusIcon,
-  MoreIcon,
-  RefreshIcon,
-  FullscreenIcon,
-  ExitFullscreenIcon,
-  // Status Icons
-  SuccessIcon,
-  ErrorIcon,
-  WarningIcon,
-  InfoIcon,
-  LoadingIcon,
-} from './components.js';
+// Export all icon components
+export * from './icons';
 
-// Export registry for use with IconProvider
-export { iconRegistry, getIcon } from './registry';
+// Export registry (minimal - only internal icons)
+export { iconRegistry, getIcon, ICON_NAMES } from './registry';
+
+// Export full registry for documentation/prototyping (tree-shakeable)
+export { allIconRegistry } from './allIconRegistry';
+
+// Export createIconRegistry for tree-shakeable custom registries
+export { createIconRegistry } from './createIconRegistry';
+
+// Export category arrays
+export {
+  ARROWS_ICONS,
+  GENERAL_ICONS,
+  IMAGE_ICONS,
+  MAIN_SITE_ICONS,
+  STATUS_ICONS,
+  TABLE_ICONS,
+  TEXT_ICONS,
+  UTILITY_ICONS,
+} from './registry';
 
 // Export types
-export type { IconComponent, IconRegistry, IconName } from './types';
+export type { IconComponent, IconRegistry } from './types';
+export type {
+  IconName,
+  ArrowsIconName,
+  GeneralIconName,
+  ImageIconName,
+  MainSiteIconName,
+  StatusIconName,
+  TableIconName,
+  TextIconName,
+  UtilityIconName,
+} from './types.generated';
+
+// Backward compatibility alias
+export type { ArrowsIconName as ArrowIconName } from './types.generated';

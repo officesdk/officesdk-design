@@ -3,6 +3,7 @@ import RcDialog from 'rc-dialog';
 import type { DialogProps } from 'rc-dialog';
 import { Button } from '../Button';
 import { Icon } from '../Icon';
+import { CloseIcon } from '@officesdk/design/icons';
 import { ModalGlobalStyles } from './globalStyle';
 import { styleManager } from '../utils/styleManager';
 import { getGlobalTheme } from '../utils/context';
@@ -229,7 +230,13 @@ export const Modal: React.FC<ModalProps> = ({
       width={width === undefined ? modalWidth : undefined}
       prefixCls={prefixCls}
       closable={closable}
-      closeIcon={closeIcon ?? <Icon name="close" size={19.2} />}
+      closeIcon={
+        closeIcon ?? (
+          <Icon size={19.2}>
+            <CloseIcon />
+          </Icon>
+        )
+      }
       mask={mask}
       maskClosable={maskClosable}
       classNames={classNames}

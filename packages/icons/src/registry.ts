@@ -1,170 +1,175 @@
+/**
+ * Icon Registry
+ *
+ * This file provides:
+ * - iconRegistry: Minimal registry containing only icons used internally by the component library
+ * - Category arrays: For documentation and reference
+ * - ICON_NAMES: All available icon names
+ *
+ * For tree-shaking, use createIconRegistry to build a custom registry with only the icons you need.
+ */
 import {
-  // General
-  WorkbenchIcon,
-  FormatBrushIcon,
-  ClearFormatIcon,
-  CopyIcon,
-  PasteIcon,
-  CutIcon,
-  DeleteIcon,
-  SelectAllIcon,
-  UndoIcon,
-  RedoIcon,
-  SaveIcon,
-  CheckIcon,
-  HideIcon,
-  PrintIcon,
-  // Main Site
-  FilterIcon,
-  SortIcon,
-  SettingsIcon,
-  CloseIcon,
-  MenuIcon,
-  BackIcon,
-  ListIcon,
-  GridIcon,
-  SearchIcon,
-  EditIcon,
-  ShareIcon,
-  DownloadIcon,
-  UploadIcon,
-  // Text
-  IndentIncreaseIcon,
-  IndentDecreaseIcon,
-  AlignLeftIcon,
-  AlignCenterIcon,
-  AlignRightIcon,
-  AlignJustifyIcon,
-  ListBulletIcon,
-  ListNumberIcon,
-  BoldIcon,
-  ItalicIcon,
-  UnderlineIcon,
-  StrikethroughIcon,
-  LinkIcon,
-  // Image
-  ImageIcon,
-  RotateLeftIcon,
-  RotateRightIcon,
-  FlipHorizontalIcon,
-  FlipVerticalIcon,
-  // Table
-  TableIcon,
-  FreezeIcon,
-  MergeCellsIcon,
-  SplitCellsIcon,
-  // Arrows
-  ArrowUpIcon,
-  ArrowDownIcon,
-  ArrowLeftIcon,
   ArrowRightIcon,
-  ChevronUpIcon,
+  CheckIcon,
   ChevronDownIcon,
-  // Utility
-  PlusIcon,
-  MinusIcon,
-  MoreIcon,
-  RefreshIcon,
-  FullscreenIcon,
-  ExitFullscreenIcon,
-  // Status
-  SuccessIcon,
+  CloseIcon,
   ErrorIcon,
-  WarningIcon,
   InfoIcon,
   LoadingIcon,
-} from './components.js';
+  SearchIcon,
+  SuccessIcon,
+  WarningIcon,
+} from './icons';
+
 import type { IconRegistry } from './types';
 
 /**
- * Built-in icon registry
- * Maps icon names to React components
+ * Internal icon registry - contains only icons used by the component library internally.
+ *
+ * These icons are required for components like Modal (close), Toast (status icons),
+ * Checkbox (check), SearchInput (search), DropdownButton (chevron-down),
+ * ToolbarButton (chevron-down), and Menu (search, check, arrow-right).
+ *
+ * For custom icons, use createIconRegistry to build your own registry:
+ * @example
+ * import { createIconRegistry, CheckIcon, SearchIcon } from '@officesdk/design/icons';
+ *
+ * const myIcons = createIconRegistry({
+ *   check: CheckIcon,
+ *   search: SearchIcon,
+ * });
  */
 export const iconRegistry: IconRegistry = {
-  // General Icons
-  'workbench': WorkbenchIcon,
-  'format-brush': FormatBrushIcon,
-  'clear-format': ClearFormatIcon,
-  'copy': CopyIcon,
-  'paste': PasteIcon,
-  'cut': CutIcon,
-  'delete': DeleteIcon,
-  'select-all': SelectAllIcon,
-  'undo': UndoIcon,
-  'redo': RedoIcon,
-  'save': SaveIcon,
-  'check': CheckIcon,
-  'hide': HideIcon,
-  'print': PrintIcon,
-
-  // Main Site Icons
-  'filter': FilterIcon,
-  'sort': SortIcon,
-  'settings': SettingsIcon,
-  'close': CloseIcon,
-  'menu': MenuIcon,
-  'back': BackIcon,
-  'list': ListIcon,
-  'grid': GridIcon,
-  'search': SearchIcon,
-  'edit': EditIcon,
-  'share': ShareIcon,
-  'download': DownloadIcon,
-  'upload': UploadIcon,
-
-  // Text Icons
-  'indent-increase': IndentIncreaseIcon,
-  'indent-decrease': IndentDecreaseIcon,
-  'align-left': AlignLeftIcon,
-  'align-center': AlignCenterIcon,
-  'align-right': AlignRightIcon,
-  'align-justify': AlignJustifyIcon,
-  'list-bullet': ListBulletIcon,
-  'list-number': ListNumberIcon,
-  'bold': BoldIcon,
-  'italic': ItalicIcon,
-  'underline': UnderlineIcon,
-  'strikethrough': StrikethroughIcon,
-  'link': LinkIcon,
-
-  // Image Icons
-  'image': ImageIcon,
-  'rotate-left': RotateLeftIcon,
-  'rotate-right': RotateRightIcon,
-  'flip-horizontal': FlipHorizontalIcon,
-  'flip-vertical': FlipVerticalIcon,
-
-  // Table Icons
-  'table': TableIcon,
-  'freeze': FreezeIcon,
-  'merge-cells': MergeCellsIcon,
-  'split-cells': SplitCellsIcon,
-
-  // Arrow Icons
-  'arrow-up': ArrowUpIcon,
-  'arrow-down': ArrowDownIcon,
-  'arrow-left': ArrowLeftIcon,
   'arrow-right': ArrowRightIcon,
-  'chevron-up': ChevronUpIcon,
+  check: CheckIcon,
   'chevron-down': ChevronDownIcon,
-
-  // Utility Icons
-  'plus': PlusIcon,
-  'minus': MinusIcon,
-  'more': MoreIcon,
-  'refresh': RefreshIcon,
-  'fullscreen': FullscreenIcon,
-  'exit-fullscreen': ExitFullscreenIcon,
-
-  // Status Icons
-  'success': SuccessIcon,
-  'error': ErrorIcon,
-  'warning': WarningIcon,
-  'info': InfoIcon,
-  'loading': LoadingIcon,
+  close: CloseIcon,
+  error: ErrorIcon,
+  info: InfoIcon,
+  loading: LoadingIcon,
+  search: SearchIcon,
+  success: SuccessIcon,
+  warning: WarningIcon,
 };
 
 /**
- * Get icon component by name
+ * Icon categories - for documentation and reference
+ */
+
+// Arrows (6)
+export const ARROWS_ICONS = [
+  'arrow-down',
+  'arrow-left',
+  'arrow-right',
+  'arrow-up',
+  'chevron-down',
+  'chevron-up',
+] as const;
+
+// General (18)
+export const GENERAL_ICONS = [
+  'check',
+  'clear-format',
+  'close',
+  'copy',
+  'cut',
+  'delete',
+  'format-brush',
+  'hide',
+  'minus',
+  'paste',
+  'plus',
+  'print',
+  'redo',
+  'save',
+  'search',
+  'select-all',
+  'undo',
+  'workbench',
+] as const;
+
+// Image (5)
+export const IMAGE_ICONS = [
+  'flip-horizontal',
+  'flip-vertical',
+  'image',
+  'rotate-left',
+  'rotate-right',
+] as const;
+
+// Main-site (11)
+export const MAIN_SITE_ICONS = [
+  'back',
+  'download',
+  'edit',
+  'filter',
+  'grid',
+  'list',
+  'menu',
+  'settings',
+  'share',
+  'sort',
+  'upload',
+] as const;
+
+// Status (6)
+export const STATUS_ICONS = [
+  'error',
+  'info',
+  'loading',
+  'question',
+  'success',
+  'warning',
+] as const;
+
+// Table (4)
+export const TABLE_ICONS = [
+  'freeze',
+  'merge-cells',
+  'split-cells',
+  'table',
+] as const;
+
+// Text (13)
+export const TEXT_ICONS = [
+  'align-center',
+  'align-justify',
+  'align-left',
+  'align-right',
+  'bold',
+  'indent-decrease',
+  'indent-increase',
+  'italic',
+  'link',
+  'list-bullet',
+  'list-number',
+  'strikethrough',
+  'underline',
+] as const;
+
+// Utility (4)
+export const UTILITY_ICONS = [
+  'exit-fullscreen',
+  'fullscreen',
+  'more',
+  'refresh',
+] as const;
+
+/**
+ * All available icon names (for documentation and reference)
+ */
+export const ICON_NAMES = [
+  ...ARROWS_ICONS,
+  ...GENERAL_ICONS,
+  ...IMAGE_ICONS,
+  ...MAIN_SITE_ICONS,
+  ...STATUS_ICONS,
+  ...TABLE_ICONS,
+  ...TEXT_ICONS,
+  ...UTILITY_ICONS,
+] as const;
+
+/**
+ * Get icon component by name from the internal registry
  */
 export const getIcon = (name: string) => iconRegistry[name];

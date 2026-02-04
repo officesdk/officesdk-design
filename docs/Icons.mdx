@@ -1,0 +1,279 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Documentation/Icons" />
+
+# Icons
+
+Officesdk Design provides a comprehensive icon library with 67 icons organized into 8 categories. All icons are SVG-based React components.
+
+## Quick Start
+
+```bash
+yarn add @officesdk/design
+```
+
+```tsx
+import { Icon } from '@officesdk/design';
+import { SearchIcon, ErrorIcon } from '@officesdk/design/icons';
+
+// Direct usage
+<SearchIcon />
+
+// With Icon wrapper (recommended for customization)
+<Icon size={24} color="#5BA0E7">
+  <SearchIcon />
+</Icon>
+```
+
+## Icon Types
+
+Icons are divided into two types based on their color mechanism:
+
+### Stroke-based Icons (Most icons)
+
+Use `currentColor` for strokes. Color can be set via CSS `color` property.
+
+```tsx
+import { SearchIcon, CloseIcon } from '@officesdk/design/icons';
+
+// Method 1: Direct style
+<SearchIcon style={{ color: 'red' }} />
+
+// Method 2: Via Icon component
+<Icon color="red"><SearchIcon /></Icon>
+
+// Method 3: Inherit from parent
+<div style={{ color: 'blue' }}>
+  <SearchIcon />  {/* Blue */}
+</div>
+```
+
+### Fill-based Icons (Status icons)
+
+Have default fill colors (e.g., green for success, red for error). Use CSS variable `--icon-fill` for override.
+
+```tsx
+import { SuccessIcon, ErrorIcon } from '@officesdk/design/icons';
+
+// Default colors preserved
+<SuccessIcon />  {/* Green */}
+<ErrorIcon />    {/* Red */}
+
+// Override via Icon component (recommended)
+<Icon color="#8B5CF6"><ErrorIcon /></Icon>  {/* Purple */}
+
+// Override via CSS variable
+<ErrorIcon style={{ '--icon-fill': '#8B5CF6' } as React.CSSProperties} />
+```
+
+**Color mechanism comparison:**
+
+| Icon Type | Examples | Default | Color Override |
+|-----------|----------|---------|----------------|
+| Stroke-based | `search`, `close`, `check` | `currentColor` | `style={{ color }}` or `<Icon color>` |
+| Fill-based | `success`, `error`, `warning`, `info`, `question` | Hardcoded colors | `<Icon color>` only |
+
+## Usage Patterns
+
+### 1. Direct Import (Simplest)
+
+Best for one-off usage without customization.
+
+```tsx
+import { CheckIcon, CloseIcon } from '@officesdk/design/icons';
+
+<CheckIcon />
+<CloseIcon style={{ color: 'red' }} />
+```
+
+### 2. Icon Component (Recommended)
+
+Best for consistent size and color control.
+
+```tsx
+import { Icon } from '@officesdk/design';
+import { CheckIcon } from '@officesdk/design/icons';
+
+<Icon size={24} color="#5BA0E7">
+  <CheckIcon />
+</Icon>
+
+<Icon size="large">  {/* 24px */}
+  <CheckIcon />
+</Icon>
+```
+
+### 3. Icon Registry (Dynamic)
+
+Best for rendering icons by name.
+
+```tsx
+import { Icon, IconProvider } from '@officesdk/design';
+import { iconRegistry } from '@officesdk/design/icons';
+
+<IconProvider icons={iconRegistry}>
+  <Icon name="check" size={20} />
+  <Icon name="close" size={20} color="#E95555" />
+</IconProvider>
+```
+
+### 4. initUIConfig (Global)
+
+Best for app-wide configuration without Provider nesting.
+
+```tsx
+import { initUIConfig, Icon } from '@officesdk/design';
+import { lightTheme } from '@officesdk/design/theme';
+import { iconRegistry } from '@officesdk/design/icons';
+
+// Initialize once at app startup
+initUIConfig({
+  theme: lightTheme,
+  icons: iconRegistry,
+});
+
+// Use anywhere
+<Icon name="check" size={20} />
+```
+
+### 5. Custom Registry (Tree-shaking)
+
+Best for optimized bundle size.
+
+```tsx
+import { Icon, IconProvider } from '@officesdk/design';
+import { createIconRegistry, CheckIcon, CloseIcon } from '@officesdk/design/icons';
+
+// Only these icons will be bundled
+const myIcons = createIconRegistry({
+  check: CheckIcon,
+  close: CloseIcon,
+});
+
+<IconProvider icons={myIcons}>
+  <Icon name="check" size={20} />
+</IconProvider>
+```
+
+**Choosing the right approach:**
+
+| Approach | Bundle Size | Use Case |
+|----------|-------------|----------|
+| Direct import | Smallest | Simple usage, no dynamic names |
+| `createIconRegistry` | Small | Need `name` prop, bundle size critical |
+| `iconRegistry` | ~32KB | Prototyping, all icons needed |
+
+## Icon Categories
+
+### General (18)
+`check` `close` `copy` `cut` `delete` `paste` `plus` `minus` `search` `save` `print` `undo` `redo` `hide` `select-all` `clear-format` `format-brush` `workbench`
+
+### Main Site (11)
+`back` `menu` `settings` `filter` `sort` `list` `grid` `edit` `share` `download` `upload`
+
+### Text (13)
+`bold` `italic` `underline` `strikethrough` `align-left` `align-center` `align-right` `align-justify` `indent-increase` `indent-decrease` `list-bullet` `list-number` `link`
+
+### Arrows (6)
+`arrow-up` `arrow-down` `arrow-left` `arrow-right` `chevron-up` `chevron-down`
+
+### Image (5)
+`image` `rotate-left` `rotate-right` `flip-horizontal` `flip-vertical`
+
+### Table (4)
+`table` `freeze` `merge-cells` `split-cells`
+
+### Utility (4)
+`more` `refresh` `fullscreen` `exit-fullscreen`
+
+### Status (6)
+`success` `error` `warning` `info` `question` `loading`
+
+> **Note:** Status icons have default colors. Use `<Icon color="...">` to override.
+
+## API Reference
+
+### Icon Component Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `name` | `string` | - | Icon name from registry |
+| `src` | `string` | - | External image URL |
+| `children` | `ReactNode` | - | Icon element (highest priority) |
+| `size` | `number \| IconSize` | - | Size in pixels or preset |
+| `color` | `string` | - | Color override |
+| `alt` | `string` | - | Alt text for images |
+| `className` | `string` | - | CSS class |
+| `style` | `CSSProperties` | - | Inline styles |
+| `onClick` | `function` | - | Click handler |
+
+### Size Presets
+
+| Preset | Value |
+|--------|-------|
+| `small` | 16px |
+| `medium` | 20px |
+| `large` | 24px |
+
+## TypeScript
+
+```tsx
+import type {
+  IconName,           // All icon names union
+  ArrowsIconName,     // 'arrow-up' | 'arrow-down' | ...
+  GeneralIconName,
+  StatusIconName,
+  // ... other category types
+  IconComponent,
+  IconRegistry,
+} from '@officesdk/design/icons';
+```
+
+## Category Arrays
+
+```tsx
+import {
+  ARROWS_ICONS,      // ['arrow-up', 'arrow-down', ...]
+  GENERAL_ICONS,
+  STATUS_ICONS,
+  // ... other categories
+  ICON_NAMES,        // All icon names
+} from '@officesdk/design/icons';
+```
+
+## Best Practices
+
+### Accessibility
+
+```tsx
+// With aria-label
+<button aria-label="Close dialog">
+  <Icon name="close" size={20} />
+</button>
+
+// With visible text
+<button>
+  <Icon name="save" size={16} />
+  <span>Save</span>
+</button>
+```
+
+### Consistent Sizing
+
+```tsx
+// Use presets for consistency
+<Icon name="check" size="medium" />  {/* 20px */}
+
+// Or define app constants
+const ICON_SIZE = { sm: 16, md: 20, lg: 24 };
+<Icon name="check" size={ICON_SIZE.md} />
+```
+
+### Theme-aware Colors
+
+```tsx
+// Stroke icons inherit color automatically
+<div style={{ color: 'var(--text-primary)' }}>
+  <SearchIcon />  {/* Inherits theme color */}
+</div>
+```

@@ -8,6 +8,7 @@ import 'rc-menu/assets/index.css';
 import { MenuGlobalStyles } from './globalStyle';
 import { styleManager } from '../utils/styleManager';
 import { getGlobalTheme } from '../utils/context';
+import { ArrowRightIcon, CheckIcon, SearchIcon as SearchIconComponent } from '@officesdk/design/icons';
 
 export interface MenuItem {
   type?: 'item';
@@ -132,25 +133,6 @@ const SearchBoxContainer = styled.div`
   padding: 8px 12px;
   border-bottom: 1px solid ${({ theme }) => theme.colors?.palettes?.transparency?.['10']};
 `;
-
-const SearchIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <path
-      d="M7.33333 12.6667C10.2789 12.6667 12.6667 10.2789 12.6667 7.33333C12.6667 4.38781 10.2789 2 7.33333 2C4.38781 2 2 4.38781 2 7.33333C2 10.2789 4.38781 12.6667 7.33333 12.6667Z"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M14 14L11.1 11.1"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
 
 // MenuItem content wrapper
 const MenuItemContent = styled.div<{ $size: 'medium' | 'large' }>`
@@ -294,30 +276,6 @@ const NextLevelIconContainer = styled.div<{ $size: 'medium' | 'large' }>`
     `;
   }}
 `;
-
-const CheckmarkIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-    <path
-      d="M14.25 5.25L7.125 12.375L3.75 9"
-      stroke="#41464B"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
-const ArrowIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-    <path
-      d="M6.75 4.5L11.25 9L6.75 13.5"
-      stroke="#41464B"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
 
 /**
  * Menu Component
@@ -469,12 +427,12 @@ export const Menu: React.FC<MenuProps> = ({
           $visible={shouldShowActiveIcon}
           $placeholder={shouldReserveSpace && !shouldShowActiveIcon}
         >
-          {shouldShowActiveIcon && <CheckmarkIcon />}
+          {shouldShowActiveIcon && <CheckIcon />}
         </ActiveIconContainer>
 
         {item.children && item.children.length > 0 && (
           <NextLevelIconContainer $size={size}>
-            <ArrowIcon />
+            <ArrowRightIcon />
           </NextLevelIconContainer>
         )}
       </MenuItemContent>
@@ -552,7 +510,7 @@ export const Menu: React.FC<MenuProps> = ({
             onChange={(e) => handleSearch(e.target.value)}
             clearable
             onClear={() => handleSearch('')}
-            prefixNode={<SearchIcon />}
+            prefixNode={<SearchIconComponent />}
           />
         </SearchBoxContainer>
       )}

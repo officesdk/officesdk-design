@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
 import { styled } from '../utils/styled';
 import { Icon } from '../Icon';
+import { ArrowRightIcon } from '@officesdk/design/icons';
 
 type DropdownButtonSize = 'large' | 'medium';
 type DropdownButtonVariant = 'framed' | 'frameless';
@@ -99,9 +100,7 @@ const DropdownButtonContainer = styled.button<{
     let background = config.background.normal;
     if ($disabled) {
       background =
-        $variant === 'frameless'
-          ? config.frameLessBackground.disabled
-          : config.background.disabled;
+        $variant === 'frameless' ? config.frameLessBackground.disabled : config.background.disabled;
     } else if ($variant === 'frameless') {
       background = config.frameLessBackground.normal;
     }
@@ -113,8 +112,8 @@ const DropdownButtonContainer = styled.button<{
       const borderColor = $disabled
         ? config.borderColor.disabled
         : $error
-          ? config.borderColor.error
-          : config.borderColor.normal;
+        ? config.borderColor.error
+        : config.borderColor.normal;
       border = `1px solid ${borderColor}`;
     }
 
@@ -128,9 +127,7 @@ const DropdownButtonContainer = styled.button<{
 
       &:hover:not(:disabled) {
         background: ${
-          $variant === 'frameless'
-            ? config.frameLessBackground.hover
-            : config.background.hover
+          $variant === 'frameless' ? config.frameLessBackground.hover : config.background.hover
         };
         color: ${config.color.hover};
         ${
@@ -144,9 +141,7 @@ const DropdownButtonContainer = styled.button<{
 
       &:active:not(:disabled) {
         background: ${
-          $variant === 'frameless'
-            ? config.frameLessBackground.active
-            : config.background.active
+          $variant === 'frameless' ? config.frameLessBackground.active : config.background.active
         };
         color: ${config.color.active};
         ${
@@ -259,15 +254,6 @@ const IndicatorWrapper = styled.div<{
   }}
 `;
 
-const DefaultArrowIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-    <path
-      d="M11.5975 8.81186C11.7113 8.91146 11.7113 9.08854 11.5975 9.18814L7.72713 12.5747C7.56548 12.7161 7.3125 12.6013 7.3125 12.3866L7.3125 5.61344C7.3125 5.39865 7.56548 5.28386 7.72713 5.4253L11.5975 8.81186Z"
-      fill="#41464B"
-    />
-  </svg>
-);
-
 /**
  * DropdownButton Component
  *
@@ -347,7 +333,7 @@ export const DropdownButton = forwardRef<HTMLButtonElement, DropdownButtonProps>
         </TextContent>
 
         <IndicatorWrapper $size={effectiveSize} $open={open} $disabled={disabled}>
-          {indicatorIcon || <DefaultArrowIcon />}
+          {indicatorIcon || <ArrowRightIcon />}
         </IndicatorWrapper>
       </DropdownButtonContainer>
     );
