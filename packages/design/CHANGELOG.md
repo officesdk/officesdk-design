@@ -1,5 +1,16 @@
 # @officesdk/design
 
+## 0.2.3
+
+### Patch Changes
+
+- 2e86780: Refactor icon system and add 60+ new icons
+
+  - Add 60+ SVG icons (arrows, text, table, status, utility, etc.)
+  - Improve icon registry with `createIconRegistry` for tree-shaking support
+  - Improve SVG import support with vite-plugin-svgr
+  - Standardize icon size from 16x16 to 20x20 (check, undo, redo)
+
 ## 0.2.2
 
 ### Patch Changes
