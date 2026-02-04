@@ -7,10 +7,6 @@ import { CloseIcon } from '@officesdk/design/icons';
 import { ModalGlobalStyles } from './globalStyle';
 import { styleManager } from '../utils/styleManager';
 import { getGlobalTheme } from '../utils/context';
-import { registerComponentIcons } from '../UIConfigProvider/configManager';
-
-// Auto-register icons required by Modal into the global registry
-registerComponentIcons({ close: CloseIcon });
 
 export interface ModalProps extends DialogProps {
   /**
@@ -234,7 +230,13 @@ export const Modal: React.FC<ModalProps> = ({
       width={width === undefined ? modalWidth : undefined}
       prefixCls={prefixCls}
       closable={closable}
-      closeIcon={closeIcon ?? <Icon name="close" size={19.2} />}
+      closeIcon={
+        closeIcon ?? (
+          <Icon size={19.2}>
+            <CloseIcon />
+          </Icon>
+        )
+      }
       mask={mask}
       maskClosable={maskClosable}
       classNames={classNames}
