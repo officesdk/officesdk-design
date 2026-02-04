@@ -2,11 +2,7 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { styled } from '../utils/styled';
 import { getGlobalTheme } from '../utils/context';
 import { Icon } from '../Icon';
-import { registerComponentIcons } from '../UIConfigProvider/configManager';
 import { CheckIcon } from '@officesdk/design/icons';
-
-// Auto-register icons required by Checkbox into the component registry
-registerComponentIcons({ check: CheckIcon });
 
 export interface CheckboxProps {
   /**
@@ -285,7 +281,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
         <IconWrapper $visible={checked}>
           {
             !theme.components.checkbox.icons.checked
-              ? <Icon name="check" size={theme.components.checkbox.small.iconSize.width} color="#fff" />
+              ? <Icon size={theme.components.checkbox.small.iconSize.width} color="#fff"><CheckIcon /></Icon>
               : <Icon src={theme.components.checkbox.icons.checked} size={theme.components.checkbox.small.iconSize.width} />
           }
         </IconWrapper>

@@ -1,11 +1,7 @@
 import React, { forwardRef, useState } from 'react';
 import { styled } from '../utils/styled';
 import { Icon } from '../Icon';
-import { registerComponentIcons } from '../UIConfigProvider/configManager';
 import { CloseIcon } from '@officesdk/design/icons';
-
-// Auto-register icons required by Input into the component registry
-registerComponentIcons({ close: CloseIcon });
 
 type InputSize = 'mini' | 'small' | 'medium' | 'large';
 type LineType = 'outlined' | 'underlined' | 'borderless';
@@ -508,7 +504,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         aria-label="Clear"
         tabIndex={-1}
       >
-        {clearIcon || <Icon name="close" size={16} color="rgba(65, 70, 75, 0.6)" />}
+        {clearIcon || (
+          <Icon size={16} color="rgba(65, 70, 75, 0.6)">
+            <CloseIcon />
+          </Icon>
+        )}
       </ClearButton>
     ) : null;
 

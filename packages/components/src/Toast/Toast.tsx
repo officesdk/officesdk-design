@@ -3,31 +3,16 @@ import { styled } from '../utils/styled';
 import { Icon } from '../Icon';
 import { Button } from '../Button';
 import { getGlobalTheme } from '../utils/context';
-import { registerComponentIcons } from '../UIConfigProvider/configManager';
-import {
-  CloseIcon,
-  ErrorIcon,
-  InfoIcon,
-  LoadingIcon,
-  SuccessIcon,
-  WarningIcon,
-} from '@officesdk/design/icons';
+import { CloseIcon, ErrorIcon, InfoIcon, SuccessIcon, WarningIcon } from '@officesdk/design/icons';
 import loadingGif from '../assets/loading.gif';
-
-// Auto-register icons required by Toast into the component registry
-registerComponentIcons({
-  close: CloseIcon,
-  error: ErrorIcon,
-  info: InfoIcon,
-  loading: LoadingIcon,
-  success: SuccessIcon,
-  warning: WarningIcon,
-});
 
 export type ToastVariant = 'success' | 'info' | 'error' | 'warn' | 'loading' | 'critical';
 
 export interface ToastProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'className' | 'style' | 'children' | 'onClick'> {
+  extends Omit<
+    React.HTMLAttributes<HTMLDivElement>,
+    'className' | 'style' | 'children' | 'onClick'
+  > {
   /**
    * Toast variant type
    */
@@ -158,16 +143,6 @@ const ActionGroup = styled.div`
   align-items: center;
 `;
 
-// Map Toast variants to icon names
-const variantToIconName: Record<string, string> = {
-  success: 'success',
-  info: 'info',
-  error: 'error',
-  warn: 'warning',
-  critical: 'error', // Critical uses error icon
-  loading: 'loading',
-};
-
 // Loading icon component using gif for animation
 const LoadingGifIcon = (props: { width: string; height: string }) => (
   <img src={loadingGif} alt="Loading" width={props.width} height={props.height} />
@@ -258,13 +233,42 @@ export const Toast: React.FC<ToastProps> = ({
       return <Icon src={variantIcon.url} size={variantIcon.size} />;
     }
 
-    // 3. Use default icon from registry (loading uses gif for animation)
+    // 3. Use default icon (loading uses gif for animation)
     if (variant === 'loading') {
       return <LoadingGifIcon width={variantIcon.size.width} height={variantIcon.size.height} />;
     }
 
-    const iconName = variantToIconName[variant];
-    return <Icon name={iconName} size={variantIcon.size} />;
+    // Map variant to icon component
+    const iconComponents = {
+      success: () => (
+        <Icon size={variantIcon.size}>
+          <SuccessIcon />
+        </Icon>
+      ),
+      info: () => (
+        <Icon size={variantIcon.size}>
+          <InfoIcon />
+        </Icon>
+      ),
+      error: () => (
+        <Icon size={variantIcon.size}>
+          <ErrorIcon />
+        </Icon>
+      ),
+      warn: () => (
+        <Icon size={variantIcon.size}>
+          <WarningIcon />
+        </Icon>
+      ),
+      critical: () => (
+        <Icon size={variantIcon.size}>
+          <ErrorIcon />
+        </Icon>
+      ),
+    };
+
+    const IconRenderer = iconComponents[variant] || iconComponents.info;
+    return <IconRenderer />;
   };
 
   const theme = getGlobalTheme();
@@ -320,7 +324,15 @@ export const Toast: React.FC<ToastProps> = ({
               size="small"
               onClick={handleClose}
               aria-label="Close"
-              icon={ toastConfig.closeButton.icon.url ? toastConfig.closeButton.icon.url : <Icon name="close" size={12} /> }
+              icon={
+                toastConfig.closeButton.icon.url ? (
+                  toastConfig.closeButton.icon.url
+                ) : (
+                  <Icon size={12}>
+                    <CloseIcon />
+                  </Icon>
+                )
+              }
               iconBordered={false}
             />
           )}

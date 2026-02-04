@@ -8,15 +8,7 @@ import 'rc-menu/assets/index.css';
 import { MenuGlobalStyles } from './globalStyle';
 import { styleManager } from '../utils/styleManager';
 import { getGlobalTheme } from '../utils/context';
-import { registerComponentIcons } from '../UIConfigProvider/configManager';
 import { ArrowRightIcon, CheckIcon, SearchIcon as SearchIconComponent } from '@officesdk/design/icons';
-
-// Auto-register icons required by Menu into the component registry
-registerComponentIcons({
-  'arrow-right': ArrowRightIcon,
-  check: CheckIcon,
-  search: SearchIconComponent,
-});
 
 export interface MenuItem {
   type?: 'item';
@@ -435,12 +427,12 @@ export const Menu: React.FC<MenuProps> = ({
           $visible={shouldShowActiveIcon}
           $placeholder={shouldReserveSpace && !shouldShowActiveIcon}
         >
-          {shouldShowActiveIcon && <Icon name="check" />}
+          {shouldShowActiveIcon && <CheckIcon />}
         </ActiveIconContainer>
 
         {item.children && item.children.length > 0 && (
           <NextLevelIconContainer $size={size}>
-            <Icon name="arrow-right" />
+            <ArrowRightIcon />
           </NextLevelIconContainer>
         )}
       </MenuItemContent>
@@ -518,7 +510,7 @@ export const Menu: React.FC<MenuProps> = ({
             onChange={(e) => handleSearch(e.target.value)}
             clearable
             onClear={() => handleSearch('')}
-            prefixNode={<Icon name="search" />}
+            prefixNode={<SearchIconComponent />}
           />
         </SearchBoxContainer>
       )}

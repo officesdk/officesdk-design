@@ -1,11 +1,7 @@
 import React, { forwardRef } from 'react';
 import { styled } from '../utils/styled';
 import { Icon } from '../Icon';
-import { registerComponentIcons } from '../UIConfigProvider/configManager';
 import { ArrowRightIcon } from '@officesdk/design/icons';
-
-// Auto-register icons required by DropdownButton into the component registry
-registerComponentIcons({ 'arrow-right': ArrowRightIcon });
 
 type DropdownButtonSize = 'large' | 'medium';
 type DropdownButtonVariant = 'framed' | 'frameless';
@@ -337,7 +333,7 @@ export const DropdownButton = forwardRef<HTMLButtonElement, DropdownButtonProps>
         </TextContent>
 
         <IndicatorWrapper $size={effectiveSize} $open={open} $disabled={disabled}>
-          {indicatorIcon || <Icon name="arrow-right" />}
+          {indicatorIcon || <ArrowRightIcon />}
         </IndicatorWrapper>
       </DropdownButtonContainer>
     );

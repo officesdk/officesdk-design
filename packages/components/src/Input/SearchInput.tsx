@@ -3,11 +3,7 @@ import { styled } from '../utils/styled';
 import { Input, InputProps } from './Input';
 import { Icon } from '../Icon';
 import { getGlobalTheme } from '../utils/context';
-import { registerComponentIcons } from '../UIConfigProvider/configManager';
 import { SearchIcon } from '@officesdk/design/icons';
-
-// Auto-register icons required by SearchInput into the component registry
-registerComponentIcons({ search: SearchIcon });
 
 export interface SearchInputProps extends Omit<InputProps, 'prefixNode' | 'suffixNode'> {
   /**
@@ -45,7 +41,6 @@ const SearchIconWrapper = styled.div`
   }
 `;
 
-
 /**
  * SearchInput Component
  *
@@ -71,14 +66,7 @@ const SearchIconWrapper = styled.div`
  */
 export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
   (
-    {
-      lineType = 'outlined',
-      size = 'medium',
-      clearable = true,
-      onClear,
-      searchIcon,
-      ...rest
-    },
+    { lineType = 'outlined', size = 'medium', clearable = true, onClear, searchIcon, ...rest },
     ref
   ) => {
     // Render search icon by priority:
@@ -101,15 +89,11 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
         return <Icon src={themeIconUrl} />;
       }
 
-      // Priority 3: default icon from registry
-      return <Icon name="search" />;
+      // Priority 3: default icon
+      return <SearchIcon />;
     };
 
-    const prefixNode = (
-      <SearchIconWrapper>
-        {getSearchIconElement()}
-      </SearchIconWrapper>
-    );
+    const prefixNode = <SearchIconWrapper>{getSearchIconElement()}</SearchIconWrapper>;
 
     return (
       <Input
@@ -126,4 +110,3 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
 );
 
 SearchInput.displayName = 'SearchInput';
-
