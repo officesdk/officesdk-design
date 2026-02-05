@@ -1,7 +1,6 @@
 import React from 'react';
 import { styled } from '../utils/styled';
-import { ChevronDownIcon } from '@officesdk/design/icons';
-
+import { ArrowDownIcon } from '@officesdk/design/icons';
 export interface ToolbarButtonProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onClick' | 'onDoubleClick'> {
   /**
@@ -427,7 +426,7 @@ export const ToolbarButton: React.FC<ToolbarButtonProps> = ({
           {renderIcon()}
           {renderLabel()}
           <DropdownArrow $disabled={disabled}>
-            <ChevronDownIcon />
+            <ArrowDownIcon />
           </DropdownArrow>
         </MainButton>
       </ToolbarButtonContainer>
@@ -465,7 +464,7 @@ export const ToolbarButton: React.FC<ToolbarButtonProps> = ({
           disabled={disabled}
         >
           <DropdownArrow $disabled={disabled}>
-            <ChevronDownIcon />
+            <ArrowDownIcon />
           </DropdownArrow>
         </DropdownButton>
       </ToolbarButtonContainer>

@@ -37,6 +37,11 @@ const meta: Meta<typeof Tabs> = {
       options: ['line', 'card'],
       description: 'Tab variant style',
     },
+    justify: {
+      control: 'radio',
+      options: ['start', 'center', 'end'],
+      description: 'Tab items alignment (only works for line variant)',
+    },
   },
 };
 
@@ -49,11 +54,31 @@ const defaultItems = [
   { key: '3', label: 'Tab 3' },
 ];
 
-// Line variant
+// Line variant (start alignment - default)
 export const Line: Story = {
   args: {
     items: defaultItems,
     variant: 'line',
+    defaultActiveKey: '1',
+  },
+};
+
+// Line variant with center alignment
+export const LineCenter: Story = {
+  args: {
+    items: defaultItems,
+    variant: 'line',
+    justify: 'center',
+    defaultActiveKey: '1',
+  },
+};
+
+// Line variant with end alignment
+export const LineEnd: Story = {
+  args: {
+    items: defaultItems,
+    variant: 'line',
+    justify: 'end',
     defaultActiveKey: '1',
   },
 };

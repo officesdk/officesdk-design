@@ -1,0 +1,53 @@
+---
+description: Testing conventions with Vitest and React Testing Library
+globs: "**/*.test.{ts,tsx}"
+alwaysApply: false
+---
+
+# Testing Conventions
+
+Use Vitest and React Testing Library for component tests.
+
+## Rules
+
+1. **Test User Behavior**: Focus on what users see and do, not implementation
+2. **Coverage**: Test rendering, interactions, and edge cases
+3. **Queries**: Prefer accessible queries (getByRole, getByLabelText)
+
+## Test Structure
+
+```tsx
+import { describe, it, expect, vi } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { Button } from '../Button';
+
+describe('Button', () => {
+  it('renders correctly', () => {
+    render(<Button>Click me</Button>);
+    expect(screen.getByRole('button', { name: 'Click me' })).toBeInTheDocument();
+  });
+
+  it('handles click events', async () => {
+    const user = userEvent.setup();
+    const handleClick = vi.fn();
+
+    render(<Button onClick={handleClick}>Click me</Button>);
+    await user.click(screen.getByRole('button'));
+
+    expect(handleClick).toHaveBeenCalledTimes(1);
+  });
+
+  it('disables interaction when disabled', () => {
+    render(<Button disabled>Click me</Button>);
+    expect(screen.getByRole('button')).toBeDisabled();
+  });
+});
+```
+
+## Query Priority
+
+1. `getByRole` - Most accessible
+2. `getByLabelText` - Form elements
+3. `getByText` - Non-interactive elements
+4. `getByTestId` - Last resort

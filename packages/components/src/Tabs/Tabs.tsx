@@ -42,6 +42,10 @@ export interface TabsProps {
    */
   size?: 'large';
   /**
+   * Tab items alignment (only works for 'line' variant)
+   */
+  justify?: 'start' | 'center' | 'end';
+  /**
    * Callback when tab changes
    */
   onChange?: (key: string) => void;
@@ -83,6 +87,7 @@ const TabContainer = styled.div<{
 
 const TabList = styled.div<{
   $variant: 'line' | 'card';
+  $justify: 'start' | 'center' | 'end';
 }>`
   display: flex;
   align-items: center;
@@ -91,10 +96,19 @@ const TabList = styled.div<{
   height: 100%;
 
 
-  ${({ $variant, theme }) => {
+  ${({ $variant, $justify, theme }) => {
     const variantConfig = theme.components.tab[$variant];
+    const justifyContent =
+      $variant === 'line'
+        ? $justify === 'center'
+          ? 'center'
+          : $justify === 'end'
+            ? 'flex-end'
+            : 'flex-start'
+        : 'flex-start';
     return `
       gap: ${variantConfig.layout.gap};
+      justify-content: ${justifyContent};
     `;
   }}
 
@@ -260,6 +274,7 @@ export const Tabs: React.FC<TabsProps> = ({
   variant = 'line',
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   size: _size = 'large',
+  justify = 'start',
   onChange,
   className,
   style,
@@ -287,7 +302,7 @@ export const Tabs: React.FC<TabsProps> = ({
 
   return (
     <TabContainer $variant={variant} className={className} style={style}>
-      <TabList $variant={variant} role="tablist">
+      <TabList $variant={variant} $justify={justify} role="tablist">
         {items.map((item) => (
           <TabItem
             key={item.key}

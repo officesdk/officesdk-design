@@ -3,7 +3,7 @@ import { styled } from '../utils/styled';
 import { Icon } from '../Icon';
 import { ArrowRightIcon } from '@officesdk/design/icons';
 
-type DropdownButtonSize = 'large' | 'medium';
+type DropdownButtonSize = 'large' | 'medium' | 'small';
 type DropdownButtonVariant = 'framed' | 'frameless';
 
 export interface DropdownButtonProps
@@ -59,6 +59,12 @@ export interface DropdownButtonProps
    * Custom text style
    */
   textStyle?: React.CSSProperties;
+
+  /**
+   * Custom content to render instead of value/placeholder
+   * When provided, value and placeholder are ignored
+   */
+  children?: React.ReactNode;
 }
 
 const DropdownButtonContainer = styled.button<{
@@ -291,6 +297,7 @@ export const DropdownButton = forwardRef<HTMLButtonElement, DropdownButtonProps>
       style,
       textStyle,
       onClick,
+      children,
       ...rest
     },
     ref
@@ -328,9 +335,13 @@ export const DropdownButton = forwardRef<HTMLButtonElement, DropdownButtonProps>
       >
         {iconElement && <IconWrapper $size={effectiveSize}>{iconElement}</IconWrapper>}
 
-        <TextContent $disabled={disabled} $hasValue={hasValue} style={textStyle}>
-          {value || placeholder}
-        </TextContent>
+        {children ? (
+          children
+        ) : (
+          <TextContent $disabled={disabled} $hasValue={hasValue} style={textStyle}>
+            {value || placeholder}
+          </TextContent>
+        )}
 
         <IndicatorWrapper $size={effectiveSize} $open={open} $disabled={disabled}>
           {indicatorIcon || <ArrowRightIcon />}

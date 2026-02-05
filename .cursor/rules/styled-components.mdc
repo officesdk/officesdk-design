@@ -1,0 +1,59 @@
+---
+description: styled-components conventions and theming
+globs: "**/*.tsx"
+alwaysApply: false
+---
+
+# styled-components Conventions
+
+Follow these patterns when using styled-components.
+
+## Rules
+
+1. **Transient Props**: Use `$` prefix to prevent DOM attribute warnings
+2. **Theme Values**: Get colors, spacing, fonts from theme - avoid hardcoding
+3. **No !important**: Avoid CSS `!important` declarations
+4. **Semantic Naming**: Name styled components descriptively
+
+## Examples
+
+### Transient Props
+
+```tsx
+// ✅ Good - Use $ prefix for non-DOM props
+const StyledButton = styled.button<{ $variant: string; $size: string }>`
+  padding: ${({ $size }) => $size === 'large' ? '12px' : '8px'};
+`;
+
+<StyledButton $variant="solid" $size="medium" />
+
+// ❌ Bad - Props leak to DOM
+const StyledButton = styled.button<{ variant: string }>`...`;
+```
+
+### Theme Values
+
+```tsx
+// ✅ Good - Use theme tokens
+const StyledButton = styled.button`
+  background: ${({ theme }) => theme.colors.palettes.brand};
+  padding: ${({ theme }) => theme.spacing.md};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
+  font-size: ${({ theme }) => theme.typography.fontSize.md};
+`;
+
+// ❌ Bad - Hardcoded values
+const StyledButton = styled.button`
+  background: #1890ff;
+  padding: 8px;
+`;
+```
+
+### Naming
+
+```tsx
+// ✅ Good
+const IconWrapper = styled.span`...`;
+const ContentContainer = styled.div`...`;
+const StyledInput = styled.input`...`;
+```

@@ -34,6 +34,10 @@ const meta: Meta<typeof DropdownButton> = {
       control: 'text',
       description: 'Placeholder when no value',
     },
+    children: {
+      control: false,
+      description: 'Custom content to render instead of value/placeholder. When provided, value and placeholder are ignored',
+    },
     open: {
       control: 'boolean',
       description: 'Whether dropdown is open (arrow rotation)',
@@ -298,6 +302,141 @@ export const Interactive: Story = {
       </div>
     );
   },
+};
+
+/**
+ * With custom children content
+ */
+export const WithChildren: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '280px' }}>
+      <div>
+        <div style={{ marginBottom: '8px', fontSize: '12px', color: '#666' }}>
+          Framed with custom children
+        </div>
+        <DropdownButton variant="framed">
+          <div style={{
+            flex: 1,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            minWidth: 0,
+          }}>
+            <span style={{
+              fontWeight: 600,
+              color: '#1890ff',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+            }}>
+              Custom Content
+            </span>
+            <span style={{
+              fontSize: '12px',
+              color: '#999',
+              flexShrink: 0,
+            }}>
+              (3 items)
+            </span>
+          </div>
+        </DropdownButton>
+      </div>
+
+      <div>
+        <div style={{ marginBottom: '8px', fontSize: '12px', color: '#666' }}>
+          Frameless with custom children
+        </div>
+        <DropdownButton variant="frameless">
+          <div style={{
+            flex: 1,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '4px',
+            minWidth: 0,
+          }}>
+            <span style={{
+              color: '#52c41a',
+              fontSize: '12px',
+              flexShrink: 0,
+            }}>●</span>
+            <span style={{
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+            }}>Active Status</span>
+          </div>
+        </DropdownButton>
+      </div>
+
+      <div>
+        <div style={{ marginBottom: '8px', fontSize: '12px', color: '#666' }}>
+          With icon and custom children
+        </div>
+        <DropdownButton variant="framed" icon={<CardIcon />}>
+          <div style={{
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            minWidth: 0,
+          }}>
+            <div style={{
+              fontWeight: 500,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+            }}>
+              Multi-line Content
+            </div>
+            <div style={{
+              fontSize: '11px',
+              color: '#999',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+            }}>
+              Additional description
+            </div>
+          </div>
+        </DropdownButton>
+      </div>
+
+      <div>
+        <div style={{ marginBottom: '8px', fontSize: '12px', color: '#666' }}>
+          Children with badge
+        </div>
+        <DropdownButton variant="framed" open>
+          <div style={{
+            flex: 1,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            minWidth: 0,
+          }}>
+            <span style={{
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+            }}>Notifications</span>
+            <span style={{
+              display: 'inline-block',
+              minWidth: '18px',
+              height: '18px',
+              lineHeight: '18px',
+              textAlign: 'center',
+              backgroundColor: '#ff4d4f',
+              color: 'white',
+              borderRadius: '9px',
+              fontSize: '11px',
+              padding: '0 5px',
+              flexShrink: 0,
+            }}>
+              99+
+            </span>
+          </div>
+        </DropdownButton>
+      </div>
+    </div>
+  ),
 };
 
 /**
