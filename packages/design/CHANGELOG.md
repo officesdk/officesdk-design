@@ -1,5 +1,15 @@
 # @officesdk/design
 
+## 0.2.5
+
+### Patch Changes
+
+- 75c5726: refactor(ToolbarButton): replace dropdown arrow icon with ArrowDownIcon
+  feat(DropdownButton): add children prop for custom content rendering
+  feat(NumberInput): add showStepButtons prop and fix floating point precision
+  feat(Tabs): add justify prop for line variant alignment
+  feat(Tooltip): add maxWidth prop for white variant
+
 ## 0.2.4
 
 ### Patch Changes
