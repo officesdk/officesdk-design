@@ -1,6 +1,36 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { styled } from '../utils/styled';
 
+/**
+ * Get the number of decimal places in a number
+ */
+const getDecimalPlaces = (num: number): number => {
+  const str = String(num);
+  const decimalIndex = str.indexOf('.');
+  if (decimalIndex === -1) return 0;
+  return str.length - decimalIndex - 1;
+};
+
+/**
+ * Precision-safe addition to avoid floating point errors
+ * e.g., 0.1 + 0.2 = 0.30000000000000004 -> 0.3
+ */
+const precisionAdd = (a: number, b: number): number => {
+  const precision = Math.max(getDecimalPlaces(a), getDecimalPlaces(b));
+  const multiplier = Math.pow(10, precision);
+  return Math.round(a * multiplier + b * multiplier) / multiplier;
+};
+
+/**
+ * Precision-safe subtraction to avoid floating point errors
+ * e.g., 0.11 - 0.1 = 0.009999999999999998 -> 0.01
+ */
+const precisionSubtract = (a: number, b: number): number => {
+  const precision = Math.max(getDecimalPlaces(a), getDecimalPlaces(b));
+  const multiplier = Math.pow(10, precision);
+  return Math.round(a * multiplier - b * multiplier) / multiplier;
+};
+
 export interface NumberInputProps {
   /**
    * Current value
@@ -54,6 +84,11 @@ export interface NumberInputProps {
    * Placeholder text
    */
   placeholder?: string;
+  /**
+   * Whether to show step buttons (increment/decrement)
+   * @default true
+   */
+  showStepButtons?: boolean;
   /**
    * Callback when value changes
    * @param fixedValue - The clamped value within min/max range (can be undefined if empty)
@@ -310,6 +345,7 @@ export const NumberInput: React.FC<NumberInputProps> = ({
   parser,
   unit,
   placeholder,
+  showStepButtons = true,
   onChange,
   className,
   style,
@@ -386,15 +422,27 @@ export const NumberInput: React.FC<NumberInputProps> = ({
   const increment = useCallback(() => {
     if (disabled) return;
     const currentValue = value ?? 0;
-    handleValueChange(currentValue + step);
-  }, [disabled, value, step, handleValueChange]);
+    const newValue = precisionAdd(currentValue, step);
+    handleValueChange(newValue);
+    // If focused, sync displayValue immediately
+    if (isFocused) {
+      const clampedValue = clampValue(newValue);
+      setDisplayValue(formatValue(clampedValue));
+    }
+  }, [disabled, value, step, handleValueChange, isFocused, clampValue, formatValue]);
 
   // Decrement value
   const decrement = useCallback(() => {
     if (disabled) return;
     const currentValue = value ?? 0;
-    handleValueChange(currentValue - step);
-  }, [disabled, value, step, handleValueChange]);
+    const newValue = precisionSubtract(currentValue, step);
+    handleValueChange(newValue);
+    // If focused, sync displayValue immediately
+    if (isFocused) {
+      const clampedValue = clampValue(newValue);
+      setDisplayValue(formatValue(clampedValue));
+    }
+  }, [disabled, value, step, handleValueChange, isFocused, clampValue, formatValue]);
 
   // Handle input change
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -474,31 +522,33 @@ export const NumberInput: React.FC<NumberInputProps> = ({
         )}
       </InputWrapper>
 
-      <ButtonGroup $alert={alert} $disabled={disabled}>
-        <StepButton
-          type="button"
-          $position="up"
-          $alert={alert}
-          $disabled={disabled}
-          onClick={increment}
-          disabled={disabled}
-          tabIndex={-1}
-        >
-          <UpArrow />
-        </StepButton>
+      {showStepButtons && (
+        <ButtonGroup $alert={alert} $disabled={disabled}>
+          <StepButton
+            type="button"
+            $position="up"
+            $alert={alert}
+            $disabled={disabled}
+            onClick={increment}
+            disabled={disabled}
+            tabIndex={-1}
+          >
+            <UpArrow />
+          </StepButton>
 
-        <StepButton
-          type="button"
-          $position="down"
-          $alert={alert}
-          $disabled={disabled}
-          onClick={decrement}
-          disabled={disabled}
-          tabIndex={-1}
-        >
-          <DownArrow />
-        </StepButton>
-      </ButtonGroup>
+          <StepButton
+            type="button"
+            $position="down"
+            $alert={alert}
+            $disabled={disabled}
+            onClick={decrement}
+            disabled={disabled}
+            tabIndex={-1}
+          >
+            <DownArrow />
+          </StepButton>
+        </ButtonGroup>
+      )}
     </NumberInputContainer>
   );
 };

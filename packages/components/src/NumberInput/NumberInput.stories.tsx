@@ -38,6 +38,10 @@ const meta: Meta<typeof NumberInput> = {
       control: 'number',
       description: 'Number of decimal places',
     },
+    showStepButtons: {
+      control: 'boolean',
+      description: 'Whether to show step buttons',
+    },
   },
 };
 
@@ -156,6 +160,14 @@ export const WithRawValueCallback: Story = {
   },
 };
 
+export const HideStepButtons: Story = {
+  args: {
+    defaultValue: 50,
+    showStepButtons: false,
+    size: 'large',
+  },
+};
+
 export const Playground: Story = {
   args: {
     defaultValue: 0,
@@ -165,6 +177,14 @@ export const Playground: Story = {
     size: 'large',
     disabled: false,
     alert: false,
+  },
+};
+
+export const FloatPrecision: Story = {
+  args: {
+    defaultValue: 0.01,
+    step: 0.1,
+    size: 'large',
   },
 };
 
