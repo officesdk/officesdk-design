@@ -17,7 +17,7 @@ export const tooltip: TooltipConfig = {
     fontSize: '13px',
     lineHeight: '18px',
     fontWeight: 400,
-    maxWidth: '280px',
+    maxWidth: '210px',
   },
   white: {
     small: {
@@ -30,6 +30,7 @@ export const tooltip: TooltipConfig = {
       fontSize: '12px',
       lineHeight: '16px',
       fontWeight: 400,
+      maxWidth: '300px',
     },
     large: {
       background: colors.palettes.gray['0'],
@@ -41,6 +42,7 @@ export const tooltip: TooltipConfig = {
       fontSize: '14px',
       lineHeight: '20px',
       fontWeight: 400,
+      maxWidth: '350px',
     },
   },
 };

@@ -2640,7 +2640,7 @@ __metadata:
     "@officesdk/design-icons": "workspace:*"
     "@officesdk/design-theme": "workspace:*"
     "@officesdk/design-utils": "workspace:*"
-    "@officesdk/editor-sdk-core": "npm:0.0.0-alpha.17"
+    "@officesdk/editor-sdk-core": "npm:0.0.0-alpha.18"
     rc-dialog: "npm:^10.0.0"
     rc-dropdown: "npm:^4.2.1"
     rc-menu: "npm:^9.0.0"
@@ -2653,10 +2653,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@officesdk/editor-sdk-core@npm:0.0.0-alpha.17":
-  version: 0.0.0-alpha.17
-  resolution: "@officesdk/editor-sdk-core@npm:0.0.0-alpha.17"
-  checksum: 10c0/39b59ad0f50519b3847ae499e6296d508a30ba0d4f05970f578552a43f0cd8fb6a799a37e3c10b29a688e5d8d14774b8b1c73b6feb855849140a01954420001a
+"@officesdk/editor-sdk-core@npm:0.0.0-alpha.18":
+  version: 0.0.0-alpha.18
+  resolution: "@officesdk/editor-sdk-core@npm:0.0.0-alpha.18"
+  checksum: 10c0/a730709fb57942a70d0fbf6c83ce6bac29e0b13fcce889775e34ddd773d6bd04bb6abac14d329ca48d99831bf6cce02e9286b479196718c3d4d0d6a8ce1fe6dd
   languageName: node
   linkType: hard
 

@@ -196,6 +196,8 @@ export const TooltipGlobalStyles = createGlobalStyle`
     line-height: ${() => getGlobalTheme().components.tooltip.black.lineHeight};
     font-weight: ${() => getGlobalTheme().components.tooltip.black.fontWeight};
     max-width: ${() => getGlobalTheme().components.tooltip.black.maxWidth};
+    white-space: normal;
+    word-wrap: break-word;
     text-align: left;
     text-decoration: none;
   }
@@ -215,6 +217,9 @@ export const TooltipGlobalStyles = createGlobalStyle`
     font-size: ${() => getGlobalTheme().components.tooltip.white.small.fontSize};
     line-height: ${() => getGlobalTheme().components.tooltip.white.small.lineHeight};
     font-weight: ${() => getGlobalTheme().components.tooltip.white.small.fontWeight};
+    max-width: ${() => getGlobalTheme().components.tooltip.white.small.maxWidth};
+    white-space: normal;
+    word-wrap: break-word;
     text-align: left;
     text-decoration: none;
   }
@@ -234,6 +239,9 @@ export const TooltipGlobalStyles = createGlobalStyle`
     font-size: ${() => getGlobalTheme().components.tooltip.white.large.fontSize};
     line-height: ${() => getGlobalTheme().components.tooltip.white.large.lineHeight};
     font-weight: ${() => getGlobalTheme().components.tooltip.white.large.fontWeight};
+    max-width: ${() => getGlobalTheme().components.tooltip.white.large.maxWidth};
+    white-space: normal;
+    word-wrap: break-word;
     text-align: left;
     text-decoration: none;
   }
