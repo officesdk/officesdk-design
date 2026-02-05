@@ -1,0 +1,38 @@
+---
+description: Named exports only, no default exports
+globs: "**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+# Export Convention
+
+Use named exports exclusively. Default exports are prohibited.
+
+## Rules
+
+1. **Named Exports Only**: Always use `export const` or `export function`
+2. **No Default Exports**: Never use `export default`
+3. **Export Public Types**: All public interfaces and types must be exported
+
+## Examples
+
+```tsx
+// ✅ Good
+export const Button: React.FC<ButtonProps> = () => { ... };
+export interface ButtonProps { ... }
+export type ButtonVariant = 'solid' | 'outlined' | 'text';
+
+// ❌ Bad
+const Button = () => { ... };
+export default Button;
+```
+
+## Index Files
+
+Re-export components from `index.ts`:
+
+```ts
+// ✅ Good
+export { Button } from './Button';
+export type { ButtonProps } from './Button';
+```

@@ -1,0 +1,69 @@
+---
+description: Storybook story conventions
+globs: "**/*.stories.tsx"
+alwaysApply: false
+---
+
+# Storybook Conventions
+
+Write stories that document all component variants and states.
+
+## Rules
+
+1. **Type Imports**: Use `Meta` and `StoryObj` types
+2. **Auto Docs**: Add `tags: ['autodocs']` for automatic documentation
+3. **Multiple Stories**: Cover different prop combinations
+4. **ArgTypes**: Define controls for interactive props
+
+## Story Template
+
+```tsx
+import type { Meta, StoryObj } from '@storybook/react';
+import { Button } from './Button';
+
+const meta: Meta<typeof Button> = {
+  title: 'Components/Button',
+  component: Button,
+  tags: ['autodocs'],
+  argTypes: {
+    variant: {
+      control: 'select',
+      options: ['solid', 'outlined', 'text'],
+    },
+    size: {
+      control: 'select',
+      options: ['small', 'medium', 'large'],
+    },
+    disabled: { control: 'boolean' },
+  },
+};
+
+export default meta;
+type Story = StoryObj<typeof Button>;
+
+export const Default: Story = {
+  args: {
+    children: 'Button',
+    variant: 'solid',
+  },
+};
+
+export const Outlined: Story = {
+  args: {
+    children: 'Outlined Button',
+    variant: 'outlined',
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    children: 'Disabled',
+    disabled: true,
+  },
+};
+```
+
+## Story Naming
+
+- Use descriptive names: `Default`, `WithIcon`, `Loading`, `Disabled`
+- Group related stories with consistent naming

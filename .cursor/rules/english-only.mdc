@@ -1,0 +1,48 @@
+---
+description: Enforce English-only content in code, comments, docs and commits
+alwaysApply: true
+---
+
+# English Only
+
+All text content in the codebase must be written in English.
+
+## Rules
+
+1. **Comments**: All code comments must be in English
+2. **Documentation**: All documentation (README, MDX, JSDoc) must be in English
+3. **Commit Messages**: Git commit messages must be in English, following Conventional Commits format
+4. **Code Strings**: Avoid Chinese characters in string literals (enforced by ESLint)
+
+## Examples
+
+```tsx
+// ✅ Good
+// Handle button click event
+const handleClick = () => { ... };
+
+// ❌ Bad
+// 处理按钮点击事件
+const handleClick = () => { ... };
+```
+
+## Commit Message Format
+
+```
+feat(Button): add loading state support
+fix(Modal): correct z-index stacking issue
+docs(README): update installation instructions
+```
+
+## Commit Message Restrictions
+
+Do NOT include AI-generated co-author signatures in commit messages:
+
+```
+# ❌ Bad - Remove these lines from commits
+Co-authored-by: Cursor <cursoragent@cursor.com>
+Co-authored-by: Claude <noreply@anthropic.com>
+
+# ✅ Good - Clean commit message
+feat(Button): add variant support for icon buttons
+```

@@ -1,0 +1,54 @@
+---
+description: TypeScript strict mode conventions
+globs: "**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+# TypeScript Strict Mode
+
+Follow strict TypeScript conventions to ensure type safety.
+
+## Rules
+
+1. **Avoid `any`**: Use specific types, `unknown`, or generics instead
+2. **Avoid `as` Assertions**: Use type guards or generics instead of type casting
+3. **Props Interface**: Define component props using `interface` with JSDoc comments
+4. **No Suppression**: Avoid `@ts-ignore` and `@ts-nocheck`
+
+## Examples
+
+### Props Definition
+
+```tsx
+// ✅ Good
+export interface ButtonProps {
+  /** Button visual style variant */
+  variant?: 'solid' | 'outlined' | 'text';
+  /** Whether the button is disabled */
+  disabled?: boolean;
+  /** Click handler */
+  onClick?: () => void;
+}
+```
+
+### Avoid Type Assertions
+
+```tsx
+// ✅ Good - Use type guard
+function isButton(element: unknown): element is HTMLButtonElement {
+  return element instanceof HTMLButtonElement;
+}
+
+// ❌ Bad - Type assertion
+const button = element as HTMLButtonElement;
+```
+
+### Avoid `any`
+
+```tsx
+// ✅ Good
+function handleEvent<T extends Event>(event: T) { ... }
+
+// ❌ Bad
+function handleEvent(event: any) { ... }
+```

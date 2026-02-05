@@ -1,0 +1,59 @@
+---
+description: React component patterns and best practices
+globs: "**/*.tsx"
+alwaysApply: false
+---
+
+# React Patterns
+
+Follow these React component patterns for consistency.
+
+## Rules
+
+1. **displayName**: Set `displayName` for all components
+2. **Functional Components**: Use `React.FC` type annotation
+3. **Custom Hooks**: Extract complex logic into custom hooks
+4. **No useEffect for State Changes**: Handle state-derived updates in business logic, not in useEffect
+
+## Examples
+
+### Component Structure
+
+```tsx
+export const Button: React.FC<ButtonProps> = ({
+  variant = 'solid',
+  children,
+  ...rest
+}) => {
+  return <StyledButton $variant={variant} {...rest}>{children}</StyledButton>;
+};
+
+Button.displayName = 'Button';
+```
+
+### Avoid useEffect for State Sync
+
+```tsx
+// ✅ Good - Derive state in render or event handlers
+const handleChange = (value: string) => {
+  setValue(value);
+  const formatted = formatValue(value);
+  setFormattedValue(formatted);
+};
+
+// ❌ Bad - useEffect to sync derived state
+useEffect(() => {
+  setFormattedValue(formatValue(value));
+}, [value]);
+```
+
+### Custom Hooks
+
+```tsx
+// ✅ Good - Extract complex logic
+const useDropdown = (options: DropdownOptions) => {
+  const [isOpen, setIsOpen] = useState(false);
+  // ... logic
+  return { isOpen, toggle, close };
+};
+```

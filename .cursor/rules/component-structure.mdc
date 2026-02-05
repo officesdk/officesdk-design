@@ -1,0 +1,55 @@
+---
+description: Component file structure and organization
+globs: "packages/components/src/**"
+alwaysApply: false
+---
+
+# Component File Structure
+
+Each component must follow a consistent directory structure.
+
+## Required Files
+
+```
+ComponentName/
+├── index.ts                    # Exports
+├── ComponentName.tsx           # Main component
+├── ComponentName.stories.tsx   # Storybook stories
+└── __tests__/
+    └── ComponentName.test.tsx  # Unit tests
+```
+
+## Naming Conventions
+
+- **Directory**: PascalCase (e.g., `Button/`) or kebab-case (e.g., `toolbar-button/`)
+- **Component File**: PascalCase (e.g., `Button.tsx`)
+- **Test File**: `ComponentName.test.tsx`
+- **Story File**: `ComponentName.stories.tsx`
+
+## Index File Pattern
+
+```ts
+// index.ts
+export { Button } from './Button';
+export type { ButtonProps } from './Button';
+```
+
+## Component File Pattern
+
+```tsx
+// Button.tsx
+import React from 'react';
+import { styled } from '../utils/styled';
+
+export interface ButtonProps {
+  // Props with JSDoc comments
+}
+
+const StyledButton = styled.button`...`;
+
+export const Button: React.FC<ButtonProps> = (props) => {
+  return <StyledButton {...props} />;
+};
+
+Button.displayName = 'Button';
+```
