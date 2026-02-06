@@ -1,5 +1,9 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { styled } from '../utils/styled';
+import { useUIConfig } from '../UIConfigProvider';
+import { formatNumber, formatNumberForEdit, parseLocalizedNumber } from '../utils/numberLocale';
+
+type LineType = 'outlined' | 'underlined' | 'borderless';
 
 /**
  * Get the number of decimal places in a number
@@ -90,6 +94,26 @@ export interface NumberInputProps {
    */
   showStepButtons?: boolean;
   /**
+   * Trigger mode for showing step buttons
+   * - 'normal': always show (default)
+   * - 'hover': show only on hover
+   * @default 'normal'
+   */
+  showStepButtonsTrigger?: 'hover' | 'normal';
+  /**
+   * Input line type
+   * - 'outlined': with full border (default)
+   * - 'underlined': with bottom border only
+   * - 'borderless': no border
+   * @default 'outlined'
+   */
+  lineType?: LineType;
+  /**
+   * Whether to use thousands separator in display
+   * @default false
+   */
+  useThousandsSeparator?: boolean;
+  /**
    * Callback when value changes
    * @param fixedValue - The clamped value within min/max range (can be undefined if empty)
    * @param rawValue - The original input value before clamping (can be undefined if empty)
@@ -110,11 +134,11 @@ const NumberInputContainer = styled.div<{
   $disabled: boolean;
   $alert: boolean;
   $isFocused: boolean;
+  $lineType: LineType;
 }>`
   display: inline-flex;
   align-items: center;
   background: white;
-  border: 1px solid;
   border-radius: ${({ theme, $size }) => theme.components.inputNumber[$size].borderRadius};
   flex-shrink: 0;
 
@@ -129,26 +153,63 @@ const NumberInputContainer = styled.div<{
     width: 80px;
   `}
 
-  ${({ $disabled, $alert, $isFocused, theme }) => {
+  ${({ $disabled, $alert, $isFocused, $lineType, theme }) => {
+    if ($lineType === 'borderless') {
+      // borderless type: no border, no boxShadow
+      return `
+        border: none;
+        background: transparent;
+        ${$disabled ? 'cursor: not-allowed;' : ''}
+      `;
+    }
+
+    if ($lineType === 'underlined') {
+      // underlined type: bottom border only
+      const borderColor = $disabled
+        ? theme.colors.palettes.transparency['10']
+        : $alert
+          ? theme.colors.palettes.red['6']
+          : $isFocused
+            ? theme.colors.palettes.transparency['30']
+            : 'transparent';
+
+      return `
+        border: none;
+        border-bottom: 1px solid ${borderColor};
+        border-radius: 0;
+        ${$disabled ? 'cursor: not-allowed;' : ''}
+        ${
+          !$disabled && !$isFocused && !$alert
+            ? `
+          &:hover {
+            border-bottom-color: ${theme.colors.palettes.transparency['20']};
+          }
+        `
+            : ''
+        }
+      `;
+    }
+
+    // outlined type (default): full border
     if ($disabled) {
       return `
-        border-color: ${theme.colors.palettes.transparency['10']};
+        border: 1px solid ${theme.colors.palettes.transparency['10']};
         cursor: not-allowed;
       `;
     }
     if ($alert) {
       return `
-        border-color: ${theme.colors.palettes.red['6']};
+        border: 1px solid ${theme.colors.palettes.red['6']};
       `;
     }
     if ($isFocused) {
       return `
-        border-color: ${theme.colors.palettes.transparency['30']};
+        border: 1px solid ${theme.colors.palettes.transparency['30']};
         box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.04);
       `;
     }
     return `
-      border-color: ${theme.colors.palettes.transparency['10']};
+      border: 1px solid ${theme.colors.palettes.transparency['10']};
 
       &:hover {
         border-color: ${theme.colors.palettes.transparency['20']};
@@ -239,25 +300,57 @@ const StyledInput = styled.input<{ $size: 'small' | 'large'; $disabled: boolean 
   }
 `;
 
-const ButtonGroup = styled.div<{ $alert: boolean; $disabled: boolean }>`
+const ButtonGroup = styled.div<{ $alert: boolean; $disabled: boolean; $lineType: LineType }>`
   display: flex;
   flex-direction: column;
   height: 100%;
-  border-left: 1px solid;
   flex-shrink: 0;
+  position: relative;
 
-  ${({ $disabled, $alert, theme }) => {
-    if ($disabled) {
-      return `border-color: ${theme.colors.palettes.transparency['10']};`;
+  ${({ $disabled, $alert, $lineType, theme }) => {
+    // No left border for borderless and underlined types
+    if ($lineType === 'borderless' || $lineType === 'underlined') {
+      return '';
     }
-    if ($alert) {
-      return `border-color: ${theme.colors.palettes.red['6']};`;
-    }
-    return `border-color: ${theme.colors.palettes.transparency['10']};`;
+
+    // outlined type: show left border
+    const borderColor = $disabled
+      ? theme.colors.palettes.transparency['10']
+      : $alert
+        ? theme.colors.palettes.red['6']
+        : theme.colors.palettes.transparency['10'];
+
+    return `border-left: 1px solid ${borderColor};`;
   }}
+
+  /* Centered divider line between buttons */
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 1px;
+    pointer-events: none;
+    background-color: ${({ $disabled, $alert, $lineType, theme }) => {
+      // No divider for borderless and underlined types
+      if ($lineType === 'borderless' || $lineType === 'underlined') {
+        return 'transparent';
+      }
+
+      if ($disabled) {
+        return theme.colors.palettes.transparency['10'];
+      }
+      if ($alert) {
+        return theme.colors.palettes.red['6'];
+      }
+      return theme.colors.palettes.transparency['10'];
+    }};
+  }
 `;
 
-const StepButton = styled.button<{ $position: 'up' | 'down'; $alert: boolean; $disabled: boolean }>`
+const StepButton = styled.button<{ $disabled: boolean }>`
   flex: 1 1 50%;
   display: flex;
   align-items: center;
@@ -269,21 +362,6 @@ const StepButton = styled.button<{ $position: 'up' | 'down'; $alert: boolean; $d
   outline: none;
   min-height: 0;
   overflow: hidden;
-
-  ${({ $position, $alert, $disabled, theme }) => {
-    if ($position === 'up') {
-      return `
-        border-bottom: 1px solid ${
-          $disabled
-            ? theme.colors.palettes.transparency['10']
-            : $alert
-            ? theme.colors.palettes.red['6']
-            : theme.colors.palettes.transparency['10']
-        };
-      `;
-    }
-    return '';
-  }}
 
   ${({ $disabled, theme }) => {
     if ($disabled) {
@@ -346,18 +424,25 @@ export const NumberInput: React.FC<NumberInputProps> = ({
   unit,
   placeholder,
   showStepButtons = true,
+  showStepButtonsTrigger = 'normal',
+  lineType = 'outlined',
+  useThousandsSeparator = false,
   onChange,
   className,
   style,
 }) => {
+  const config = useUIConfig();
+  const locale = config?.locale ?? 'en-US';
+
   const [internalValue, setInternalValue] = useState<number | undefined>(controlledValue ?? defaultValue);
   const [displayValue, setDisplayValue] = useState<string>('');
   const [isFocused, setIsFocused] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const value = controlledValue !== undefined ? controlledValue : internalValue;
 
-  // Format value for display
+  // Format value for display (optionally with thousands separator)
   const formatValue = useCallback(
     (val: number | undefined): string => {
       if (val === undefined) {
@@ -366,24 +451,38 @@ export const NumberInput: React.FC<NumberInputProps> = ({
       if (formatter) {
         return formatter(val);
       }
-      if (precision !== undefined) {
-        return val.toFixed(precision);
+      // Use thousands separator based on prop
+      if (useThousandsSeparator) {
+        return formatNumber(val, locale, precision);
       }
-      return String(val);
+      return formatNumberForEdit(val, locale, precision);
     },
-    [formatter, precision]
+    [formatter, precision, locale, useThousandsSeparator]
   );
 
-  // Parse display value to number
+  // Format value for editing (without thousands separator, for easier input)
+  const formatValueForEdit = useCallback(
+    (val: number | undefined): string => {
+      if (val === undefined) {
+        return '';
+      }
+      if (formatter) {
+        return formatter(val);
+      }
+      return formatNumberForEdit(val, locale, precision);
+    },
+    [formatter, precision, locale]
+  );
+
+  // Parse display value to number (handles locale-specific separators)
   const parseValue = useCallback(
     (displayVal: string): number | null => {
       if (parser) {
         return parser(displayVal);
       }
-      const parsed = parseFloat(displayVal);
-      return isNaN(parsed) ? null : parsed;
+      return parseLocalizedNumber(displayVal, locale);
     },
-    [parser]
+    [parser, locale]
   );
 
   // Update display value when value changes
@@ -392,6 +491,20 @@ export const NumberInput: React.FC<NumberInputProps> = ({
       setDisplayValue(formatValue(value));
     }
   }, [value, isFocused, formatValue]);
+
+  // Apply precision to a value (rounds to specified decimal places)
+  const applyPrecision = useCallback(
+    (val: number | undefined): number | undefined => {
+      if (val === undefined || precision === undefined) {
+        return val;
+      }
+      // Use toFixed and parseFloat to round to precision
+      // This ensures 0.006 with precision=2 becomes 0.01
+      const multiplier = Math.pow(10, precision);
+      return Math.round(val * multiplier) / multiplier;
+    },
+    [precision]
+  );
 
   // Clamp value to min/max
   const clampValue = useCallback(
@@ -424,12 +537,12 @@ export const NumberInput: React.FC<NumberInputProps> = ({
     const currentValue = value ?? 0;
     const newValue = precisionAdd(currentValue, step);
     handleValueChange(newValue);
-    // If focused, sync displayValue immediately
+    // If focused, sync displayValue immediately (use edit format without thousands separator)
     if (isFocused) {
       const clampedValue = clampValue(newValue);
-      setDisplayValue(formatValue(clampedValue));
+      setDisplayValue(formatValueForEdit(clampedValue));
     }
-  }, [disabled, value, step, handleValueChange, isFocused, clampValue, formatValue]);
+  }, [disabled, value, step, handleValueChange, isFocused, clampValue, formatValueForEdit]);
 
   // Decrement value
   const decrement = useCallback(() => {
@@ -437,12 +550,12 @@ export const NumberInput: React.FC<NumberInputProps> = ({
     const currentValue = value ?? 0;
     const newValue = precisionSubtract(currentValue, step);
     handleValueChange(newValue);
-    // If focused, sync displayValue immediately
+    // If focused, sync displayValue immediately (use edit format without thousands separator)
     if (isFocused) {
       const clampedValue = clampValue(newValue);
-      setDisplayValue(formatValue(clampedValue));
+      setDisplayValue(formatValueForEdit(clampedValue));
     }
-  }, [disabled, value, step, handleValueChange, isFocused, clampValue, formatValue]);
+  }, [disabled, value, step, handleValueChange, isFocused, clampValue, formatValueForEdit]);
 
   // Handle input change
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -459,22 +572,21 @@ export const NumberInput: React.FC<NumberInputProps> = ({
     } else {
       const parsed = parseValue(trimmedValue);
       if (parsed !== null) {
-        handleValueChange(parsed);
+        // Apply precision to ensure stored value matches displayed value
+        const preciseValue = applyPrecision(parsed);
+        handleValueChange(preciseValue);
       } else {
         setDisplayValue(formatValue(value));
       }
     }
-  }, [displayValue, parseValue, handleValueChange, value, formatValue]);
+  }, [displayValue, parseValue, handleValueChange, value, formatValue, applyPrecision]);
 
   // Handle input focus
   const handleFocus = useCallback(() => {
     setIsFocused(true);
-    if (value !== undefined) {
-      setDisplayValue(String(value));
-    } else {
-      setDisplayValue('');
-    }
-  }, [value]);
+    // Use edit format (without thousands separator) for easier editing
+    setDisplayValue(formatValueForEdit(value));
+  }, [value, formatValueForEdit]);
 
   // Handle keyboard events
   const handleKeyDown = useCallback(
@@ -492,14 +604,25 @@ export const NumberInput: React.FC<NumberInputProps> = ({
     [increment, decrement]
   );
 
+  const handleMouseEnter = useCallback(() => {
+    setIsHovered(true);
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    setIsHovered(false);
+  }, []);
+
   return (
     <NumberInputContainer
       $size={size}
       $disabled={disabled}
       $alert={alert}
       $isFocused={isFocused}
+      $lineType={lineType}
       className={className}
       style={style}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <InputWrapper>
         <StyledInput
@@ -522,12 +645,10 @@ export const NumberInput: React.FC<NumberInputProps> = ({
         )}
       </InputWrapper>
 
-      {showStepButtons && (
-        <ButtonGroup $alert={alert} $disabled={disabled}>
+      {showStepButtons && (showStepButtonsTrigger !== 'hover' || isHovered || isFocused) && (
+        <ButtonGroup $alert={alert} $disabled={disabled} $lineType={lineType}>
           <StepButton
             type="button"
-            $position="up"
-            $alert={alert}
             $disabled={disabled}
             onClick={increment}
             disabled={disabled}
@@ -538,8 +659,6 @@ export const NumberInput: React.FC<NumberInputProps> = ({
 
           <StepButton
             type="button"
-            $position="down"
-            $alert={alert}
             $disabled={disabled}
             onClick={decrement}
             disabled={disabled}
