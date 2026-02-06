@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { styled } from '../utils/styled';
 import { Slider } from '../Slider';
-import { NumberInput } from '../NumberInput';
+import { NumberInput, NumberInputProps } from '../NumberInput';
 
 export interface SpinButtonProps {
   /**
@@ -64,6 +64,29 @@ export interface SpinButtonProps {
    * Custom style
    */
   style?: React.CSSProperties;
+  /**
+   * Additional props passed to the internal NumberInput component
+   * Allows customizing unit, placeholder, lineType, showStepButtons, etc.
+   */
+  inputProps?: Partial<
+    Omit<
+      NumberInputProps,
+      | 'value'
+      | 'defaultValue'
+      | 'min'
+      | 'max'
+      | 'step'
+      | 'size'
+      | 'disabled'
+      | 'alert'
+      | 'precision'
+      | 'formatter'
+      | 'parser'
+      | 'onChange'
+      | 'className'
+      | 'style'
+    >
+  >;
 }
 
 const SpinButtonWrapper = styled.div<{
@@ -111,6 +134,7 @@ export const SpinButton: React.FC<SpinButtonProps> = ({
   onChange,
   className,
   style,
+  inputProps,
 }) => {
   const [internalValue, setInternalValue] = useState<number>(controlledValue ?? defaultValue);
 
@@ -167,6 +191,7 @@ export const SpinButton: React.FC<SpinButtonProps> = ({
         precision={precision}
         formatter={formatter}
         parser={parser}
+        {...inputProps}
         onChange={handleValueChange}
       />
     </SpinButtonWrapper>

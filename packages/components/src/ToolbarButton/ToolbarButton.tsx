@@ -1,6 +1,14 @@
 import React from 'react';
 import { styled } from '../utils/styled';
-import { ArrowDownIcon } from '@officesdk/design/icons';
+
+const ArrowDownIcon = () => {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M8.1858 9.79353C8.08649 9.90387 7.91346 9.90387 7.81415 9.79353L4.77549 6.41724C4.6307 6.25636 4.74487 6 4.96132 6L11.0386 6C11.2551 6 11.3693 6.25636 11.2245 6.41724L8.1858 9.79353Z" fill="#41464B" fillOpacity="0.6"/>
+    </svg>
+  );
+};
+
 export interface ToolbarButtonProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onClick' | 'onDoubleClick'> {
   /**
