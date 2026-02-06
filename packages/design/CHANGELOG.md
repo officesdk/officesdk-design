@@ -1,5 +1,12 @@
 # @officesdk/design
 
+## 0.2.7
+
+### Patch Changes
+
+- 09e4b35: feat: add inputProps to SpinButton
+  feat: add onFocus & onBlur to NumberInput
+
 ## 0.2.6
 
 ### Patch Changes
