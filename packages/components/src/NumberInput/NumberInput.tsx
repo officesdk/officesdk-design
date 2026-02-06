@@ -127,6 +127,21 @@ export interface NumberInputProps {
    * Custom style
    */
   style?: React.CSSProperties;
+  /**
+   * Callback when input receives focus
+   */
+  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  /**
+   * Callback when input loses focus
+   */
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  /**
+   * Callback when input value changes during typing
+   * Useful for real-time validation (e.g., check if value is multiple of 3)
+   * @param inputValue - The raw input string
+   * @param parsedValue - The parsed number value (undefined if invalid)
+   */
+  onInputChange?: (inputValue: string, parsedValue: number | undefined) => void;
 }
 
 const NumberInputContainer = styled.div<{
@@ -430,6 +445,9 @@ export const NumberInput: React.FC<NumberInputProps> = ({
   onChange,
   className,
   style,
+  onFocus: onFocusProp,
+  onBlur: onBlurProp,
+  onInputChange,
 }) => {
   const config = useUIConfig();
   const locale = config?.locale ?? 'en-US';
@@ -558,35 +576,52 @@ export const NumberInput: React.FC<NumberInputProps> = ({
   }, [disabled, value, step, handleValueChange, isFocused, clampValue, formatValueForEdit]);
 
   // Handle input change
-  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setDisplayValue(e.target.value);
-  }, []);
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const inputValue = e.target.value;
+      setDisplayValue(inputValue);
+
+      // Parse and call onInputChange callback
+      const trimmed = inputValue.trim();
+      const parsedValue = trimmed === '' ? undefined : (parseValue(trimmed) ?? undefined);
+      onInputChange?.(inputValue, parsedValue);
+    },
+    [parseValue, onInputChange]
+  );
 
   // Handle input blur
-  const handleBlur = useCallback(() => {
-    setIsFocused(false);
-    const trimmedValue = displayValue.trim();
-    if (trimmedValue === '') {
-      handleValueChange(undefined);
-      setDisplayValue('');
-    } else {
-      const parsed = parseValue(trimmedValue);
-      if (parsed !== null) {
-        // Apply precision to ensure stored value matches displayed value
-        const preciseValue = applyPrecision(parsed);
-        handleValueChange(preciseValue);
+  const handleBlur = useCallback(
+    (e: React.FocusEvent<HTMLInputElement>) => {
+      setIsFocused(false);
+      const trimmedValue = displayValue.trim();
+      if (trimmedValue === '') {
+        handleValueChange(undefined);
+        setDisplayValue('');
       } else {
-        setDisplayValue(formatValue(value));
+        const parsed = parseValue(trimmedValue);
+        if (parsed !== null) {
+          // Apply precision to ensure stored value matches displayed value
+          const preciseValue = applyPrecision(parsed);
+          handleValueChange(preciseValue);
+        } else {
+          setDisplayValue(formatValue(value));
+        }
       }
-    }
-  }, [displayValue, parseValue, handleValueChange, value, formatValue, applyPrecision]);
+      onBlurProp?.(e);
+    },
+    [displayValue, parseValue, handleValueChange, value, formatValue, applyPrecision, onBlurProp]
+  );
 
   // Handle input focus
-  const handleFocus = useCallback(() => {
-    setIsFocused(true);
-    // Use edit format (without thousands separator) for easier editing
-    setDisplayValue(formatValueForEdit(value));
-  }, [value, formatValueForEdit]);
+  const handleFocus = useCallback(
+    (e: React.FocusEvent<HTMLInputElement>) => {
+      setIsFocused(true);
+      // Use edit format (without thousands separator) for easier editing
+      setDisplayValue(formatValueForEdit(value));
+      onFocusProp?.(e);
+    },
+    [value, formatValueForEdit, onFocusProp]
+  );
 
   // Handle keyboard events
   const handleKeyDown = useCallback(

@@ -12,52 +12,92 @@ const meta: Meta<typeof NumberInput> = {
   },
   tags: ['autodocs'],
   argTypes: {
+    // Size and style
     size: {
       control: 'radio',
       options: ['small', 'large'],
       description: 'Size variant',
-    },
-    disabled: {
-      control: 'boolean',
-      description: 'Whether the input is disabled',
-    },
-    alert: {
-      control: 'boolean',
-      description: 'Whether to show alert state',
-    },
-    min: {
-      control: 'number',
-      description: 'Minimum value',
-    },
-    max: {
-      control: 'number',
-      description: 'Maximum value',
-    },
-    step: {
-      control: 'number',
-      description: 'Step increment/decrement',
-    },
-    precision: {
-      control: 'number',
-      description: 'Number of decimal places',
-    },
-    showStepButtons: {
-      control: 'boolean',
-      description: 'Whether to show step buttons',
-    },
-    showStepButtonsTrigger: {
-      control: 'radio',
-      options: ['normal', 'hover'],
-      description: 'Trigger mode for step buttons',
+      table: { type: { summary: "'small' | 'large'" } },
     },
     lineType: {
       control: 'radio',
       options: ['outlined', 'underlined', 'borderless'],
       description: 'Input line type',
+      table: { type: { summary: "'outlined' | 'underlined' | 'borderless'" } },
+    },
+
+    // State
+    disabled: {
+      control: 'boolean',
+      description: 'Whether the input is disabled',
+      table: { type: { summary: 'boolean' } },
+    },
+    alert: {
+      control: 'boolean',
+      description: 'Whether to show alert state',
+      table: { type: { summary: 'boolean' } },
+    },
+
+    // Value constraints
+    min: {
+      control: 'number',
+      description: 'Minimum value',
+      table: { type: { summary: 'number' } },
+    },
+    max: {
+      control: 'number',
+      description: 'Maximum value',
+      table: { type: { summary: 'number' } },
+    },
+    step: {
+      control: 'number',
+      description: 'Step increment/decrement',
+      table: { type: { summary: 'number' } },
+    },
+    precision: {
+      control: 'number',
+      description: 'Number of decimal places',
+      table: { type: { summary: 'number' } },
+    },
+
+    // Display options
+    showStepButtons: {
+      control: 'boolean',
+      description: 'Whether to show step buttons',
+      table: { type: { summary: 'boolean' } },
+    },
+    showStepButtonsTrigger: {
+      control: 'radio',
+      options: ['normal', 'hover'],
+      description: 'Trigger mode for step buttons',
+      table: { type: { summary: "'hover' | 'normal'" } },
     },
     useThousandsSeparator: {
       control: 'boolean',
       description: 'Whether to use thousands separator in display',
+      table: { type: { summary: 'boolean' } },
+    },
+
+    // Event callbacks
+    onChange: {
+      action: 'onChange',
+      description: 'Callback when value changes (on blur or step button click)',
+      table: { type: { summary: '(fixedValue: number | undefined, rawValue: number | undefined) => void' } },
+    },
+    onInputChange: {
+      action: 'onInputChange',
+      description: 'Callback when input value changes during typing',
+      table: { type: { summary: '(inputValue: string, parsedValue: number | undefined) => void' } },
+    },
+    onFocus: {
+      action: 'onFocus',
+      description: 'Callback when input receives focus',
+      table: { type: { summary: '(e: React.FocusEvent<HTMLInputElement>) => void' } },
+    },
+    onBlur: {
+      action: 'onBlur',
+      description: 'Callback when input loses focus',
+      table: { type: { summary: '(e: React.FocusEvent<HTMLInputElement>) => void' } },
     },
   },
 };
@@ -227,6 +267,25 @@ export const Playground: Story = {
     disabled: false,
     alert: false,
     lineType: 'outlined',
+  },
+};
+
+/**
+ * This story demonstrates all event callbacks.
+ * Open the Actions panel to see the events being triggered.
+ * - onFocus: triggered when input receives focus
+ * - onBlur: triggered when input loses focus
+ * - onInputChange: triggered on every keystroke during typing
+ * - onChange: triggered when value is committed (on blur or step button click)
+ */
+export const WithEvents: Story = {
+  name: 'With Events (check Actions panel)',
+  args: {
+    defaultValue: 50,
+    min: 0,
+    max: 100,
+    step: 1,
+    size: 'large',
   },
 };
 
