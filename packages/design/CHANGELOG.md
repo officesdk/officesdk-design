@@ -1,5 +1,11 @@
 # @officesdk/design
 
+## 0.2.9
+
+### Patch Changes
+
+- fd3b169: perf: Optimize the display of NumberInput units
+
 ## 0.2.8
 
 ### Patch Changes
