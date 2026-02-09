@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import { styled } from "../utils/styled";
 import { LineType } from "./NumberInput";
 
 export const NumberInputContainer = styled.div<{
@@ -50,14 +50,13 @@ export const NumberInputContainer = styled.div<{
         border-bottom: 1px solid ${borderColor};
         border-radius: 0;
         ${$disabled ? 'cursor: not-allowed;' : ''}
-        ${
-          !$disabled && !$isFocused && !$alert
-            ? `
+        ${!$disabled && !$isFocused && !$alert
+          ? `
           &:hover {
             border-bottom-color: ${theme.colors.palettes.transparency['20']};
           }
         `
-            : ''
+          : ''
         }
       `;
     }
@@ -180,19 +179,19 @@ export const ButtonGroup = styled.div<{ $alert: boolean; $disabled: boolean; $li
     height: 1px;
     pointer-events: none;
     background-color: ${({ $disabled, $alert, $lineType, theme }) => {
-      // No divider for borderless and underlined types
-      if ($lineType === 'borderless' || $lineType === 'underlined') {
-        return 'transparent';
-      }
+    // No divider for borderless and underlined types
+    if ($lineType === 'borderless' || $lineType === 'underlined') {
+      return 'transparent';
+    }
 
-      if ($disabled) {
-        return theme.colors.palettes.transparency['10'];
-      }
-      if ($alert) {
-        return theme.colors.palettes.red['6'];
-      }
+    if ($disabled) {
       return theme.colors.palettes.transparency['10'];
-    }};
+    }
+    if ($alert) {
+      return theme.colors.palettes.red['6'];
+    }
+    return theme.colors.palettes.transparency['10'];
+  }};
   }
 `;
 
@@ -231,6 +230,6 @@ export const StepButton = styled.button<{ $disabled: boolean }>`
     width: 14px;
     height: 14px;
     fill: ${({ $disabled, theme }) =>
-      $disabled ? theme.colors.palettes.transparency['30'] : theme.colors.palettes.gray['120']};
+    $disabled ? theme.colors.palettes.transparency['30'] : theme.colors.palettes.gray['120']};
   }
 `;
