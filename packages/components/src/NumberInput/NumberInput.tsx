@@ -257,32 +257,6 @@ const InputWrapper = styled.div`
   align-items: center;
   padding: 0 8px;
   min-width: 0;
-  gap: 4px;
-`;
-
-const UnitText = styled.span<{ $size: 'small' | 'large'; $disabled: boolean }>`
-  flex-shrink: 0;
-  font-family: 'PingFang SC', sans-serif;
-  font-weight: 400;
-  line-height: 20px;
-
-  ${({ $size }) =>
-    $size === 'small'
-      ? `
-    font-size: 12px;
-  `
-      : `
-    font-size: 13px;
-  `}
-
-  ${({ $disabled, theme }) =>
-    $disabled
-      ? `
-    color: ${theme.colors.palettes.transparency['30']};
-  `
-      : `
-    color: ${theme.colors.palettes.gray['120']};
-  `}
 `;
 
 const StyledInput = styled.input<{ $size: 'small' | 'large'; $disabled: boolean }>`
@@ -490,22 +464,27 @@ export const NumberInput: React.FC<NumberInputProps> = ({
   const effectiveMin = extendedValueMap ? extendedValueMap.start : min;
   const effectiveMax = extendedValueMap ? extendedValueMap.end : max;
 
-  // Format value for display (optionally with thousands separator)
+  // Format value for display (optionally with thousands separator and unit)
   const formatValue = useCallback(
     (val: number | undefined): string => {
       if (val === undefined) {
         return '';
       }
+      let formatted: string;
       if (formatter) {
-        return formatter(val);
+        formatted = formatter(val);
+      } else if (useThousandsSeparator) {
+        formatted = formatNumber(val, locale, precision);
+      } else {
+        formatted = formatNumberForEdit(val, locale, precision);
       }
-      // Use thousands separator based on prop
-      if (useThousandsSeparator) {
-        return formatNumber(val, locale, precision);
+      // Append unit directly to the number for display
+      if (unit) {
+        return formatted + unit;
       }
-      return formatNumberForEdit(val, locale, precision);
+      return formatted;
     },
-    [formatter, precision, locale, useThousandsSeparator]
+    [formatter, precision, locale, useThousandsSeparator, unit]
   );
 
   // Format value for editing (without thousands separator, for easier input)
@@ -719,11 +698,6 @@ export const NumberInput: React.FC<NumberInputProps> = ({
           $size={size}
           $disabled={disabled}
         />
-        {unit && (
-          <UnitText $size={size} $disabled={disabled}>
-            {unit}
-          </UnitText>
-        )}
       </InputWrapper>
 
       {showStepButtons && (showStepButtonsTrigger !== 'hover' || isHovered || isFocused) && (
