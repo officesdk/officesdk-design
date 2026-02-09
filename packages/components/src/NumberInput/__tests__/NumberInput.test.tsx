@@ -182,20 +182,20 @@ describe('NumberInput', () => {
   });
 
   describe('Unit', () => {
-    it('should display unit text', () => {
+    it('should display unit text appended to value', () => {
       render(<NumberInput defaultValue={100} unit="px" />);
-      expect(screen.getByText('px')).toBeInTheDocument();
+      expect(screen.getByRole('textbox')).toHaveValue('100px');
     });
 
-    it('should display percentage unit', () => {
+    it('should display percentage unit appended to value', () => {
       render(<NumberInput defaultValue={50} unit="%" />);
-      expect(screen.getByText('%')).toBeInTheDocument();
+      expect(screen.getByRole('textbox')).toHaveValue('50%');
     });
 
-    it('should not display unit when not provided', () => {
+    it('should not append unit when not provided', () => {
       render(<NumberInput defaultValue={50} />);
-      expect(screen.queryByText('px')).not.toBeInTheDocument();
-      expect(screen.queryByText('%')).not.toBeInTheDocument();
+      const input = screen.getByRole('textbox');
+      expect(input).toHaveValue('50');
     });
   });
 });
