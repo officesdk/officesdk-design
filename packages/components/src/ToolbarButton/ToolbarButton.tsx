@@ -384,7 +384,6 @@ export const ToolbarButton: React.FC<ToolbarButtonProps> = ({
 
   const handleDropdownClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (disabled) return;
-    e.stopPropagation();
     onDropdownClick?.(e);
   };
 
