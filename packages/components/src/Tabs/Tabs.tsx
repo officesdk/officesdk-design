@@ -241,7 +241,7 @@ const TabItem = styled.button<{
     if ($variant === 'line') {
       const gapNumber = parseInt(theme.components.tab.line.layout.gap ?? '0');
       return `
-        max-width: calc((100% - ${gapNumber * ($count - 1)}px) / ${$count});
+        max-width: ${$count > 1 ? `calc((100% - ${gapNumber * ($count - 1)}px) / ${$count})` : '100%'};
       `;
     }
     return '';
