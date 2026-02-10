@@ -1,5 +1,11 @@
 # @officesdk/design
 
+## 0.2.10
+
+### Patch Changes
+
+- 1c897ff: refactor: remove stopPropagation in dropdownClick of toolbarButton
+
 ## 0.2.9
 
 ### Patch Changes
