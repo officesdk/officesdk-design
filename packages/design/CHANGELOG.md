@@ -1,5 +1,11 @@
 # @officesdk/design
 
+## 0.2.11
+
+### Patch Changes
+
+- 2ec13e6: refactor: refactor maxWidth of tabItem
+
 ## 0.2.10
 
 ### Patch Changes
