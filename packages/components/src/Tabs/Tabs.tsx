@@ -126,6 +126,7 @@ const TabItem = styled.button<{
   $variant: 'line' | 'card';
   $active: boolean;
   $disabled: boolean;
+  $count: number
 }>`
   display: inline-flex;
   align-items: center;
@@ -236,10 +237,11 @@ const TabItem = styled.button<{
     return '';
   }}
 
-  ${({ $variant }) => {
+  ${({ $variant, theme, $count }) => {
     if ($variant === 'line') {
+      const gapNumber = parseInt(theme.components.tab.line.layout.gap ?? '0');
       return `
-        max-width: 160px;
+        max-width: calc((100% - ${gapNumber * ($count - 1)}px) / ${$count});
       `;
     }
     return '';
@@ -309,6 +311,7 @@ export const Tabs: React.FC<TabsProps> = ({
             $variant={variant}
             $active={activeKey === item.key}
             $disabled={item.disabled || false}
+            $count={items.length}
             onClick={() => handleTabClick(item.key, item.disabled)}
             role="tab"
             aria-selected={activeKey === item.key}
