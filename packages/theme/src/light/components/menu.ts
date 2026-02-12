@@ -16,7 +16,6 @@ export const menu: MenuConfig = {
       color: 'transparent',
       width: 'none',
     },
-    borderRadius: '0',
     // Layout
     layout: {
       padding: '6px 12px',
