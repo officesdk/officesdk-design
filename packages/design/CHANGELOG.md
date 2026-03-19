@@ -1,5 +1,11 @@
 # @officesdk/design
 
+## 0.2.13
+
+### Patch Changes
+
+- d2bd711: refactor: remove borderRadius of menuItem
+
 ## 0.2.12
 
 ### Patch Changes
