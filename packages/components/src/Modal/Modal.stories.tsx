@@ -135,12 +135,13 @@ export const NoFooter: Story = {
   },
 };
 
-export const CustomWidth: Story = {
+export const CustomSize: Story = {
   render: (args) => <ModalDemo {...args} />,
   args: {
-    title: 'Wide Modal',
+    title: 'Custom Size Modal',
     width: 800,
-    children: 'This modal has a custom width of 800px.',
+    height: 480,
+    children: 'This modal has a custom width of 800px and height of 480px.',
   },
 };
 

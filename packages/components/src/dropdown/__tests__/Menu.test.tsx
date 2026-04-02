@@ -24,25 +24,13 @@ describe('Menu', () => {
     it('should render with icons', () => {
       const TestIcon = () => <div data-testid="test-icon">Icon</div>;
 
-      render(
-        <Menu
-          items={[
-            { key: '1', label: 'Option 1', icon: <TestIcon /> },
-          ]}
-        />
-      );
+      render(<Menu items={[{ key: '1', label: 'Option 1', icon: <TestIcon /> }]} />);
 
       expect(screen.getByTestId('test-icon')).toBeInTheDocument();
     });
 
     it('should render with descriptions', () => {
-      render(
-        <Menu
-          items={[
-            { key: '1', label: 'Option 1', description: 'Cmd+C' },
-          ]}
-        />
-      );
+      render(<Menu items={[{ key: '1', label: 'Option 1', description: 'Cmd+C' }]} />);
 
       expect(screen.getByText('Cmd+C')).toBeInTheDocument();
     });
@@ -57,9 +45,7 @@ describe('Menu', () => {
               type: 'group',
               key: 'g1',
               label: 'Group Title',
-              children: [
-                { key: '1', label: 'Option 1' },
-              ],
+              children: [{ key: '1', label: 'Option 1' }],
             },
           ]}
         />
@@ -101,13 +87,7 @@ describe('Menu', () => {
     });
 
     it('should handle disabled state', () => {
-      render(
-        <Menu
-          items={[
-            { key: '1', label: 'Option 1', disabled: true },
-          ]}
-        />
-      );
+      render(<Menu items={[{ key: '1', label: 'Option 1', disabled: true }]} />);
 
       expect(screen.getByText('Option 1')).toBeInTheDocument();
     });
@@ -118,14 +98,7 @@ describe('Menu', () => {
       const user = userEvent.setup();
       const onSelect = vi.fn();
 
-      render(
-        <Menu
-          items={[
-            { key: '1', label: 'Option 1' },
-          ]}
-          onSelect={onSelect}
-        />
-      );
+      render(<Menu items={[{ key: '1', label: 'Option 1' }]} onSelect={onSelect} />);
 
       const option = screen.getByText('Option 1');
       await user.click(option);
@@ -138,12 +111,7 @@ describe('Menu', () => {
       const onSelect = vi.fn();
 
       render(
-        <Menu
-          items={[
-            { key: '1', label: 'Option 1', disabled: true },
-          ]}
-          onSelect={onSelect}
-        />
+        <Menu items={[{ key: '1', label: 'Option 1', disabled: true }]} onSelect={onSelect} />
       );
 
       const option = screen.getByText('Option 1');
@@ -156,13 +124,7 @@ describe('Menu', () => {
       const user = userEvent.setup();
       const onClick = vi.fn();
 
-      render(
-        <Menu
-          items={[
-            { key: '1', label: 'Option 1', onClick },
-          ]}
-        />
-      );
+      render(<Menu items={[{ key: '1', label: 'Option 1', onClick }]} />);
 
       const option = screen.getByText('Option 1');
       await user.click(option);
@@ -173,16 +135,44 @@ describe('Menu', () => {
 
   describe('Search', () => {
     it('should render search box when searchable', () => {
-      render(
+      const { container } = render(
         <Menu
           searchable
+          maxHeight={120}
           items={[
             { key: '1', label: 'Option 1' },
+            { key: '2', label: 'Option 2' },
+            { key: '3', label: 'Option 3' },
+            { key: '4', label: 'Option 4' },
+            { key: '5', label: 'Option 5' },
           ]}
         />
       );
 
       expect(screen.getByRole('textbox')).toBeInTheDocument();
+      expect(container.firstChild).toHaveStyle({ maxHeight: '120px' });
+    });
+
+    it('should keep search box outside the scrollable menu content', () => {
+      render(
+        <Menu
+          searchable
+          maxHeight={120}
+          items={Array.from({ length: 8 }, (_, index) => ({
+            key: `${index + 1}`,
+            label: `Option ${index + 1}`,
+          }))}
+        />
+      );
+
+      const searchInput = screen.getByRole('textbox');
+      const searchContainer = screen.getByTestId('menu-search-container');
+      const scrollContainer = screen.getByTestId('menu-scroll-container');
+
+      expect(searchContainer).toBeInTheDocument();
+      expect(scrollContainer).toBeInTheDocument();
+      expect(searchContainer).toContainElement(searchInput);
+      expect(scrollContainer).not.toContainElement(searchInput);
     });
 
     it('should filter items based on search', async () => {
@@ -211,13 +201,7 @@ describe('Menu', () => {
       const user = userEvent.setup({ delay: null });
       const onSearch = vi.fn();
 
-      render(
-        <Menu
-          searchable
-          items={[{ key: '1', label: 'Option 1' }]}
-          onSearch={onSearch}
-        />
-      );
+      render(<Menu searchable items={[{ key: '1', label: 'Option 1' }]} onSearch={onSearch} />);
 
       const searchInput = screen.getByRole('textbox');
       await user.type(searchInput, 'test');
@@ -278,22 +262,14 @@ describe('Menu', () => {
   describe('Sizes', () => {
     it('should render medium size', () => {
       const { container } = render(
-        <Menu
-          size="medium"
-          items={[{ key: '1', label: 'Option 1' }]}
-        />
+        <Menu size="medium" items={[{ key: '1', label: 'Option 1' }]} />
       );
 
       expect(container.querySelector('.od-menu')).toBeInTheDocument();
     });
 
     it('should render large size', () => {
-      const { container } = render(
-        <Menu
-          size="large"
-          items={[{ key: '1', label: 'Option 1' }]}
-        />
-      );
+      const { container } = render(<Menu size="large" items={[{ key: '1', label: 'Option 1' }]} />);
 
       expect(container.querySelector('.od-menu')).toBeInTheDocument();
     });
@@ -320,4 +296,3 @@ describe('Menu', () => {
     });
   });
 });
-

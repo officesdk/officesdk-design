@@ -4,13 +4,26 @@ import { useState } from 'react';
 
 const CardIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-    <rect x="2" y="2" width="14" height="14" rx="2" stroke="currentColor" strokeWidth="1.5" fill="none"/>
+    <rect
+      x="2"
+      y="2"
+      width="14"
+      height="14"
+      rx="2"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      fill="none"
+    />
   </svg>
 );
 
 const FolderIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-    <path d="M2 5C2 3.89543 2.89543 3 4 3H6L8 5H14C15.1046 5 16 5.89543 16 7V13C16 14.1046 15.1046 15 14 15H4C2.89543 15 2 14.1046 2 13V5Z" stroke="currentColor" strokeWidth="1.5"/>
+    <path
+      d="M2 5C2 3.89543 2.89543 3 4 3H6L8 5H14C15.1046 5 16 5.89543 16 7V13C16 14.1046 15.1046 15 14 15H4C2.89543 15 2 14.1046 2 13V5Z"
+      stroke="currentColor"
+      strokeWidth="1.5"
+    />
   </svg>
 );
 
@@ -173,6 +186,27 @@ export const WithSearch: Story = {
 };
 
 /**
+ * Constrained-height menu keeps search pinned while items scroll
+ */
+export const ConstrainedHeightWithSearch: Story = {
+  render: () => (
+    <div style={{ width: '280px', height: '200px', padding: '16px', background: '#f5f5f5' }}>
+      <Menu
+        size="large"
+        searchable
+        maxHeight={200}
+        searchPlaceholder="Search actions"
+        items={Array.from({ length: 20 }, (_, index) => ({
+          key: `${index + 1}`,
+          label: `Action ${index + 1}`,
+          description: index % 3 === 0 ? `Cmd+${index + 1}` : undefined,
+        }))}
+      />
+    </div>
+  ),
+};
+
+/**
  * Large menu with virtual scrolling
  */
 export const VirtualScrolling: Story = {
@@ -214,9 +248,7 @@ export const SizeComparison: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: '24px' }}>
       <div>
-        <div style={{ marginBottom: '16px', fontSize: '14px', fontWeight: 600 }}>
-          Medium (28px)
-        </div>
+        <div style={{ marginBottom: '16px', fontSize: '14px', fontWeight: 600 }}>Medium (28px)</div>
         <Menu
           size="medium"
           items={[
@@ -229,9 +261,7 @@ export const SizeComparison: Story = {
       </div>
 
       <div>
-        <div style={{ marginBottom: '16px', fontSize: '14px', fontWeight: 600 }}>
-          Large (36px)
-        </div>
+        <div style={{ marginBottom: '16px', fontSize: '14px', fontWeight: 600 }}>Large (36px)</div>
         <Menu
           size="large"
           items={[
@@ -332,4 +362,3 @@ export const CompleteExample: Story = {
     );
   },
 };
-

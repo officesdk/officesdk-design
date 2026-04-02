@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { Loading } from './Loading';
+import { LoadingOverlay } from './LoadingOverlay';
 import { LoadingIcon } from '@officesdk/design/icons';
 
 const meta: Meta<typeof Loading> = {
@@ -70,6 +71,20 @@ export const Fullscreen: Story = {
     spinning: true,
     fullscreen: true,
     tip: 'Loading fullscreen...',
+    transparent: false,
+  },
+  parameters: {
+    layout: 'fullscreen',
+  },
+};
+
+export const TransparentFullscreen: Story = {
+  args: {
+    size: 'large',
+    spinning: true,
+    fullscreen: true,
+    tip: 'Transparent fullscreen loading...',
+    transparent: true,
   },
   parameters: {
     layout: 'fullscreen',
@@ -222,6 +237,117 @@ export const WrapperModeWithTip: Story = {
   },
 };
 
+export const ExternalOverlayMode: Story = {
+  render: (args) => {
+    const [spinning, setSpinning] = React.useState(args.spinning ?? true);
+
+    return (
+      <div style={{ width: '400px' }}>
+        <div style={{ marginBottom: '16px' }}>
+          <button
+            onClick={() => setSpinning(!spinning)}
+            style={{
+              padding: '8px 16px',
+              fontSize: '14px',
+              cursor: 'pointer',
+              borderRadius: '4px',
+              border: '1px solid #d9d9d9',
+              background: '#fff',
+            }}
+          >
+            Toggle Loading
+          </button>
+        </div>
+        <div
+          style={{
+            position: 'relative',
+            border: '1px solid #e8e8e8',
+            borderRadius: '8px',
+            background: '#fff',
+            overflow: 'hidden',
+          }}
+        >
+          <div
+            style={{
+              padding: '24px',
+              opacity: spinning ? 0.45 : 1,
+              transition: 'opacity 0.3s',
+            }}
+          >
+            <h3 style={{ margin: '0 0 12px 0', fontSize: '16px' }}>Panel Content</h3>
+            <p style={{ margin: 0, color: '#666', fontSize: '14px', lineHeight: '1.6' }}>
+              This uses a positioned host with LoadingOverlay, so content can be covered without
+              passing children into Loading. The parent host should set position to relative.
+            </p>
+          </div>
+          <LoadingOverlay {...args} spinning={spinning} />
+        </div>
+      </div>
+    );
+  },
+  args: {
+    spinning: true,
+    tip: 'Loading panel...',
+    transparent: false,
+  },
+};
+
+export const TransparentExternalOverlay: Story = {
+  render: (args) => {
+    const [spinning, setSpinning] = React.useState(args.spinning ?? true);
+
+    return (
+      <div style={{ width: '400px' }}>
+        <div style={{ marginBottom: '16px' }}>
+          <button
+            onClick={() => setSpinning(!spinning)}
+            style={{
+              padding: '8px 16px',
+              fontSize: '14px',
+              cursor: 'pointer',
+              borderRadius: '4px',
+              border: '1px solid #d9d9d9',
+              background: '#fff',
+            }}
+          >
+            Toggle Loading
+          </button>
+        </div>
+        <div
+          style={{
+            position: 'relative',
+            border: '1px solid #e8e8e8',
+            borderRadius: '8px',
+            background:
+              'linear-gradient(135deg, rgba(24, 144, 255, 0.08), rgba(82, 196, 26, 0.08))',
+            overflow: 'hidden',
+          }}
+        >
+          <div
+            style={{
+              padding: '24px',
+              opacity: spinning ? 0.75 : 1,
+              transition: 'opacity 0.3s',
+            }}
+          >
+            <h3 style={{ margin: '0 0 12px 0', fontSize: '16px' }}>Transparent Overlay</h3>
+            <p style={{ margin: 0, color: '#666', fontSize: '14px', lineHeight: '1.6' }}>
+              Transparent mode keeps the overlay layer interactive for loading display while the
+              host background remains visually visible underneath.
+            </p>
+          </div>
+          <LoadingOverlay {...args} spinning={spinning} />
+        </div>
+      </div>
+    );
+  },
+  args: {
+    spinning: true,
+    tip: 'Transparent panel loading...',
+    transparent: true,
+  },
+};
+
 // ==================== Custom Indicators ====================
 
 // Icon Component Spinner with Animation
@@ -280,7 +406,7 @@ const CSSSpinner: React.FC<{ size?: number }> = ({ size = 24 }) => {
   );
 };
 
-// Custom Emoji Spinner Component
+// Custom Text Spinner Component
 const EmojiSpinner = () => (
   <>
     <style>
@@ -294,11 +420,12 @@ const EmojiSpinner = () => (
     <span
       style={{
         display: 'inline-block',
-        fontSize: '24px',
+        fontSize: '14px',
+        fontWeight: 600,
         animation: 'emoji-spin 1s linear infinite',
       }}
     >
-      ⏳
+      LD
     </span>
   </>
 );
@@ -547,7 +674,7 @@ export const CustomEmojiIndicator: Story = {
               >
                 <h3 style={{ margin: '0 0 12px 0', fontSize: '16px' }}>Content Title</h3>
                 <p style={{ margin: 0, color: '#666', fontSize: '14px' }}>
-                  Content with custom emoji indicator (⏳).
+                  Content with custom text indicator.
                 </p>
               </div>
             </Loading>

@@ -159,6 +159,30 @@ describe('Modal', () => {
     expect(screen.getByText('Content')).toBeInTheDocument();
   });
 
+  it('applies custom width without variant width constraints', () => {
+    render(
+      <Modal visible={true} variant="message" width={800} title="Custom Width Modal">
+        Content
+      </Modal>
+    );
+
+    const modal = document.body.querySelector('.osd-modal');
+    expect(modal).toHaveStyle({ width: '800px' });
+    expect(modal?.className).not.toContain('osd-modal-content-message');
+  });
+
+  it('applies custom height without variant size constraints', () => {
+    render(
+      <Modal visible={true} variant="functional" height={480} title="Custom Height Modal">
+        Content
+      </Modal>
+    );
+
+    const modal = document.body.querySelector('.osd-modal');
+    expect(modal).toHaveStyle({ height: '480px' });
+    expect(modal?.className).not.toContain('osd-modal-content-functional');
+  });
+
   it('renders with dark mask type', () => {
     render(
       <Modal visible={true} maskType="dark" title="Dark Mask Modal">
