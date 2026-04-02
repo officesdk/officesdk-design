@@ -151,6 +151,7 @@ export const Modal: React.FC<ModalProps> = ({
   maskType = 'light',
   title,
   width,
+  height,
   okText,
   cancelText,
   footer,
@@ -186,15 +187,12 @@ export const Modal: React.FC<ModalProps> = ({
   // Calculate width - use prop if provided, otherwise use theme default
   const modalWidth = width ?? modalConfig[variant].defaultWidth;
 
-  // Build classNames for semantic elements
+  // When custom dimensions are provided, avoid applying variant size constraints again.
   const classNames = {
     ...(maskType === 'dark' && { mask: `${prefixCls}-mask-dark` }),
-    content: `${prefixCls}-content-${variant}`,
+    ...(width === undefined &&
+      height === undefined && { content: `${prefixCls}-content-${variant}` }),
   };
-
-  // Build styles for custom width
-  const styles: Record<string, React.CSSProperties> | undefined =
-    width !== undefined ? { content: { width } } : undefined;
 
   // Build default footer when not provided
   const renderFooter = () => {
@@ -227,7 +225,8 @@ export const Modal: React.FC<ModalProps> = ({
       {...restProps}
       visible={visible}
       title={title}
-      width={width === undefined ? modalWidth : undefined}
+      width={modalWidth}
+      height={height}
       prefixCls={prefixCls}
       closable={closable}
       closeIcon={
@@ -240,7 +239,6 @@ export const Modal: React.FC<ModalProps> = ({
       mask={mask}
       maskClosable={maskClosable}
       classNames={classNames}
-      styles={styles}
       className={className}
       onClose={handleClose}
       footer={renderFooter()}

@@ -1,4 +1,3 @@
-import React from 'react';
 import '@testing-library/jest-dom/vitest';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { screen, act } from '@testing-library/react';
@@ -19,6 +18,11 @@ describe('Loading', () => {
     it('should render spinner when spinning is true', () => {
       render(<Loading spinning />);
       expect(screen.getByRole('status')).toBeInTheDocument();
+    });
+
+    it('should use span as root element for standalone loading', () => {
+      const { container } = render(<Loading spinning />);
+      expect(container.firstElementChild?.tagName).toBe('SPAN');
     });
 
     it('should not render spinner when spinning is false', () => {
@@ -146,9 +150,19 @@ describe('Loading', () => {
       expect(screen.getByRole('status')).toBeInTheDocument();
     });
 
+    it('should use div as root element for fullscreen loading', () => {
+      const { container } = render(<Loading fullscreen spinning />);
+      expect(container.firstElementChild?.tagName).toBe('DIV');
+    });
+
     it('should not render fullscreen loading when spinning is false', () => {
       render(<Loading fullscreen spinning={false} />);
       expect(screen.queryByRole('status')).not.toBeInTheDocument();
+    });
+
+    it('should support transparent fullscreen background', () => {
+      const { container } = render(<Loading fullscreen spinning transparent />);
+      expect(container.firstElementChild).toHaveStyle({ background: 'transparent' });
     });
   });
 
@@ -184,9 +198,7 @@ describe('Loading', () => {
     });
 
     it('should apply size to custom indicator wrapper', () => {
-      const { container } = render(
-        <Loading size="large" indicator={<span>Custom</span>} />
-      );
+      const { container } = render(<Loading size="large" indicator={<span>Custom</span>} />);
       expect(container.querySelector('span[role="status"]')).toBeInTheDocument();
     });
   });
@@ -296,7 +308,7 @@ describe('Loading', () => {
     });
 
     it('should maintain indicator during wrapper mode', () => {
-      const CustomIndicator = () => <div data-testid="custom-wrapper">⏳</div>;
+      const CustomIndicator = () => <div data-testid="custom-wrapper">LD</div>;
       render(
         <Loading spinning indicator={<CustomIndicator />}>
           <div>Content</div>

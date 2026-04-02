@@ -28,6 +28,10 @@ export interface LoadingProps {
    */
   fullscreen?: boolean;
   /**
+   * Whether overlay background should be transparent
+   */
+  transparent?: boolean;
+  /**
    * Custom className
    */
   className?: string;
@@ -92,21 +96,25 @@ const CSSSpinner = styled.div<{ $size: LoadingProps['size'] }>`
   }}
 `;
 
-const LoadingContainer = styled.div<{ $fullscreen: boolean; $hasTip: boolean }>`
+const LoadingInlineContainer = styled.span<{ $hasTip: boolean }>`
   display: inline-flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: ${({ $hasTip, theme }) => ($hasTip ? theme.components.loading.indicator.gap : '0')};
+`;
 
-  ${({ $fullscreen, theme }) =>
-    $fullscreen &&
-    `
-      position: fixed;
-      inset: 0;
-      z-index: ${theme.components.loading.fullscreen.zIndex};
-      background: ${theme.components.loading.fullscreen.background};
-    `}
+const LoadingFullscreenContainer = styled.div<{ $hasTip: boolean; $transparent: boolean }>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: ${({ $hasTip, theme }) => ($hasTip ? theme.components.loading.indicator.gap : '0')};
+  position: fixed;
+  inset: 0;
+  z-index: ${({ theme }) => theme.components.loading.fullscreen.zIndex};
+  background: ${({ $transparent, theme }) =>
+    $transparent ? 'transparent' : theme.components.loading.fullscreen.background};
 `;
 
 const Tip = styled.span`
@@ -182,6 +190,7 @@ export const Loading: React.FC<LoadingProps> = ({
   delay = 0,
   tip,
   fullscreen = false,
+  transparent = false,
   className,
   children,
   indicator,
@@ -262,10 +271,18 @@ export const Loading: React.FC<LoadingProps> = ({
   // Standalone or fullscreen mode (no children)
   if (!shouldShow) return null;
 
+  if (fullscreen) {
+    return (
+      <LoadingFullscreenContainer $hasTip={!!tip} $transparent={transparent} className={className}>
+        {renderSpinner()}
+      </LoadingFullscreenContainer>
+    );
+  }
+
   return (
-    <LoadingContainer $fullscreen={fullscreen} $hasTip={!!tip} className={className}>
+    <LoadingInlineContainer $hasTip={!!tip} className={className}>
       {renderSpinner()}
-    </LoadingContainer>
+    </LoadingInlineContainer>
   );
 };
 

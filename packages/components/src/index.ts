@@ -35,13 +35,21 @@ export { ToolbarButton } from './ToolbarButton';
 export type { ToolbarButtonProps } from './ToolbarButton';
 
 export { DropdownButton, Menu, Dropdown, MenuGlobalStyles, DropdownGlobalStyles } from './dropdown';
-export type { DropdownButtonProps, MenuProps, MenuItem, MenuGroup, MenuDivider, MenuItemType, DropdownProps } from './dropdown';
+export type {
+  DropdownButtonProps,
+  MenuProps,
+  MenuItem,
+  MenuGroup,
+  MenuDivider,
+  MenuItemType,
+  DropdownProps,
+} from './dropdown';
 
 export { Modal, ModalGlobalStyles } from './Modal';
 export type { ModalProps } from './Modal';
 
-export { Loading } from './Loading';
-export type { LoadingProps } from './Loading';
+export { Loading, LoadingOverlay } from './Loading';
+export type { LoadingProps, LoadingOverlayProps } from './Loading';
 
 export {
   UIConfigProvider,
@@ -67,4 +75,3 @@ export type {
 
 export { styled } from './utils/styled';
 export { getGlobalTheme } from './utils/context';
-

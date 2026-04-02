@@ -1,5 +1,10 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import RcMenu, { MenuItem as RcMenuItem, SubMenu as RcSubMenu, Divider as RcDivider, ItemGroup as RcItemGroup } from 'rc-menu';
+import RcMenu, {
+  MenuItem as RcMenuItem,
+  SubMenu as RcSubMenu,
+  Divider as RcDivider,
+  ItemGroup as RcItemGroup,
+} from 'rc-menu';
 import VirtualList from 'rc-virtual-list';
 import { styled } from '../utils/styled';
 import { Icon } from '../Icon';
@@ -8,7 +13,11 @@ import 'rc-menu/assets/index.css';
 import { MenuGlobalStyles } from './globalStyle';
 import { styleManager } from '../utils/styleManager';
 import { getGlobalTheme } from '../utils/context';
-import { ArrowRightIcon, CheckIcon, SearchIcon as SearchIconComponent } from '@officesdk/design/icons';
+import {
+  ArrowRightIcon,
+  CheckIcon,
+  SearchIcon as SearchIconComponent,
+} from '@officesdk/design/icons';
 
 export interface MenuItem {
   type?: 'item';
@@ -101,6 +110,8 @@ const MenuContainer = styled.div`
   flex-direction: column;
   box-sizing: border-box;
   min-width: 220px;
+  max-height: 100%;
+  overflow: hidden;
 
   ${({ theme }) => {
     const dropdownConfig = theme.components?.dropdown;
@@ -109,7 +120,9 @@ const MenuContainer = styled.div`
     return `
       padding: ${dropdownConfig?.padding || '4px 0'};
       background: ${dropdownConfig?.background || '#fff'};
-      border: ${menuConfig?.border?.width || '1px'} solid ${menuConfig?.border?.color || 'rgba(65, 70, 75, 0.1)'};
+      border: ${menuConfig?.border?.width || '1px'} solid ${
+      menuConfig?.border?.color || 'rgba(65, 70, 75, 0.1)'
+    };
       border-radius: ${menuConfig?.border?.radius || '4px'};
       box-shadow: ${dropdownConfig?.boxShadow || '0 2px 8px rgba(0, 0, 0, 0.15)'};
     `;
@@ -130,8 +143,21 @@ const MenuContainer = styled.div`
 `;
 
 const SearchBoxContainer = styled.div`
+  flex-shrink: 0;
   padding: 8px 12px;
   border-bottom: 1px solid ${({ theme }) => theme.colors?.palettes?.transparency?.['10']};
+`;
+
+const MenuScrollContainer = styled.div`
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+`;
+
+const VirtualListContainer = styled.div`
+  max-height: 100%;
+  overflow: hidden;
 `;
 
 // MenuItem content wrapper
@@ -194,7 +220,7 @@ const LabelText = styled.div<{ $size: 'medium' | 'large'; $disabled: boolean }>`
     const colorConfig = config?.label?.color;
 
     const fontSize = sizeConfig?.label?.fontSize || '13px';
-    const color = colorConfig?.normal || '#41464b'
+    const color = colorConfig?.normal || '#41464b';
 
     return `
       font-size: ${fontSize};
@@ -217,8 +243,8 @@ const DescriptionText = styled.div<{ $size: 'medium' | 'large'; $disabled: boole
 
     const fontSize = sizeConfig?.description?.fontSize || '10px';
     const color = $disabled
-      ? (colorConfig?.disabled || 'rgba(65, 70, 75, 0.3)')
-      : (colorConfig?.normal || 'rgba(65, 70, 75, 0.6)');
+      ? colorConfig?.disabled || 'rgba(65, 70, 75, 0.3)'
+      : colorConfig?.normal || 'rgba(65, 70, 75, 0.6)';
 
     return `
       font-size: ${fontSize};
@@ -346,15 +372,17 @@ export const Menu: React.FC<MenuProps> = ({
 
     const filterMenuItem = (item: MenuItem): MenuItem | null => {
       // If item itself matches, return it with all children
-      if (item.label.toLowerCase().includes(searchLower) ||
-          item.description?.toLowerCase().includes(searchLower)) {
+      if (
+        item.label.toLowerCase().includes(searchLower) ||
+        item.description?.toLowerCase().includes(searchLower)
+      ) {
         return item;
       }
 
       // If item has children, check if any child matches
       if (item.children && item.children.length > 0) {
         const filteredChildren = item.children
-          .map(child => filterMenuItem(child))
+          .map((child) => filterMenuItem(child))
           .filter(Boolean) as MenuItem[];
 
         if (filteredChildren.length > 0) {
@@ -372,7 +400,7 @@ export const Menu: React.FC<MenuProps> = ({
       if (item.type === 'group') {
         // Filter group children
         const filteredChildren = item.children
-          .map(child => filterMenuItem(child))
+          .map((child) => filterMenuItem(child))
           .filter(Boolean) as MenuItem[];
 
         // Only show group if it has matching children
@@ -386,9 +414,7 @@ export const Menu: React.FC<MenuProps> = ({
       return filterMenuItem(item);
     };
 
-    return items
-      .map(item => filterItem(item))
-      .filter(Boolean) as MenuItemType[];
+    return items.map((item) => filterItem(item)).filter(Boolean) as MenuItemType[];
   }, [items, searchValue]);
 
   // Render menu item content
@@ -450,7 +476,7 @@ export const Menu: React.FC<MenuProps> = ({
     if (item.type === 'group') {
       return (
         <RcItemGroup key={item.key} title={item.label}>
-          {item.children.map(child => renderMenuItem(child))}
+          {item.children.map((child) => renderMenuItem(child))}
         </RcItemGroup>
       );
     }
@@ -472,7 +498,7 @@ export const Menu: React.FC<MenuProps> = ({
           disabled={item.disabled}
           popupOffset={theme.components?.menu?.subMenu?.popupOffset || [15, 0]}
         >
-          {item.children.map(child => renderMenuItem(child))}
+          {item.children.map((child) => renderMenuItem(child))}
         </RcSubMenu>
       );
     }
@@ -499,9 +525,9 @@ export const Menu: React.FC<MenuProps> = ({
   const menuKey = openKeys?.join(',') || 'menu';
 
   return (
-    <MenuContainer className={className} style={style}>
+    <MenuContainer className={className} style={{ maxHeight, ...style }}>
       {searchable && (
-        <SearchBoxContainer>
+        <SearchBoxContainer data-testid="menu-search-container">
           <Input
             lineType="underlined"
             size="small"
@@ -515,56 +541,59 @@ export const Menu: React.FC<MenuProps> = ({
         </SearchBoxContainer>
       )}
 
-      {virtual && filteredItems.length > 10 ? (
-        <VirtualList
-          data={filteredItems}
-          height={maxHeight}
-          itemHeight={itemHeight}
-          itemKey="key"
-          fullHeight={false}
-          style={{ width: '100%' }}
-        >
-          {(item: MenuItemType) => (
-            <RcMenu
-              key={menuKey}
-              prefixCls="od-menu"
-              mode="vertical"
-              selectedKeys={selectedKeys}
-              openKeys={openKeys}
-              onOpenChange={onOpenChange}
-              triggerSubMenuAction="hover"
-              expandIcon={null}
-              style={{
-                border: 'none',
-                background: 'transparent',
-                padding: 0,
-              }}
+      <MenuScrollContainer data-testid="menu-scroll-container">
+        {virtual && filteredItems.length > 10 ? (
+          <VirtualListContainer>
+            <VirtualList
+              data={filteredItems}
+              height={maxHeight}
+              itemHeight={itemHeight}
+              itemKey="key"
+              fullHeight={false}
+              style={{ width: '100%' }}
             >
-              {renderItem(item)}
-            </RcMenu>
-          )}
-        </VirtualList>
-      ) : (
-        <RcMenu
-          key={menuKey}
-          prefixCls="od-menu"
-          mode="vertical"
-          selectedKeys={selectedKeys}
-          openKeys={openKeys}
-          onOpenChange={onOpenChange}
-          triggerSubMenuAction="hover"
-          expandIcon={null}
-          style={{
-            border: 'none',
-            background: 'transparent',
-          }}
-        >
-          {filteredItems.map(renderItem)}
-        </RcMenu>
-      )}
+              {(item: MenuItemType) => (
+                <RcMenu
+                  key={menuKey}
+                  prefixCls="od-menu"
+                  mode="vertical"
+                  selectedKeys={selectedKeys}
+                  openKeys={openKeys}
+                  onOpenChange={onOpenChange}
+                  triggerSubMenuAction="hover"
+                  expandIcon={null}
+                  style={{
+                    border: 'none',
+                    background: 'transparent',
+                    padding: 0,
+                  }}
+                >
+                  {renderItem(item)}
+                </RcMenu>
+              )}
+            </VirtualList>
+          </VirtualListContainer>
+        ) : (
+          <RcMenu
+            key={menuKey}
+            prefixCls="od-menu"
+            mode="vertical"
+            selectedKeys={selectedKeys}
+            openKeys={openKeys}
+            onOpenChange={onOpenChange}
+            triggerSubMenuAction="hover"
+            expandIcon={null}
+            style={{
+              border: 'none',
+              background: 'transparent',
+            }}
+          >
+            {filteredItems.map(renderItem)}
+          </RcMenu>
+        )}
+      </MenuScrollContainer>
     </MenuContainer>
   );
 };
 
 Menu.displayName = 'Menu';
-
