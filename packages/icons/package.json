@@ -17,6 +17,10 @@
     "dist"
   ],
   "scripts": {
+    "discover:figma": "source ../../.env.local && tsx scripts/sync-figma.ts discover",
+    "discover:figma:write": "tsx scripts/sync-figma.ts discover --write",
+    "sync:figma": "tsx scripts/sync-figma.ts sync",
+    "sync:figma:check": "tsx scripts/sync-figma.ts check",
     "generate:registry": "tsx scripts/generate-registry.ts",
     "prebuild": "yarn generate:registry",
     "build": "yarn clean && tsup && yarn build:dts",

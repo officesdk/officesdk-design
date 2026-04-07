@@ -104,6 +104,9 @@ jobs:
       - name: Install Dependencies
         run: yarn install --immutable
 
+      - name: Check Icon Generated Files
+        run: node scripts/check-icon-generated.js
+
       - name: Build Packages
         run: yarn build
 

@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "figma": {
+    "fileKey": "",
+    "exportFormat": "svg"
+  },
+  "defaults": {
+    "outputDir": "src/svg",
+    "nameSource": "manifest-slug"
+  },
+  "categoryMap": {
+    "主站圆角": "main-site",
+    "文本": "text",
+    "表格": "table",
+    "图片": "image",
+    "通用功能": "utility",
+    "形状": "status",
+    "其他": "general"
+  },
+  "icons": []
+}

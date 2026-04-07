@@ -58,3 +58,5 @@ yalc.lock
 .history
 
 .storybook/.local
+
+.claude/
