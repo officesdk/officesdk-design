@@ -1,5 +1,11 @@
 # @officesdk/design
 
+## 0.2.15
+
+### Patch Changes
+
+- 78505fe: Fix Slider track bounds so larger thumbs stay within the container.
+
 ## 0.2.14
 
 ### Patch Changes
