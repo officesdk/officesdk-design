@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(fi)",
+      "Bash(done)",
+      "Bash(node:*)",
+      "Bash(yarn workspace:*)",
+      "Bash(sh -lc '. ../../.env.local && tsx scripts/sync-figma.ts discover')",
+      "Bash(sh -lc '. \"/Users/sky/workspace/officesdk-design/.env.local\" && tsx \"/Users/sky/workspace/officesdk-design/packages/icons/scripts/sync-figma.ts\" discover')"
+    ]
+  }
+}

@@ -4,6 +4,20 @@ import userEvent from '@testing-library/user-event';
 import { render } from '../../__tests__/test-utils';
 import { Slider } from '../Slider';
 
+const mockElementRect = (element: Element, rect: Partial<DOMRect>) => {
+  vi.spyOn(element, 'getBoundingClientRect').mockReturnValue({
+    x: rect.left ?? 0,
+    y: rect.top ?? 0,
+    width: rect.width ?? 0,
+    height: rect.height ?? 0,
+    top: rect.top ?? 0,
+    right: rect.right ?? (rect.left ?? 0) + (rect.width ?? 0),
+    bottom: rect.bottom ?? (rect.top ?? 0) + (rect.height ?? 0),
+    left: rect.left ?? 0,
+    toJSON: () => ({}),
+  } as DOMRect);
+};
+
 describe('Slider', () => {
   describe('Rendering', () => {
     it('should render slider component', () => {
@@ -31,9 +45,7 @@ describe('Slider', () => {
       const handleChange = vi.fn();
       const user = userEvent.setup();
 
-      const { rerender } = render(
-        <Slider value={25} onChange={handleChange} />
-      );
+      const { rerender } = render(<Slider value={25} onChange={handleChange} />);
 
       const slider = screen.getByRole('slider');
       expect(slider).toHaveAttribute('aria-valuenow', '25');
@@ -230,7 +242,11 @@ describe('Slider', () => {
 
       // Simulate mousemove on document
       act(() => {
-        const mouseMoveEvent = new MouseEvent('mousemove', { bubbles: true, cancelable: true, clientX: 100 });
+        const mouseMoveEvent = new MouseEvent('mousemove', {
+          bubbles: true,
+          cancelable: true,
+          clientX: 100,
+        });
         document.dispatchEvent(mouseMoveEvent);
       });
 
@@ -241,6 +257,97 @@ describe('Slider', () => {
       });
 
       expect(handleDragEnd).toHaveBeenCalled();
+    });
+  });
+
+  describe('Track Bounds', () => {
+    it('should map clicks near the left edge to min after accounting for thumb width', () => {
+      const handleChange = vi.fn();
+      const { container } = render(<Slider defaultValue={50} onChange={handleChange} />);
+
+      const slider = screen.getByRole('slider');
+      const thumb = container.querySelector('[role="slider"] > div:last-child') as HTMLElement;
+
+      mockElementRect(slider, { left: 0, top: 0, width: 100, height: 18, right: 100, bottom: 18 });
+      mockElementRect(thumb, { left: 6, top: 5, width: 20, height: 8, right: 26, bottom: 13 });
+
+      act(() => {
+        slider.dispatchEvent(
+          new MouseEvent('mousedown', {
+            bubbles: true,
+            cancelable: true,
+            clientX: 10,
+            clientY: 9,
+          })
+        );
+      });
+
+      expect(handleChange).toHaveBeenCalledWith(0);
+    });
+
+    it('should map dragging to the right edge to max after accounting for thumb width', () => {
+      const handleChange = vi.fn();
+      const { container } = render(<Slider defaultValue={50} onChange={handleChange} />);
+
+      const slider = screen.getByRole('slider');
+      const thumb = container.querySelector('[role="slider"] > div:last-child') as HTMLElement;
+
+      mockElementRect(slider, { left: 0, top: 0, width: 100, height: 18, right: 100, bottom: 18 });
+      mockElementRect(thumb, { left: 40, top: 5, width: 20, height: 8, right: 60, bottom: 13 });
+
+      act(() => {
+        thumb.dispatchEvent(
+          new MouseEvent('mousedown', { bubbles: true, cancelable: true, clientX: 50, clientY: 9 })
+        );
+      });
+
+      act(() => {
+        document.dispatchEvent(
+          new MouseEvent('mousemove', {
+            bubbles: true,
+            cancelable: true,
+            clientX: 90,
+            clientY: 9,
+          })
+        );
+      });
+
+      act(() => {
+        document.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, cancelable: true }));
+      });
+
+      expect(handleChange).toHaveBeenCalledWith(100);
+    });
+
+    it('should map clicks near the bottom edge to min for vertical sliders after accounting for thumb height', () => {
+      const handleChange = vi.fn();
+      const { container } = render(
+        <Slider
+          defaultValue={50}
+          direction="vertical"
+          style={{ height: '100px' }}
+          onChange={handleChange}
+        />
+      );
+
+      const slider = screen.getByRole('slider');
+      const thumb = container.querySelector('[role="slider"] > div:last-child') as HTMLElement;
+
+      mockElementRect(slider, { left: 0, top: 0, width: 18, height: 100, right: 18, bottom: 100 });
+      mockElementRect(thumb, { left: 5, top: 74, width: 8, height: 20, right: 13, bottom: 94 });
+
+      act(() => {
+        slider.dispatchEvent(
+          new MouseEvent('mousedown', {
+            bubbles: true,
+            cancelable: true,
+            clientX: 9,
+            clientY: 90,
+          })
+        );
+      });
+
+      expect(handleChange).toHaveBeenCalledWith(0);
     });
   });
 
@@ -258,4 +365,3 @@ describe('Slider', () => {
     });
   });
 });
-

@@ -98,22 +98,25 @@ const SliderTrack = styled.div<{
   position: absolute;
   background: ${({ theme }) => theme.colors.palettes.transparency['20']};
   border-radius: 1000px;
-  ${({ $direction, theme }) =>
-    $direction === 'vertical'
+  ${({ $direction, theme }) => {
+    const thumbSize = theme.components.slider.large.thumbSize;
+
+    return $direction === 'vertical'
       ? `
-        top: 0;
-        bottom: 0;
+        top: 50%;
         width: ${theme.components.slider.track.height};
+        height: calc(100% - ${thumbSize});
         left: 50%;
-        transform: translateX(-50%);
+        transform: translate(-50%, -50%);
       `
       : `
-        left: 0;
-        right: 0;
+        left: 50%;
+        width: calc(100% - ${thumbSize});
         height: ${theme.components.slider.track.height};
         top: 50%;
-        transform: translateY(-50%);
-      `}
+        transform: translate(-50%, -50%);
+      `;
+  }}
 `;
 
 const SliderFill = styled.div<{
@@ -127,22 +130,25 @@ const SliderFill = styled.div<{
     $disabled
       ? theme.components.slider.track.filledBackgroundDisabled
       : theme.components.slider.track.filledBackground};
-  ${({ $direction, $percentage, theme }) =>
-    $direction === 'vertical'
+  ${({ $direction, $percentage, theme }) => {
+    const thumbSize = theme.components.slider.large.thumbSize;
+
+    return $direction === 'vertical'
       ? `
-        bottom: 0;
+        bottom: calc(${thumbSize} / 2);
         width: ${theme.components.slider.track.height};
         left: 50%;
         transform: translateX(-50%);
-        height: ${$percentage}%;
+        height: calc((100% - ${thumbSize}) * ${$percentage / 100});
       `
       : `
-        left: 0;
+        left: calc(${thumbSize} / 2);
         height: ${theme.components.slider.track.height};
         top: 50%;
         transform: translateY(-50%);
-        width: ${$percentage}%;
-      `}
+        width: calc((100% - ${thumbSize}) * ${$percentage / 100});
+      `;
+  }}
 `;
 
 const SliderThumb = styled.div<{
@@ -156,23 +162,28 @@ const SliderThumb = styled.div<{
   height: ${({ theme }) => theme.components.slider.large.thumbSize};
   border-radius: 50%;
   background: ${({ $disabled, theme }) =>
-    $disabled ? theme.components.slider.thumb.backgroundDisabled : theme.components.slider.thumb.background};
+    $disabled
+      ? theme.components.slider.thumb.backgroundDisabled
+      : theme.components.slider.thumb.background};
   cursor: ${({ $disabled }) => ($disabled ? 'not-allowed' : 'grab')};
   box-shadow: ${({ theme }) => theme.components.slider.thumb.boxShadow};
-  ${({ $direction, $percentage, $isDragging }) =>
-    $direction === 'vertical'
+  ${({ $direction, $percentage, $isDragging, theme }) => {
+    const thumbSize = theme.components.slider.large.thumbSize;
+
+    return $direction === 'vertical'
       ? `
-        bottom: ${$percentage}%;
+        bottom: calc((100% - ${thumbSize}) * ${$percentage / 100} + ${thumbSize} / 2);
         left: 50%;
         transform: translate(-50%, 50%);
         transition: ${$isDragging ? 'none' : 'bottom 0.1s ease'};
       `
       : `
-        left: ${$percentage}%;
+        left: calc((100% - ${thumbSize}) * ${$percentage / 100} + ${thumbSize} / 2);
         top: 50%;
         transform: translate(-50%, -50%);
         transition: ${$isDragging ? 'none' : 'left 0.1s ease'};
-      `}
+      `;
+  }}
 
   ${({ $disabled, theme }) =>
     !$disabled &&
@@ -223,11 +234,10 @@ export const Slider: React.FC<SliderProps> = ({
   const effectiveMin = extendedValueMap.start;
   const effectiveMax = extendedValueMap.end;
 
-  const [internalValue, setInternalValue] = useState<number>(
-    controlledValue ?? defaultValue
-  );
+  const [internalValue, setInternalValue] = useState<number>(controlledValue ?? defaultValue);
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const thumbRef = useRef<HTMLDivElement>(null);
 
   const value = controlledValue !== undefined ? controlledValue : internalValue;
 
@@ -240,16 +250,20 @@ export const Slider: React.FC<SliderProps> = ({
       if (!containerRef.current || disabled) return;
 
       const rect = containerRef.current.getBoundingClientRect();
+      const thumbRect = thumbRef.current?.getBoundingClientRect();
+      const thumbLength = direction === 'vertical' ? thumbRect?.height ?? 0 : thumbRect?.width ?? 0;
+      const containerLength = direction === 'vertical' ? rect.height : rect.width;
+      const trackLength = Math.max(containerLength - thumbLength, 0);
       let visualPercent: number;
 
       if (direction === 'vertical') {
         // Vertical: from bottom (0%) to top (100%)
-        const offsetY = rect.bottom - clientY;
-        visualPercent = Math.max(0, Math.min(1, offsetY / rect.height));
+        const offsetY = rect.bottom - clientY - thumbLength / 2;
+        visualPercent = trackLength === 0 ? 0 : Math.max(0, Math.min(1, offsetY / trackLength));
       } else {
         // Horizontal: from left (0%) to right (100%)
-        const offsetX = clientX - rect.left;
-        visualPercent = Math.max(0, Math.min(1, offsetX / rect.width));
+        const offsetX = clientX - rect.left - thumbLength / 2;
+        visualPercent = trackLength === 0 ? 0 : Math.max(0, Math.min(1, offsetX / trackLength));
       }
 
       // Convert visual percent to value and snap to step
@@ -370,6 +384,7 @@ export const Slider: React.FC<SliderProps> = ({
       <SliderTrack $disabled={disabled} $direction={direction} />
       <SliderFill $percentage={percentage} $disabled={disabled} $direction={direction} />
       <SliderThumb
+        ref={thumbRef}
         $percentage={percentage}
         $disabled={disabled}
         $isDragging={isDragging}
@@ -381,4 +396,3 @@ export const Slider: React.FC<SliderProps> = ({
 };
 
 Slider.displayName = 'Slider';
-
