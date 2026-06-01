@@ -9,7 +9,6 @@ import VirtualList from 'rc-virtual-list';
 import { styled } from '../utils/styled';
 import { Icon } from '../Icon';
 import { Input } from '../Input';
-import 'rc-menu/assets/index.css';
 import { MenuGlobalStyles } from './globalStyle';
 import { styleManager } from '../utils/styleManager';
 import { getGlobalTheme } from '../utils/context';

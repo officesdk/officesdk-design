@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import RcDropdown from 'rc-dropdown';
 import type { DropdownProps as RcDropdownProps } from 'rc-dropdown';
-import 'rc-dropdown/assets/index.css';
 import { DropdownGlobalStyles } from './globalStyle';
 import { styleManager } from '../utils/styleManager';
 
