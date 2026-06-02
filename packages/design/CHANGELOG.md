@@ -1,5 +1,11 @@
 # @officesdk/design
 
+## 0.2.16
+
+### Patch Changes
+
+- c6d5280: Remove the default `rc-dropdown` and `rc-menu` stylesheet imports from dropdown components to avoid loading external icon font assets.
+
 ## 0.2.15
 
 ### Patch Changes
