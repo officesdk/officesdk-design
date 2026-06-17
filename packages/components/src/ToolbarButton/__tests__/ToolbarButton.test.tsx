@@ -107,12 +107,12 @@ describe('ToolbarButton', () => {
       expect(button).toBeDisabled();
     });
 
-    it('should apply reduced opacity to dropdown arrow when disabled', () => {
+    it('should render dropdown arrow with 0.3 fill opacity', () => {
       const { container } = render(<ToolbarButton icon={<TestIcon />} hasDropdown disabled />);
       const svgs = container.querySelectorAll('svg');
-      const dropdownArrow = svgs[svgs.length - 1]?.parentElement as HTMLElement | null;
+      const dropdownArrowPath = svgs[svgs.length - 1]?.querySelector('path');
 
-      expect(dropdownArrow).toHaveStyle({ opacity: '0.3' });
+      expect(dropdownArrowPath).toHaveAttribute('fill-opacity', '0.3');
     });
   });
 
