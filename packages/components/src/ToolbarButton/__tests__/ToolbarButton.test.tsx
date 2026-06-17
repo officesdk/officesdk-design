@@ -106,6 +106,22 @@ describe('ToolbarButton', () => {
       const button = screen.getAllByRole('button')[0];
       expect(button).toBeDisabled();
     });
+
+    it('should render dropdown arrow with 0.6 fill opacity when enabled', () => {
+      const { container } = render(<ToolbarButton icon={<TestIcon />} hasDropdown />);
+      const svgs = container.querySelectorAll('svg');
+      const dropdownArrowPath = svgs[svgs.length - 1]?.querySelector('path');
+
+      expect(dropdownArrowPath).toHaveAttribute('fill-opacity', '0.6');
+    });
+
+    it('should render dropdown arrow with 0.3 fill opacity when disabled', () => {
+      const { container } = render(<ToolbarButton icon={<TestIcon />} hasDropdown disabled />);
+      const svgs = container.querySelectorAll('svg');
+      const dropdownArrowPath = svgs[svgs.length - 1]?.querySelector('path');
+
+      expect(dropdownArrowPath).toHaveAttribute('fill-opacity', '0.3');
+    });
   });
 
   describe('Variants', () => {
@@ -144,4 +160,3 @@ describe('ToolbarButton', () => {
     });
   });
 });
-
