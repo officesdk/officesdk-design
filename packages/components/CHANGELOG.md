@@ -1,5 +1,11 @@
 # @officesdk/design-components
 
+## 0.1.5
+
+### Patch Changes
+
+- Fix `ToolbarButton` dropdown arrow opacity so the disabled state renders with the correct visual style.
+
 ## 0.1.4
 
 ### Patch Changes
