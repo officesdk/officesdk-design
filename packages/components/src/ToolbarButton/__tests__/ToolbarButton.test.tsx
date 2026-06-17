@@ -106,6 +106,14 @@ describe('ToolbarButton', () => {
       const button = screen.getAllByRole('button')[0];
       expect(button).toBeDisabled();
     });
+
+    it('should apply reduced opacity to dropdown arrow when disabled', () => {
+      const { container } = render(<ToolbarButton icon={<TestIcon />} hasDropdown disabled />);
+      const svgs = container.querySelectorAll('svg');
+      const dropdownArrow = svgs[svgs.length - 1]?.parentElement as HTMLElement | null;
+
+      expect(dropdownArrow).toHaveStyle({ opacity: '0.3' });
+    });
   });
 
   describe('Variants', () => {
@@ -144,4 +152,3 @@ describe('ToolbarButton', () => {
     });
   });
 });
-

@@ -280,6 +280,7 @@ const DropdownArrow = styled.span<{ $disabled: boolean }>`
     const config = theme.components.toolbarButton;
     return $disabled
       ? `
+    opacity: 0.3;
     color: ${config.color.colorDisabled};
   `
       : `
